@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.monitor.modules.apm.dao.ProductMapper">
+
+
+
+    <sql id="Base_Column_List">
+        Id AS id, Name AS name, Count as count, Description AS description, ProductionDate as productionDate, ExpireDate AS expireDate
+    </sql>
+
+    <insert id="addProduct" parameterType="com.rongzi.monitor.modules.apm.model.Product">
+
+        INSERT INTO  [DFSS_LOG].[dbo].[Product]
+        (
+          Name, Count, Description, ProductionDate, ExpireDate
+        )
+        VALUES
+        (
+          #{name},#{count},#{description},#{productionDate},#{expireDate}
+        )
+    </insert>
+
+
+    <select id="findProductById" resultType="com.rongzi.monitor.modules.apm.model.Product">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM [DFSS_LOG].[dbo].[Product]
+        WHERE Id=#{id}
+    </select>
+
+
+    <update id="updateProduct" parameterType="Product">
+        UPDATE [DFSS_LOG].[dbo].[Product]
+        <set>
+            <if test="Name!=null and Name !=''">Name=#{name},</if>
+            <if test="Count!=null and Count !=''">Count=#{count},</if>
+            <if test="Description!=null and Description !=''">Description=#{description},</if>
+            <if test="ProductionDate!=null  ">ProductionDate=#{productionDate},</if>
+            <if test="ExpireDate!=null  ">ExpireDate=#{expireDate},</if>
+        </set>
+        WHERE (Id =#{id});
+    </update>
+
+
+    <delete id="deleteProduct">
+        DELETE  FROM [DFSS_LOG].[dbo].[Product] WHERE Id =#{Id}
+    </delete>
+
+    <delete id="batchDeleteByIds">
+        DELETE FROM [DFSS_LOG].[dbo].[Product] WHERE Id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findProductsAll" resultType="java.util.HashMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM [DFSS_LOG].[dbo].[Product]
+    </select>
+
+
+    <insert id="batchImportExcelData" parameterType="java.util.List">
+        INSERT INTO [DFSS_LOG].[dbo].[Product]
+        (
+        name, count, description, productionDate, expireDate
+        )VALUES
+        <foreach collection="products" item="product" index="index" separator=",">
+
+            (#{product.name},#{product.count},#{product.description},#{product.productionDate},#{product.expireDate})
+
+        </foreach>
+
+    </insert>
+
+
+    <select id="findListProducts" resultType="Product">
+
+
+        SELECT name, count, description, productionDate, expireDate FROM [DFSS_LOG].[dbo].[Product]
+
+    </select>
+
+</mapper>

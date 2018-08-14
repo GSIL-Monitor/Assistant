@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.monitor.modules.nginx.dao.NginxMapper">
+
+    <select id="findNginxsAll" resultType="java.util.HashMap" >
+        <if test="isiis != null and isiis == 1">
+            select top 500 controller ,action,count,convert(int,avg_iiscosttime) as avg_iiscosttime, convert(int,max_iiscosttime) as max_iiscosttime,
+            (select count(1) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action) as allcount,
+            (select memo from  NginxLogDB.dbo.ignore(nolock) where ignoreaction=T.action) as memo,
+            convert(int,(select avg(iiscosttime) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action)*1000) as allavgiiscosttime
+            from(
+            select controller,action,count(1) as count,avg(iiscosttime)*1000 as avg_iiscosttime,max(iiscosttime)*1000 as max_iiscosttime
+            from NginxLogDB.dbo.nginxlog(nolock) where
+            iiscosttime>#{overtimelength} and status=200
+            group by Controller, Action
+            ) T
+            <if test="isignore != null and isignore != 0">
+                where t.action not in (select ignoreaction from ignore(nolock))
+            </if>
+            order by T.count desc
+        </if>
+        <if test="isiis != null and isiis == 0">
+            select top 100 controller ,action,count,convert(int,avg_iiscosttime) as avg_iiscosttime, convert(int,max_iiscosttime) as max_iiscosttime,
+            (select count(1) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action) as allcount,
+            (select memo from  NginxLogDB.dbo.ignore(nolock) where ignoreaction=T.action) as memo,
+            convert(int,(select avg(nginxcosttime) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action)*1000) as allavgiiscosttime
+            from(
+                select controller,action,count(1) as count,avg(nginxcosttime)*1000 as avg_iiscosttime,max(nginxcosttime)*1000 as max_iiscosttime
+                from NginxLogDB.dbo.nginxlog(nolock) where
+                nginxcosttime>#{overtimelength} and status=200
+                group by Controller, Action
+            ) T
+            <if test="isignore != null and isignore != 0">
+                where t.action not in (select ignoreaction from ignore(nolock))
+            </if>
+            order by T.count desc
+        </if>
+    </select>
+
+
+    <select id="findNginxsAllServerPage" resultType="java.util.HashMap" parameterType="com.baomidou.mybatisplus.plugins.Page">
+        select  controller ,action,count,convert(int,avg_iiscosttime) as avg_iiscosttime, convert(int,max_iiscosttime) as max_iiscosttime,
+        (select count(1) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action) as allcount,
+        convert(int,(select avg(iiscosttime) from NginxLogDB.dbo.nginxlog(nolock) where action=T.action)*1000) as allavgiiscosttime
+        from(
+        select controller,action,count(1) as count,avg(iiscosttime)*1000 as avg_iiscosttime,max(iiscosttime)*1000 as max_iiscosttime
+        from NginxLogDB.dbo.nginxlog(nolock) where
+        iiscosttime>#{overtimelength} and status=200
+        group by Controller, Action
+        ) T
+        <if test="isignore != null and isignore != 0">
+            where t.action not in (select ignoreaction from ignore(nolock))
+        </if>
+        order by T.count desc
+    </select>
+
+
+    <select id="queryNginxTotal" resultType="java.util.HashMap" >
+
+           select count(1) as nginxtotalcount,
+            (select count(1)  from ${begintime}(nolock) where nginxcosttime>1 and status=200) as nginxover1seccount ,
+            (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where nginxcosttime>3 and status=200) as nginxover3seccount ,
+            (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where nginxcosttime>10 and status=200) as nginxover10seccount ,
+            (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>1 and status=200) as iisover1seccount ,
+            (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>3 and status=200) as iisover3seccount ,
+            (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>10 and status=200) as iisover10seccount
+            from NginxLogDB.dbo.${begintime}(nolock) where  status=200
+
+    </select>
+
+
+
+
+    <select id="getDetatilByActionandController" resultType="java.util.HashMap" >
+       select top 100 * from NginxLogDB.dbo.nginxlog(nolock) where action=#{action} and  controller=#{controller} order by nginxcosttime desc
+    </select>
+
+    <insert id="addactiontotal"  parameterType="com.rongzi.monitor.modules.nginx.model.nginxtotal">
+        insert into nginxtotal( nginxtotalcount, nginxover1seccount, nginxover3seccount, nginxover10seccount, iisover1seccount, iisover3seccount, iisover10seccount)
+        values(#{nginxtotalcount},#{nginxover1seccount},#{nginxover3seccount},#{nginxover10seccount},#{iisover1seccount},#{iisover3seccount},#{iisover10seccount})
+    </insert>
+
+
+</mapper>

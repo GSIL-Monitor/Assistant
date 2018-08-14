@@ -1,0 +1,38 @@
+long-url in web
+long-url in winform
+
+exception in web
+exception in winform
+
+-----------------------------------------------------------------------------
+guns数据库：
+192.168.1.22	dfssuser	qqq111
+DFSS_LOG数据库：
+192.168.1.112	logger	qqq.111
+DFSS_LOG_HISTORY数据库：
+192.168.1.112	logger	qqq.111
+
+-----------------------------------------------------------------------------
+异常监控任务job需求：
+
+定时每隔5分钟扫描DFSS_LOG.ExceptionLog表（当天的异常数据）。
+如果这5分钟内发生异常，发邮件通知到指定的人；如果没有异常，则不做任何动作。
+
+指定的人：
+liujunwei@rongzi.com,zhuyongli@rongzi.com,zhangpengtian@rongzi.com,sunyonglin@rongzi.com
+
+相关sql：
+SELECT COUNT(1) FROM [dbo].[ExceptionLog](nolock) WHERE ProcessStatus <> 0
+
+邮件标题：异常报警
+邮件内容：
+2018-06-29 18:30:00 系统新发生10个异常，目前总共有100个异常，赶紧去检查修复。
+
+-----------------------------------------------------------------------------
+Redis运维需求：
+
+1. 新建 redis 页面，菜单结构 devops -> redis。
+2. 在输入框内输入一个key，点击删除按钮可以删除key对应的值，将Redis返回的值显示到界面提示。
+3. 输入的key要支持模糊匹配。
+
+-----------------------------------------------------------------------------

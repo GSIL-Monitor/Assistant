@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.log.modules.sql.dao.SqlDataLogMapper">
+
+
+    <insert id="addSql" parameterType="com.rongzi.log.modules.sql.model.SqlDataLog">
+          INSERT  INTO [DFSS_LOG_DEV].[dbo].[SqlDataLog]
+        (
+          [methodname],[url],[sqlData],[costtime],[occurtime],[createtime]
+        )VALUES (
+          #{methodname},#{url},#{sqlData},#{costtime},#{occurtime},#{createtime}
+        )
+
+    </insert>
+
+
+</mapper>

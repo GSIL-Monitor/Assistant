@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.monitor.modules.apm.dao.TypeExceptionMapper">
+
+
+
+    <sql id="Base_Column_List">
+        Id, ErrorType, Count,   OccurDate, CreateTime,UpdateTime,SystemCode
+
+    </sql>
+
+
+    <select id="findTypeExceptionByCodeAndOccurDate" resultType="java.util.HashMap">
+
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM [DFSS_LOG].[dbo].[Stats_ExceptionByType]
+        <where>
+            <if test="code!=null"> AND SystemCode=#{code} </if>
+            <if test="OccurDate!=null">AND OccurDate=#{OccurDate} </if>
+        </where>
+    </select>
+
+
+
+    <select id="findTypeExceptionByCodeAndOccurDatePage" resultType="java.util.HashMap" parameterType="com.baomidou.mybatisplus.plugins.Page">
+
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM [DFSS_LOG].[dbo].[Stats_ExceptionByType] WHERE 1=1
+            <if test="code!=null"> AND SystemCode=#{code} </if>
+            <if test="OccurDate!=null">AND OccurDate=#{OccurDate} </if>
+            <if test="orderByField != null and orderByField !='' and isAsc == true"> order by ${orderByField} ASC</if>
+            <if test="orderByField != null and orderByField !='' and isAsc == false"> order by ${orderByField} DESC</if>
+    </select>
+
+
+</mapper>

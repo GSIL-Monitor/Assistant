@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.monitor.modules.nginx.dao.NginxTotalMapper">
+    <select id="queryNginxTotal" resultType="java.util.HashMap" >
+        select count(1) as nginxtotalcount,
+        (select count(1)  from ${begintime}(nolock) where nginxcosttime>1 and status=200) as nginxover1seccount ,
+        (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where nginxcosttime>3 and status=200) as nginxover3seccount ,
+        (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where nginxcosttime>10 and status=200) as nginxover10seccount ,
+        (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>1 and status=200) as iisover1seccount ,
+        (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>3 and status=200) as iisover3seccount ,
+        (select count(1)  from NginxLogDB.dbo.${begintime}(nolock) where iiscosttime>10 and status=200) as iisover10seccount
+        from NginxLogDB.dbo.${begintime}(nolock) where  status=200
+    </select>
+    <insert id="addactiontotal"  parameterType="com.rongzi.monitor.modules.nginx.model.nginxtotal">
+        insert into nginxtotal( nginxtotalcount, nginxover1seccount, nginxover3seccount, nginxover10seccount, iisover1seccount, iisover3seccount, iisover10seccount,createdate)
+        values(#{nginxtotalcount},#{nginxover1seccount},#{nginxover3seccount},#{nginxover10seccount},#{iisover1seccount},#{iisover3seccount},#{iisover10seccount},#{createdate})
+    </insert>
+    <select id="findnginxtotalBydate" resultType="com.rongzi.monitor.modules.nginx.model.nginxtotal">
+       select top 100 * from nginxtotal(nolock) where createdate=#{date}
+    </select>
+    <select id="querynginxtotalforpage" resultType="java.util.HashMap">
+        <if test="timetype == 0">
+            select top 100 * from nginxtotal(nolock) order by createdate desc
+        </if>
+        <if test="timetype == 1">
+            select top 100 * from nginxtotal(nolock) WHERE DATEPART(weekday,createdate)  IN (1,7) order by createdate desc
+        </if>
+        <if test="timetype == 2">
+            select top 100 * from nginxtotal(nolock) WHERE DATEPART(weekday,createdate)  not IN (1,7) order by createdate desc
+        </if>
+    </select>
+
+
+</mapper>

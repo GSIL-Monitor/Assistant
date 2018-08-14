@@ -1,0 +1,83 @@
+@layout("/common/_container.html"){
+<style type="text/css">
+    .tooltip-inner {
+        max-width: 650px;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>异常日志</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#TimeCon id="beginTime" name="开始时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#TimeCon id="endTime" name="结束时间" isTime="false" pattern="YYYY-MM-DD" />
+                            </div>
+                            <div class="col-sm-4">
+                                <#SelectCon id="systemCode" name="业务系统" >
+                                    <option value="-1">全部</option>
+                                    <option value="0">Winform</option>
+                                    <option value="1">DFSSRZWeb</option>
+                                    <option value="2">DFSSRZStatisticsAnalysis</option>
+                                    <option value="3">DFSSRZOpenApi</option>
+                                    <option value="4">DFSSRZJunLunDataSync</option>
+                                    <option value="5">DFSSRZ.OpenAPIService.AutoRun</option>
+                                    <option value="6">DFSSRZ.AutoService.Run</option>
+                                    <option value="7">DFSSRZMarket</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="isReadonly" name="是否只读" >
+                                    <option value="-1">全部</option>
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="Owner" name="指派人员" >
+                                    <option value="">全部</option>
+                                    <option value="孙永林">孙永林</option>
+                                    <option value="张鹏天">张鹏天</option>
+                                    <option value="朱永立">朱永立</option>
+                                    <option value="谢基炫">谢基炫</option>
+                                    <option value="刘泽伟">刘泽伟</option>
+                                    <option value="梅靖">梅靖</option>
+                                    <option value="任辉">任辉</option>
+                                    <option value="陈威">陈威</option>
+                                    <option value="刘军委">刘军委</option>
+                                    <option value="徐磊">徐磊</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="Status" name="分配状态" >
+                                    <option value="-1">全部</option>
+                                    <option value="0">待分配</option>
+                                    <option value="1">已分配</option>
+                                    <option value="2">待修复</option>
+                                    <option value="3">已完成</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="hidden-xs" id="exLogTableToolbar" role="group">
+                                    <#button name="搜索" icon="fa-search" clickFun="ExLog.search()"/>
+                                    <#button name="修改" icon="fa-edit" clickFun="ExLog.updateOwner()" space="true"/>
+                                    <#button name="条件下载" icon="fa-download" clickFun="ExLog.downloadExcel()"/>
+                                </div>
+                            </div>
+                        </div>
+                        <#table id="ExLogTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/apm/exception/log.js"></script>
+@}

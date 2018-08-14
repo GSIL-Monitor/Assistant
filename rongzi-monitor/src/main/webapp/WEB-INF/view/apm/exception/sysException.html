@@ -1,0 +1,27 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>系统异常</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12 row">
+                        <div class="from-inline container">
+                            <span class="btn btn-success ">记录日期筛选</span>
+                            <div class="form-group">
+                            <input id="OccurDate" name="记录日期查询"
+                                   onclick="laydate({istime: false, format: 'YYYY-MM-DD',choose:sysException.refreshForTime})"
+                                     type="date" style="width: auto;" class="form-control"/>
+                            </div>
+                        </div>
+                        <#table id="sysExceptionTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/apm/exception/sysException.js"></script>
+@}

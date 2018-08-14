@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rongzi.common.modules.account.dao.UserManager">
+    <select id="getUser" parameterType="java.lang.String" resultType="com.rongzi.common.modules.account.model.User">
+        select * from account_user where username=#{username}
+    </select>
+    <insert id="addUser" parameterType="com.rongzi.common.modules.account.model.User">
+        insert into account_user values(#{username})
+    </insert>
+    <delete id="delUser">
+        delete account_user where id=#{id}
+    </delete>
+    <select id="findUsers" resultType="com.rongzi.common.modules.account.model.User">
+        select * from account_user
+    </select>
+</mapper>

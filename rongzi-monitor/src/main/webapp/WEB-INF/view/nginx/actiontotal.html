@@ -1,0 +1,39 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Nginxlog运营情况总体情况</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="hidden-xs" id="nginxTableToolbar" role="group">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <#TimeCon id="beginTime" name="开始时间" isTime="false" pattern="YYYY-MM-DD" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <#SelectCon id="isignore" name="是否忽略" >
+                                        <option value="0">否</option>
+                                        <option value="1" selected>是</option>
+                                    </#SelectCon>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="hidden-xs" id="exLogTableToolbar" role="group">
+                                        <#button name="搜索" icon="fa-search" clickFun="Nginx.search()"/>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <#table id="nginxTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/nginx/actiontotal.js"></script>
+@}

@@ -1,0 +1,58 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Nginxlog按照action分类统计</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="hidden-xs" id="nginxTableToolbar" role="group">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <#SelectCon id="isiis" name="是否按iis时长统计" >
+                                        <option value="1" selected>iis</option>
+                                        <option value="0">nginx</option>
+                                    </#SelectCon>
+                                </div>
+                                <div class="col-sm-2">
+                                    <#SelectCon id="overtimelength" name="超时时长" >
+
+                                        <option value="1">1秒</option>
+                                        <option value="3">3秒</option>
+                                        <option value="5" selected>5秒</option>
+                                        <option value="7">7秒</option>
+                                        <option value="10">10秒</option>
+                                        <option value="20">20秒</option>
+                                        <option value="30">30秒</option>
+                                        <option value="60">60秒</option>
+                                    </#SelectCon>
+                                </div>
+                                <div class="col-sm-2">
+                                    <#SelectCon id="isignore" name="是否忽略" >
+                                        <option value="0">否</option>
+                                        <option value="1" selected>是</option>
+                                    </#SelectCon>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="hidden-xs" id="exLogTableToolbar" role="group">
+                                        <#button name="搜索" icon="fa-search" clickFun="Nginx.search()"/>
+                                        <#button name="查询详情" icon="fa-search" clickFun="Nginx.searchDetailInfo()"/>
+                                    </div>
+                                    <div class="hidden-xs" id="searchDetail" role="group">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <#table id="nginxTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/nginx/nginx.js"></script>
+@}

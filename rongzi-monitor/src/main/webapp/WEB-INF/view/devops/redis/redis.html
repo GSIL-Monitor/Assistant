@@ -1,0 +1,19 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="redisInfoForm">
+            <div class="row">
+                <div class="col-sm-14">
+                    <div class="col-sm-5">
+                     <#input id="rediskey" name="要删除的KEY：" placeholder="支持正则匹配例子：X* "/>
+                    </div>
+                    <div class="col-sm-4">
+                    <#button btnCss="info" name="删除" id="ensure" icon="fa-remove" clickFun="Redis.delKey()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/devops/redis/redis.js"></script>
+@}

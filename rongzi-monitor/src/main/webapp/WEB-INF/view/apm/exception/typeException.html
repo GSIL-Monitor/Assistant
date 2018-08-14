@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>异常类型</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                   <div class="col-sm-12">
+                        <div class="row">
+                                <div class="col-sm-6 b-r">
+                                    <span class="btn btn-success ">系统名称筛选</span>
+                                    <div class="form-group">
+                                    <select class="form-control" name="系统名称筛选" id="sysName" style="width: auto;" onchange="typeException.refresh()">
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="btn btn-success ">记录日期筛选</span>
+                                    <div class="form-group">
+                                    <input id="OccurDate" name="记录日期查询" type="date" style="width: auto;" class="form-control"
+                                    onclick="laydate({istime: false, format: 'YYYY-MM-DD',choose:typeException.refreshForTime})" />
+                                    </div>
+                                </div>
+                        </div>
+                        <#table id="typeExceptionTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modules/apm/exception/typeException.js"></script>
+@}
