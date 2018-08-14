@@ -15,6 +15,7 @@
         <module>rongzi-common</module>
         <module>rongzi-log</module>
         <module>rongzi-monitor</module>
+        <module>rongzi-hr</module>
     </modules>
 
     <properties>

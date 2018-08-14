@@ -5,11 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(value = "com.rongzi.demo.modules.sql.dao")
+@MapperScan(value = "com.rongzi.log.modules.sql.dao")
 public class LogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LogApplication.class,args);
+        SpringApplication.run(LogApplication.class, args);
     }
 
 }
