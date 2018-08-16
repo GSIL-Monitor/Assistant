@@ -1,5 +1,6 @@
 package com.rongzi.monitor.modules.apm.service.impl;
 
+import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import com.rongzi.monitor.core.common.constant.DatasourceEnum;
 import com.rongzi.monitor.modules.apm.dao.ExceptionLogMapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -40,6 +41,16 @@ public class ExceptionLogServiceImpl extends ServiceImpl<ExceptionLogMapper, Exc
 
 
         return exceptionLogMapper.findExceptionLogsForExcelDownload(beginTime, endTime, systemCode, isReadonly, Owner, Status);
+    }
+
+    @Override
+    public List<Map<String, Object>> getExceptionLogsAllByDatabase(String beginTime, String endTime, Integer systemCode, Integer isReadonly, Page<ExceptionLog> page, String Owner, Integer Status, String orderByField, boolean asc, String flag) {
+
+        DataSourceContextHolder.setDataSourceType(flag);
+
+        List<Map<String, Object>> data=exceptionLogMapper.findExceptionLogsAll(beginTime, endTime, systemCode, isReadonly, page, Owner, Status,orderByField,asc);
+
+        return data;
     }
 
 }

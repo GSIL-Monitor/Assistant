@@ -8,6 +8,8 @@ var ExLog = {
     layerIndex: -1
 };
 
+
+
 /**
  * 初始化表格的列
  */
@@ -55,6 +57,20 @@ ExLog.check = function () {
         return true;
     }
 };
+
+ExLog.validateDate = function () {
+
+   var beginTime=$("#beginTime").val();
+   var endDate=$("#endTime").val();
+   var now = moment().format("YYYY-MM-DD");
+    if((now==endDate) && (!(beginTime==endDate))){
+        return false;
+    }else{
+        return true;
+    }
+};
+
+
 
 /**
  * 初始化查询表单提交参数
@@ -108,6 +124,11 @@ ExLog.updateOwner = function () {
  * 查询日志列表
  */
 ExLog.search = function () {
+
+    if (!ExLog.validateDate()){
+        Feng.error("查询时选择的结束时间不能为今天");
+        return;
+    }
     ExLog.table.refresh({query: ExLog.formParams()});
 };
 
@@ -153,6 +174,7 @@ window.operateEvents = {
 };
 
 $(function () {
+
     ExLog.initFormParams();
     var defaultColunms = ExLog.initColumn();
     var table = new BSTable(ExLog.id, "/exception/logs", defaultColunms);

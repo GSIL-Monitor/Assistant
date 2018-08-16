@@ -1,5 +1,7 @@
 package com.rongzi.monitor.modules.apm.controller;
 
+import com.rongzi.core.exception.GunsException;
+import com.rongzi.core.exception.GunsExceptionEnum;
 import com.rongzi.monitor.core.common.constant.factory.PageFactory;
 import com.rongzi.monitor.modules.apm.service.ExceptionLogService;
 import com.alibaba.fastjson.JSONObject;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -37,7 +41,6 @@ public class ExceptionController extends BaseController {
     }
 
 
-
     @PostMapping("/logs")
     @ResponseBody
     public Object list(@RequestParam(required = true) String beginTime,
@@ -46,9 +49,23 @@ public class ExceptionController extends BaseController {
                        @RequestParam(required = true) Integer isReadonly,
                        @RequestParam(required = true) String Owner,
                        @RequestParam(required = true) Integer Status) {
+        //1:如果开始时间是今天，结束时间是今天，就查新数据库
+        //2：如果开始时间不是今天，结束时间包含今天，就报错
+        //3：如果开始时间不是今天，结束时间不包含今天，就正常显示
+
+        String flag = "";
+        String today="";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        today = simpleDateFormat.format(new Date());
+        if (today.equals(beginTime) && today.equals(endTime)) {
+            //查询新的数据库
+            flag = "dataSourceBiz";
+        } else {
+            flag = "dataSourceHistory";
+        }
         Page<ExceptionLog> page = new PageFactory<ExceptionLog>().defaultPage();
-        List<Map<String, Object>> resultdata = exceptionLogService.getExceptionLogsAll(beginTime, endTime, systemCode,
-                isReadonly, page, Owner, Status,page.getOrderByField(), page.isAsc());
+        List<Map<String, Object>> resultdata = exceptionLogService.getExceptionLogsAllByDatabase(beginTime, endTime, systemCode,
+                isReadonly, page, Owner, Status, page.getOrderByField(), page.isAsc(), flag);
 
         page.setRecords((List<ExceptionLog>) new ExceptionLogWarpper(resultdata).warp());
         return super.packForBT(page);
@@ -75,25 +92,24 @@ public class ExceptionController extends BaseController {
 
     @PostMapping("/downLoadExcelByCondition")
     @ResponseBody
-    public Tip saveDataForExcelDownload(@RequestParam(required = true,value = "excelParamData") String excelParamData, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    public Tip saveDataForExcelDownload(@RequestParam(required = true, value = "excelParamData") String excelParamData, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
 
-
-        request.getSession().setAttribute("excelParamData",excelParamData);
+        request.getSession().setAttribute("excelParamData", excelParamData);
 
         return SUCCESS_TIP;
     }
+
     /**
-     *
      * 功能描述: 根据选择内容下载生成Excel
      *
      * @param:
-     * @return: 
+     * @return:
      * @auther: Administrator
      * @date: 2018/8/6 0006 10:32
      */
     @RequestMapping(value = "/downloadExcelContent")
-    public void exportExcel(HttpServletRequest request,HttpServletResponse response) {
+    public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
 
         String excelParamData = (String) request.getSession().getAttribute("excelParamData");
 
@@ -107,7 +123,7 @@ public class ExceptionController extends BaseController {
         String Owner = (String) jsonObject.get("Owner");
         Integer Status = Integer.parseInt((String) jsonObject.get("Status"));
 
-        String excelName = endTime+"ExceptionLog.xls";
+        String excelName = endTime + "ExceptionLog.xls";
         List<ExceptionLog> exceptionLogs = exceptionLogService.findAllExceptionLogsForDownLoad(beginTime, endTime, systemCode,
                 isReadonly, Owner, Status);
 
@@ -117,7 +133,6 @@ public class ExceptionController extends BaseController {
 
         FileUtil.exportDataToExcel(exceptionLogs, ExceptionLog.class, excelName, response);
     }
-
 
 
 }
