@@ -36,32 +36,9 @@ public class MybatisPlusConfig {
     MutiDataSourceProperties mutiDataSourceProperties;
 
 
-    @Autowired
-    HistoryDataSourceProperties historyDataSourceProperties;
-
-    @Autowired
-    NginxDataSourceProperties nginxDataSourceProperties;
 
 
-    /**
-     * nginx数据源
-     */
-    private DruidDataSource nginxDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        nginxDataSourceProperties.config(dataSource);
-        return dataSource;
-    }
 
-    /**
-     * 第三个数据源
-     */
-    private DruidDataSource historyDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        historyDataSourceProperties.config(dataSource);
-        return dataSource;
-    }
 
     /**
      * 另一个数据源
@@ -100,15 +77,11 @@ public class MybatisPlusConfig {
 
         DruidDataSource dataSourceGuns = dataSourceGuns();
         DruidDataSource bizDataSource = bizDataSource();
-        DruidDataSource historyDataSource = historyDataSource();
-        DruidDataSource nginxDataSource = nginxDataSource();
 
 
         try {
             dataSourceGuns.init();
             bizDataSource.init();
-            historyDataSource.init();
-            nginxDataSource().init();
 
         } catch (SQLException sql) {
             sql.printStackTrace();
@@ -118,8 +91,6 @@ public class MybatisPlusConfig {
         HashMap<Object, Object> hashMap = new HashMap();
         hashMap.put(DatasourceEnum.DATA_SOURCE_GUNS, dataSourceGuns);
         hashMap.put(DatasourceEnum.DATA_SOURCE_BIZ, bizDataSource);
-        hashMap.put(DatasourceEnum.DATA_SOURCE_HISTORY, historyDataSource);
-        hashMap.put(DatasourceEnum.DATA_SOURCE_NGINX, nginxDataSource);
 
 
         dynamicDataSource.setTargetDataSources(hashMap);

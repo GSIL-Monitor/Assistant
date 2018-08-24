@@ -12,11 +12,6 @@ public interface DatasourceEnum {
 
     String DATA_SOURCE_BIZ = "dataSourceBiz";            //其他业务的数据源
 
-    //第三个数据源
-    String DATA_SOURCE_HISTORY = "dataSourceHistory";
-
-
-    String DATA_SOURCE_NGINX = "dataSourceNginx";
 
 
 }

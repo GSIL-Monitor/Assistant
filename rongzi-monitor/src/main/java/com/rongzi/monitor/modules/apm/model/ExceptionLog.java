@@ -34,6 +34,8 @@ public class ExceptionLog extends Model<ExceptionLog> {
      */
     private String serverIP;
 
+
+
     /**
      *  发生时间
      */

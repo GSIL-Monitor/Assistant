@@ -11,7 +11,6 @@ import com.rongzi.hr.core.common.constant.cache.CacheKey;
 import com.rongzi.hr.core.common.constant.state.ManagerStatus;
 import com.rongzi.hr.core.common.constant.state.MenuStatus;
 import com.rongzi.hr.core.log.LogObjectHolder;
-import com.rongzi.hr.modules.apm.service.DicSystemService;
 import com.rongzi.hr.modules.system.dao.*;
 import com.rongzi.hr.modules.system.model.*;
 import org.springframework.cache.annotation.Cacheable;
@@ -41,9 +40,6 @@ public class ConstantFactory implements IConstantFactory {
     /**
      * 获取系统异常字典表中的数据,在多数据源的情况下，这里不能使用dao层，当使用反射的时候无法同时做到切换数据源。
      */
-    //private DicSystemMapper dicSystemMapper=SpringContextHolder.getBean(DicSystemMapper.class);
-
-    private DicSystemService dicSystemService = SpringContextHolder.getBean(DicSystemService.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -335,24 +331,6 @@ public class ConstantFactory implements IConstantFactory {
             parentDeptIds.add(Integer.valueOf(StrKit.removeSuffix(StrKit.removePrefix(s, "["), "]")));
         }
         return parentDeptIds;
-    }
-
-    /**
-     * 根据系统编号来获取系统名称
-     *
-     * @param code
-     * @return
-     */
-    @Override
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#SysCode")
-    public String findSysNameBysysCode(Integer SysCode) {
-
-//        List<String> allSystemName = dicSystemMapper.findAllSystemName();
-//        String systemName = dicSystemMapper.findSystemNameBySystemCode(SysCode);
-
-        String systemName = dicSystemService.getSysNameBySysCode(SysCode);
-
-        return systemName;
     }
 
 
