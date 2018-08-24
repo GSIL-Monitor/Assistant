@@ -49,9 +49,6 @@ public class ExceptionController extends BaseController {
                        @RequestParam(required = true) Integer isReadonly,
                        @RequestParam(required = true) String Owner,
                        @RequestParam(required = true) Integer Status) {
-        //1:如果开始时间是今天，结束时间是今天，就查新数据库
-        //2：如果开始时间不是今天，结束时间包含今天，就报错
-        //3：如果开始时间不是今天，结束时间不包含今天，就正常显示
 
         String flag = "";
         String today="";

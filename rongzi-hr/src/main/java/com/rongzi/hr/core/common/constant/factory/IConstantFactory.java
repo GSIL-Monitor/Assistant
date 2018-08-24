@@ -114,9 +114,4 @@ public interface IConstantFactory {
     List<Integer> getParentDeptIds(Integer deptid);
 
 
-    /**
-     * 根据系统编号来获取系统名称
-     */
-    String findSysNameBysysCode(Integer code);
-
 }
