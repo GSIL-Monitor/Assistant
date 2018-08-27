@@ -1,7 +1,7 @@
 package com.rongzi.monitor.config;
 
+import com.rongzi.core.mutidatasource.MutiDataSourceProperties;
 import com.rongzi.monitor.config.datasource.HistoryDataSourceProperties;
-import com.rongzi.monitor.config.datasource.MutiDataSourceProperties;
 import com.rongzi.monitor.config.datasource.NginxDataSourceProperties;
 import com.rongzi.monitor.core.common.constant.DatasourceEnum;
 import com.rongzi.monitor.core.datascope.DataScopeInterceptor;
