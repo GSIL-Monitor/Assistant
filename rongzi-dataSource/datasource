@@ -1,0 +1,143 @@
+2018-08-27 10:18:38.395  INFO 10128 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Starting CtlBaseServiceImplTest on RZW-20180808TYO with PID 10128 (started by Administrator in E:\CodeGit\dfssrz\rongzi-dataSource)
+2018-08-27 10:18:38.396 DEBUG 10128 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-08-27 10:18:38.396  INFO 10128 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : The following profiles are active: dev
+2018-08-27 10:18:38.450  INFO 10128 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:18:38 CST 2018]; root of context hierarchy
+2018-08-27 10:18:39.745  INFO 10128 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-27 10:18:40.315  INFO 10128 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-08-27 10:18:40.418  INFO 10128 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration' of type [org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration$$EnhancerBySpringCGLIB$$786b4523] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:18:40.509  INFO 10128 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$b1ff86f5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:18:41.683  INFO 10128 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2018-08-27 10:18:41.684  INFO 10128 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2018-08-27 10:18:41.686  INFO 10128 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} inited
+2018-08-27 10:18:42.981  INFO 10128 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:18:38 CST 2018]; root of context hierarchy
+2018-08-27 10:18:43.078  INFO 10128 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/error]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPage()
+2018-08-27 10:18:43.080  INFO 10128 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/sessionError]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPageInfo(org.springframework.ui.Model)
+2018-08-27 10:18:43.082  INFO 10128 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-27 10:18:43.083  INFO 10128 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-27 10:18:43.129  INFO 10128 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:18:43.129  INFO 10128 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:18:43.193  INFO 10128 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:18:44.153  INFO 10128 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2018-08-27 10:18:44.168  INFO 10128 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Started CtlBaseServiceImplTest in 6.316 seconds (JVM running for 9.24)
+2018-08-27 10:18:44.275 ERROR 10128 --- [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4e4aea35] to prepare test instance [com.rongzi.datasource.service.impl.CtlBaseServiceImplTest@16d431b4]
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.rongzi.datasource.service.impl.CtlBaseServiceImplTest': Unsatisfied dependency expressed through field 'ctlBaseService'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.rongzi.dataSource.service.CtlBaseService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:588) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:366) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1264) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:386) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:118) ~[spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83) ~[spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:44) ~[spring-boot-test-autoconfigure-1.5.9.RELEASE.jar:1.5.9.RELEASE]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:230) ~[spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:287) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:289) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191) [spring-test-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137) [junit-4.12.jar:4.12]
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68) [junit-rt.jar:na]
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47) [junit-rt.jar:na]
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242) [junit-rt.jar:na]
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70) [junit-rt.jar:na]
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.rongzi.dataSource.service.CtlBaseService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585) ~[spring-beans-4.3.13.RELEASE.jar:4.3.13.RELEASE]
+	... 28 common frames omitted
+
+2018-08-27 10:18:44.460  INFO 10128 --- [Thread-3] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:18:38 CST 2018]; root of context hierarchy
+2018-08-27 10:18:44.462  INFO 10128 --- [Thread-3] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647
+2018-08-27 10:19:43.559  INFO 13028 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Starting CtlBaseServiceImplTest on RZW-20180808TYO with PID 13028 (started by Administrator in E:\CodeGit\dfssrz\rongzi-dataSource)
+2018-08-27 10:19:43.561 DEBUG 13028 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-08-27 10:19:43.561  INFO 13028 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : The following profiles are active: dev
+2018-08-27 10:19:43.687  INFO 13028 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:19:43 CST 2018]; root of context hierarchy
+2018-08-27 10:19:45.140  INFO 13028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-27 10:19:45.661  INFO 13028 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-08-27 10:19:45.787  INFO 13028 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration' of type [org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration$$EnhancerBySpringCGLIB$$a0f04282] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:19:45.881  INFO 13028 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$da848454] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:19:47.054  INFO 13028 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2018-08-27 10:19:47.055  INFO 13028 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2018-08-27 10:19:47.056  INFO 13028 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} inited
+2018-08-27 10:19:48.174  INFO 13028 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:19:43 CST 2018]; root of context hierarchy
+2018-08-27 10:19:48.277  INFO 13028 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/error]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPage()
+2018-08-27 10:19:48.279  INFO 13028 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/sessionError]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPageInfo(org.springframework.ui.Model)
+2018-08-27 10:19:48.282  INFO 13028 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-27 10:19:48.284  INFO 13028 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-27 10:19:48.336  INFO 13028 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:19:48.337  INFO 13028 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:19:48.398  INFO 13028 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:19:49.287  INFO 13028 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2018-08-27 10:19:49.301  INFO 13028 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Started CtlBaseServiceImplTest in 6.71 seconds (JVM running for 8.089)
+2018-08-27 10:19:49.354  INFO 13028 --- [main] c.r.c.m.DataSourceContextHolder          : 切换到 {beijing }数据源
+2018-08-27 10:19:49.414 DEBUG 13028 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==>  Preparing: SELECT CLT_ID AS id,CLT_CODE as code ,CLT_TYPE as type ,CLT_SOURCE as source, CLT_STATUS as status FROM [SAL_CLT_BASE] 
+2018-08-27 10:19:49.439 DEBUG 13028 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==> Parameters: 
+2018-08-27 10:19:51.931 DEBUG 13028 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : <==      Total: 105025
+2018-08-27 10:19:53.241  INFO 13028 --- [Thread-3] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:19:43 CST 2018]; root of context hierarchy
+2018-08-27 10:19:53.243  INFO 13028 --- [Thread-3] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647
+2018-08-27 10:20:22.493  INFO 12360 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Starting CtlBaseServiceImplTest on RZW-20180808TYO with PID 12360 (started by Administrator in E:\CodeGit\dfssrz\rongzi-dataSource)
+2018-08-27 10:20:22.494 DEBUG 12360 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-08-27 10:20:22.495  INFO 12360 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : The following profiles are active: dev
+2018-08-27 10:20:22.567  INFO 12360 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:22 CST 2018]; root of context hierarchy
+2018-08-27 10:20:23.953  INFO 12360 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-27 10:20:24.496  INFO 12360 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-08-27 10:20:24.619  INFO 12360 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration' of type [org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration$$EnhancerBySpringCGLIB$$faa3fa17] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:20:24.726  INFO 12360 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$34383be9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:20:25.915  INFO 12360 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2018-08-27 10:20:25.917  INFO 12360 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2018-08-27 10:20:25.918  INFO 12360 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} inited
+2018-08-27 10:20:27.084  INFO 12360 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:22 CST 2018]; root of context hierarchy
+2018-08-27 10:20:27.207  INFO 12360 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/error]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPage()
+2018-08-27 10:20:27.208  INFO 12360 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/sessionError]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPageInfo(org.springframework.ui.Model)
+2018-08-27 10:20:27.211  INFO 12360 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-27 10:20:27.211  INFO 12360 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-27 10:20:27.266  INFO 12360 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:20:27.266  INFO 12360 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:20:27.336  INFO 12360 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:20:28.200  INFO 12360 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2018-08-27 10:20:28.217  INFO 12360 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Started CtlBaseServiceImplTest in 6.534 seconds (JVM running for 8.15)
+2018-08-27 10:20:28.274  INFO 12360 --- [main] c.r.c.m.DataSourceContextHolder          : 切换到 {beijing }数据源
+2018-08-27 10:20:28.348 DEBUG 12360 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==>  Preparing: SELECT TOP 10 CLT_ID AS id,CLT_CODE as code ,CLT_TYPE as type ,CLT_SOURCE as source, CLT_STATUS as status FROM [SAL_CLT_BASE] 
+2018-08-27 10:20:28.386 DEBUG 12360 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==> Parameters: 
+2018-08-27 10:20:28.417 DEBUG 12360 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : <==      Total: 10
+2018-08-27 10:20:28.433  INFO 12360 --- [Thread-3] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:22 CST 2018]; root of context hierarchy
+2018-08-27 10:20:28.435  INFO 12360 --- [Thread-3] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647
+2018-08-27 10:20:59.056  INFO 8600 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Starting CtlBaseServiceImplTest on RZW-20180808TYO with PID 8600 (started by Administrator in E:\CodeGit\dfssrz\rongzi-dataSource)
+2018-08-27 10:20:59.058 DEBUG 8600 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-08-27 10:20:59.058  INFO 8600 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : The following profiles are active: dev
+2018-08-27 10:20:59.110  INFO 8600 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:59 CST 2018]; root of context hierarchy
+2018-08-27 10:21:00.478  INFO 8600 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-27 10:21:01.009  INFO 8600 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-08-27 10:21:01.110  INFO 8600 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration' of type [org.springframework.amqp.rabbit.annotation.RabbitBootstrapConfiguration$$EnhancerBySpringCGLIB$$4b8764b8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:21:01.196  INFO 8600 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$851ba68a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-27 10:21:02.428  INFO 8600 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2018-08-27 10:21:02.431  INFO 8600 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2018-08-27 10:21:02.432  INFO 8600 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} inited
+2018-08-27 10:21:03.581  INFO 8600 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:59 CST 2018]; root of context hierarchy
+2018-08-27 10:21:03.673  INFO 8600 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/error]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPage()
+2018-08-27 10:21:03.675  INFO 8600 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/global/sessionError]}" onto public java.lang.String com.rongzi.core.base.controller.GlobalController.errorPageInfo(org.springframework.ui.Model)
+2018-08-27 10:21:03.678  INFO 8600 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-27 10:21:03.679  INFO 8600 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-27 10:21:03.731  INFO 8600 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:21:03.731  INFO 8600 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:21:03.797  INFO 8600 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-27 10:21:04.790  INFO 8600 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2018-08-27 10:21:04.805  INFO 8600 --- [main] c.r.d.s.impl.CtlBaseServiceImplTest      : Started CtlBaseServiceImplTest in 6.705 seconds (JVM running for 8.036)
+2018-08-27 10:21:04.863  INFO 8600 --- [main] c.r.c.m.DataSourceContextHolder          : 切换到 {chengdu }数据源
+2018-08-27 10:21:04.922 DEBUG 8600 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==>  Preparing: SELECT TOP 10 CLT_ID AS id,CLT_CODE as code ,CLT_TYPE as type ,CLT_SOURCE as source, CLT_STATUS as status FROM [SAL_CLT_BASE] 
+2018-08-27 10:21:04.949 DEBUG 8600 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : ==> Parameters: 
+2018-08-27 10:21:05.734 DEBUG 8600 --- [main] c.r.d.dao.CltBaseMapper.queryCltBaseAll  : <==      Total: 10
+2018-08-27 10:21:05.762  INFO 8600 --- [Thread-3] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@f5acb9d: startup date [Mon Aug 27 10:20:59 CST 2018]; root of context hierarchy
+2018-08-27 10:21:05.764  INFO 8600 --- [Thread-3] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647

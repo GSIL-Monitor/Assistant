@@ -1,4 +1,4 @@
-package com.rongzi.core.mutidatasource.config;
+package com.rongzi.hr.config.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
