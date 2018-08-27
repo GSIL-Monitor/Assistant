@@ -1,7 +1,7 @@
 package com.rongzi.core.mutidatasource.aop;
 
-import com.rongzi.core.mutidatasource.config.MutiDataSourceProperties;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
+import com.rongzi.core.mutidatasource.MutiDataSourceProperties;
 import com.rongzi.core.mutidatasource.annotion.DataSource;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;

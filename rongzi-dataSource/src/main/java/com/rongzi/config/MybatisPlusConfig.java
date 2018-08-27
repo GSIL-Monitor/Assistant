@@ -1,21 +1,20 @@
-package com.rongzi.hr.config;
+package com.rongzi.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.rongzi.core.datasource.DruidProperties;
 import com.rongzi.core.mutidatasource.DynamicDataSource;
-import com.rongzi.hr.core.common.constant.DatasourceEnum;
-import com.rongzi.hr.core.datascope.DataScopeInterceptor;
+import com.rongzi.core.mutidatasource.annotion.DataSource;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * MybatisPlus配置
@@ -25,29 +24,16 @@ import java.util.HashMap;
  */
 @Configuration
 @EnableTransactionManagement(order = 2)//由于引入多数据源，所以让spring事务的aop要在多数据源切换aop的后面
-@MapperScan(basePackages = {"com.rongzi.hr.modules.*.dao"})
+@MapperScan(basePackages = {"com.rongzi.datasource.dao"})
 public class MybatisPlusConfig {
 
     @Autowired
     DruidProperties druidProperties;
 
+
     @Autowired
-    MutiDataSourceProperties mutiDataSourceProperties;
+    CityDataSourceConfig CityDataSourceConfig;
 
-
-
-
-
-
-    /**
-     * 另一个数据源
-     */
-    private DruidDataSource bizDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        mutiDataSourceProperties.config(dataSource);
-        return dataSource;
-    }
 
     /**
      * guns的数据源
@@ -58,40 +44,56 @@ public class MybatisPlusConfig {
         return dataSource;
     }
 
+
     /**
      * 单数据源连接池配置
      */
-    @Bean
-    @ConditionalOnProperty(prefix = "guns", name = "muti-datasource-open", havingValue = "false")
-    public DruidDataSource singleDatasource() {
-        return dataSourceGuns();
-    }
+//    @Bean
+//    @ConditionalOnProperty(prefix = "guns", name = "muti-datasource-open", havingValue = "false")
+//    public DruidDataSource singleDatasource() {
+//        return dataSourceGuns();
+//    }
 
     /**
      * 多数据源连接池配置
      */
     @Bean
-    @ConditionalOnProperty(prefix = "guns", name = "muti-datasource-open", havingValue = "true")
+//    @ConditionalOnProperty(prefix = "guns", name = "muti-datasource-open", havingValue = "true")
     public DynamicDataSource mutiDataSource() {
 
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+
+        HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
         DruidDataSource dataSourceGuns = dataSourceGuns();
-        DruidDataSource bizDataSource = bizDataSource();
+
 
 
         try {
             dataSourceGuns.init();
-            bizDataSource.init();
+
+            Map<String, DataSourceModel> dataSourceModelMap = CityDataSourceConfig.getMap();
+
+            for (Map.Entry<String, DataSourceModel> entry : dataSourceModelMap.entrySet()) {
+
+                DruidDataSource druidDataSource = new DruidDataSource();
+                String dataSourceName = entry.getKey();
+
+                DataSourceModel sourceModel = entry.getValue();
+                druidDataSource.setUrl(sourceModel.getUrl());
+                druidDataSource.setUsername(sourceModel.getUsername());
+                druidDataSource.setDriverClassName(sourceModel.getDriver());
+                druidDataSource.setPassword(sourceModel.getPassword());
+                druidDataSource.init();
+
+
+                hashMap.put(dataSourceName,druidDataSource);
+            }
 
         } catch (SQLException sql) {
             sql.printStackTrace();
         }
 
-        DynamicDataSource dynamicDataSource = new DynamicDataSource();
-        HashMap<Object, Object> hashMap = new HashMap();
         hashMap.put(DatasourceEnum.DATA_SOURCE_GUNS, dataSourceGuns);
-        hashMap.put(DatasourceEnum.DATA_SOURCE_BIZ, bizDataSource);
-
-
         dynamicDataSource.setTargetDataSources(hashMap);
         dynamicDataSource.setDefaultTargetDataSource(dataSourceGuns);
         return dynamicDataSource;
@@ -105,13 +107,6 @@ public class MybatisPlusConfig {
         return new PaginationInterceptor();
     }
 
-    /**
-     * 数据范围mybatis插件
-     */
-    @Bean
-    public DataScopeInterceptor dataScopeInterceptor() {
-        return new DataScopeInterceptor();
-    }
 
     /**
      * 乐观锁mybatis插件

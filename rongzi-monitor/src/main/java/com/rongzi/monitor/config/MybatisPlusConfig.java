@@ -1,6 +1,7 @@
 package com.rongzi.monitor.config;
 
 import com.rongzi.monitor.config.datasource.HistoryDataSourceProperties;
+import com.rongzi.monitor.config.datasource.MutiDataSourceProperties;
 import com.rongzi.monitor.config.datasource.NginxDataSourceProperties;
 import com.rongzi.monitor.core.common.constant.DatasourceEnum;
 import com.rongzi.monitor.core.datascope.DataScopeInterceptor;
@@ -9,7 +10,6 @@ import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.rongzi.core.datasource.DruidProperties;
 import com.rongzi.core.mutidatasource.DynamicDataSource;
-import com.rongzi.core.mutidatasource.config.MutiDataSourceProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

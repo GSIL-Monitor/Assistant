@@ -17,6 +17,8 @@
         <module>rongzi-monitor</module>
         <module>rongzi-hr</module>
         <module>rongzi-assistant</module>
+        <module>rongzimulti-Datasource</module>
+        <module>rongzi-dataSource</module>
     </modules>
 
     <properties>
