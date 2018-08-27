@@ -176,7 +176,6 @@
                 <version>${hutool.version}</version>
             </dependency>
 
-
         </dependencies>
     </dependencyManagement>
 
@@ -217,7 +216,7 @@
             <releases><enabled>true</enabled></releases>
             <snapshots><enabled>false</enabled></snapshots>
         </repository>
-
+		
     </repositories>
 
 </project>
