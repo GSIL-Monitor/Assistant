@@ -1,9 +1,11 @@
 package com.rongzi.assistant.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.rongzi.assistant.common.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
+import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.CityService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
@@ -39,8 +41,13 @@ public class CustomerServiceImpl implements CustomerService{
         Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
 
 
+        /**
+         * 切换数据源
+         */
+        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
-        DataSourceContextHolder.setDataSourceType("suzhou");
+
         List<Customer>  list=  customerMapper.queryAllCutomers(page,empCode,customerExeStatus);
         for (Customer customer : list) {
             if(!StringUtils.isEmpty(customer.getWorkPlace())){

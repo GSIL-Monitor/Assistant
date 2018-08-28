@@ -26,11 +26,22 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    /**
+     *  获取客户列表
+     * @param customerExeStatus
+     * @param pageSize
+     * @param pageIndex
+     * @param empCode
+     * @return
+     */
     @GetMapping("/list")
     public String findCustomerList(@RequestParam("customerExeStatus") int customerExeStatus
             , @RequestParam("pageSize") int pageSize
             , @RequestParam("pageIndex") int pageIndex
             , @RequestParam("empCode") String empCode) {
+
+
+
 
         Page page = new Page(pageIndex, pageSize);
 
@@ -50,7 +61,12 @@ public class CustomerController {
 
     }
 
-
+    /**
+     * 编辑客户备注
+     * @param customerCode
+     * @param comment
+     * @return
+     */
     @PostMapping("/editComment")
     public String editComment(@RequestParam("customerCode") String customerCode, @RequestParam("comment") String comment) {
 

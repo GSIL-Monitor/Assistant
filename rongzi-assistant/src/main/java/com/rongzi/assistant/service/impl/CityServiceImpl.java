@@ -17,10 +17,12 @@ public class CityServiceImpl implements CityService {
     @Autowired
     CityMapper cityDao;
 
-
+    /**
+     * 获取所有的城市列表
+     * @return
+     */
     @Override
     public List<City> findAllCitys() {
-
 
         DataSourceContextHolder.setDataSourceType("product");
 

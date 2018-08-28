@@ -1,8 +1,10 @@
 package com.rongzi.assistant.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.rongzi.assistant.common.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerReplyMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
+import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.CustomerReplyMsgService;
 import com.rongzi.core.constant.DatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
@@ -33,7 +35,9 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
     public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile,String customerCode,String empCode) {
 
 
+
         DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
+
 
         List<SmsMessage> replyMsgs=  customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
 
@@ -58,6 +62,11 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
         return resultList;
     }
 
+    /**
+     * 将客户回复的短信增加到销售系统
+     * @param replyList
+     * @return
+     */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
 

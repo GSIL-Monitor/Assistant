@@ -14,8 +14,6 @@
         SELECT
 
         <include refid="Base_Column_List"></include>
-
-
         FROM DictionaryType
 
         WHERE DicType='CustomerSmsType'
