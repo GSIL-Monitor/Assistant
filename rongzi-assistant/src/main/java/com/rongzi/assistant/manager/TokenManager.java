@@ -15,17 +15,12 @@ public class TokenManager {
         return "Bearer " + jwtToken;
     }
 
-    public static UserInfo getUserInfoFromToken(String token) {
+    public static UserInfo getUserInfoFromToken(String token) throws Exception {
         final String jwtToken = token.substring(7);
         Claims claims = JwtTokenUtil.getClaimFromToken(jwtToken);
         Map<String, Object> map = (Map<String, Object>) claims.get(JwtConstants.CLAIMS_DATA_KEY);
 
-        UserInfo userInfo = null;
-        try {
-            userInfo = (UserInfo) ReflectUtil.mapToObject(map, UserInfo.class);
-        } catch (Exception e) {
-            // Empty.
-        }
+        UserInfo userInfo = (UserInfo) ReflectUtil.mapToObject(map, UserInfo.class);
 
         return userInfo;
     }
