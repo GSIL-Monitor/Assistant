@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.assistant.dao.CustomerReplyMsgMapper">
+
+
+
+    <select id="queryCustomerReplyMsgs" resultType="com.rongzi.assistant.model.SmsMessage">
+
+
+        SELECT  ReplyContent AS content,ReplyTime AS occurTime FROM CustomerSmsReply
+
+         WHERE ReplyMobile=#{customerMobile}   ORDER BY ReplyTime DESC
+
+    </select>
+
+    
+    <insert id="addMsgsToSaleSystem" parameterType="java.util.List">
+
+        INSERT  INTO CustomerSmsReply
+        (
+          ReplyMobile,ReplyTime,ReplyContent,CreateTime,UpdateTime,IsRead
+        )
+        VALUES 
+        <foreach collection="list" index="index" item="sms" separator=",">
+            (
+              #{sms.senderMobile},#{sms.occurTime},#{sms.content},getdate(),getdate(),#{sms.isRead}
+            )
+        </foreach>
+
+    </insert>
+
+</mapper>

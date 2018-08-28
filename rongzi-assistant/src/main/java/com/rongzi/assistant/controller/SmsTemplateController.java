@@ -1,0 +1,38 @@
+package com.rongzi.assistant.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.rongzi.assistant.model.SmsTemplate;
+import com.rongzi.assistant.service.SmsTemplateService;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/api/sms")
+public class SmsTemplateController {
+
+
+    @Autowired
+    SmsTemplateService smsTemplateService;
+
+    @GetMapping("/templates")
+    public String getSmsTemplates(){
+
+        List<SmsTemplate> resultList= smsTemplateService.findAllsmsTemplates();
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("msg", "操作成功");
+        resultMap.put("code", 0);
+        resultMap.put("data", JSON.toJSONString(resultList));
+
+
+        return  JSON.toJSONString(resultMap);
+
+    }
+}

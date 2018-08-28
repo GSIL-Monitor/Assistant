@@ -37,19 +37,19 @@ public class Customer implements Serializable{
     private int IsSecuityOrFund;
 
     /**
-     *  职业
+     *  工作身份
      */
     private String job;
 
     /**
      * 借款期限
      */
-    private Double rqrDuration;
+    private int rqrDuration;
 
     /**
      * 借款额度
      */
-    private Double rqrAmount;
+    private int rqrAmount;
 
     /**
      * 用款时间
@@ -75,7 +75,7 @@ public class Customer implements Serializable{
     /**
      * 客户编号
      */
-    private String code;
+    private String customerCode;
 
     /**
      * 客户手机号码
@@ -144,19 +144,19 @@ public class Customer implements Serializable{
         this.job = job;
     }
 
-    public Double getRqrDuration() {
+    public int getRqrDuration() {
         return rqrDuration;
     }
 
-    public void setRqrDuration(Double rqrDuration) {
+    public void setRqrDuration(int rqrDuration) {
         this.rqrDuration = rqrDuration;
     }
 
-    public Double getRqrAmount() {
+    public int getRqrAmount() {
         return rqrAmount;
     }
 
-    public void setRqrAmount(Double rqrAmount) {
+    public void setRqrAmount(int rqrAmount) {
         this.rqrAmount = rqrAmount;
     }
 
@@ -192,13 +192,6 @@ public class Customer implements Serializable{
         this.exeStatus = exeStatus;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getMobile() {
         return mobile;
@@ -216,6 +209,13 @@ public class Customer implements Serializable{
         this.contactStatus = contactStatus;
     }
 
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 
     @Override
     public String toString() {
@@ -233,7 +233,7 @@ public class Customer implements Serializable{
                 ", workPlace='" + workPlace + '\'' +
                 ", comment='" + comment + '\'' +
                 ", exeStatus=" + exeStatus +
-                ", code='" + code + '\'' +
+                ", customerCode='" + customerCode + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", contactStatus=" + contactStatus +
                 '}';

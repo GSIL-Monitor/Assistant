@@ -9,4 +9,6 @@ public interface CustomerService {
 
 
     List<Customer> findAllCustomers(Page page, int empCode, int customerExeStatus);
+
+    void editCommentByCode(String customerCode, String comment);
 }
