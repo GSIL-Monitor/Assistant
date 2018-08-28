@@ -7,23 +7,49 @@
     <select id="queryAllCutomers" resultType="com.rongzi.assistant.model.Customer">
 
 
+     SELECT
+        A.CLT_MEMO AS comment,
+        B.LNK_NAME AS name,
+        B.LNK_MOBILE AS mobile,
+        B.CLT_CODE AS customerCode,
+        C.PAYMENT_DATE AS paymentDate,
+        C.RQR_AMOUNT AS rqrAmount,
+        C.RQR_DURATION AS rqrDuration,
+        F.SEL_TXT AS job,
+        D.IsSecuityOrFund AS IsSecuityOrFund,
+        C.LoanCity AS workPlace,
+        D.HasHouse AS hasHouse ,
+        D.HasCar AS hasCars ,
+        D.HasPolicy AS hasPolicy,
+        E.Salary AS salary,
+        A.CLT_EXE_STATUS AS exeStatus,
+        A.ContactStatus AS contactStatus
+        FROM dbo.SAL_CLT_BASE A (NOLOCK)
+        LEFT JOIN dbo.SAL_CLT_LNKMAN B (NOLOCK) ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
+        LEFT JOIN dbo.SAL_CLT_REQUIRE C (NOLOCK) ON A.RQR_ID=C.RQR_ID
+        LEFT JOIN dbo.FinancingBooksInfo D (NOLOCK) ON A.CLT_CODE=D.CLT_CODE
+        LEFT JOIN dbo.CustomerExtentInfo E (NOLOCK) ON A.CLT_CODE=E.CLT_CODE
+        LEFT JOIN dbo.SYS_SELECT_LIST F (NOLOCK) ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
+        WHERE
+         1=1
+         <if test="empCode!=null and empCode!=''">
+            AND  clt_owner=#{empCode}
+         </if>
+         <if test="customerExeStatus!=null and customerExeStatus!=-1">
+            AND   CLT_EXE_STATUS=#{customerExeStatus}
+         </if>
 
-        
-
-
-
-      FROM [SAL_CLT_BASE]
 
     </select>
-    
-    
+
+
     <update id="editCommentByCodeAndComment" parameterType="com.rongzi.assistant.model.Customer">
 
-      UPDATE  SAL_CLT_BASE
-      <set>
-          <if test="comment!='' and comment!=null ">comment=#{comment},</if>
-      </set>
-      WHERE CLT_CODE =#{customerCode}
+        UPDATE SAL_CLT_BASE
+        <set>
+            <if test="comment!='' and comment!=null ">comment=#{comment},</if>
+        </set>
+        WHERE CLT_CODE =#{customerCode}
     </update>
 
 </mapper>
