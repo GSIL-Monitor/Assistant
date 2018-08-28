@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.assistant.dao.UserSendMsgMapper">
+
+
+    <select id="findAllMsgsByUserAndCustomer" resultType="com.rongzi.assistant.model.SmsMessage">
+
+
+        SELECT  MsgContent AS content ,SendTime AS occurTime,
+
+        Signature,SendEmpName AS senderName
+
+        FROM CustomerMsg WHERE
+
+        SendEmpCode=#{empCode} AND LnkMobile =#{customerMobile}   ORDER  BY SendTime DESC
+
+
+    </select>
+
+    <insert id="addMsgsToSaleSystem" parameterType="java.util.List">
+
+        insert INTO CustomerMsg
+        (
+        CltCode,LnkMobile,MsgContent,SendEmpCode,SendEmpName,Signature,SendStatus
+        ,SendTime,CreateTime
+        )VALUES
+        <foreach collection="list" index="index" item="sms" separator=",">
+            (
+            #{sms.receiver},#{sms.receiverMobile},#{sms.content},#{sms.sender},#{sms.senderName},
+            #{sms.signature},#{sms.sendStatus},#{sms.occurTime},getdate()
+            )
+        </foreach>
+
+
+    </insert>
+
+</mapper>

@@ -21,4 +21,10 @@ public class CustomerServiceImpl implements CustomerService{
         List<Customer>  list=  customerMapper.queryAllCutomers(page,empCode,customerExeStatus);
         return list;
     }
+
+    @Override
+    public void editCommentByCode(String customerCode, String comment) {
+
+        customerMapper.editCommentByCodeAndComment(customerCode,comment);
+    }
 }

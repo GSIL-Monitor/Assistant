@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.assistant.dao.SmsTemplateMapper">
+
+
+    <sql id="Base_Column_List">
+        DicKey AS id, DicText AS title, DicRemark as content
+    </sql>
+
+
+    <select id="queryAllsmsTemplates" resultType="com.rongzi.assistant.model.SmsTemplate">
+
+        SELECT
+
+        <include refid="Base_Column_List"></include>
+
+
+        FROM DictionaryType
+
+        WHERE DicType='CustomerSmsType'
+
+    </select>
+
+
+</mapper>
