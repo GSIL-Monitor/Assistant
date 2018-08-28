@@ -24,7 +24,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<City> findAllCitys() {
 
-        DataSourceContextHolder.setDataSourceType("product");
+        DataSourceContextHolder.setDataSourceType("PRODUCT");
 
         return cityDao.queryAllCitys();
     }
