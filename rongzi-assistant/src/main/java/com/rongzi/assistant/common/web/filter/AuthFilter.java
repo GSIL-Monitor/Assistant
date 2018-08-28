@@ -42,7 +42,7 @@ public class AuthFilter extends OncePerRequestFilter {
                 UserInfo userInfo = TokenManager.getUserInfoFromToken(authHeader);
                 // Add the userInfo to request header
                 request.setAttribute(Constants.CURRENT_USER_INFO_KEY, userInfo);
-            } catch (final SignatureException e) {
+            } catch (Exception e) {
                 throw new ServletException("Invalid token");
             }
 
