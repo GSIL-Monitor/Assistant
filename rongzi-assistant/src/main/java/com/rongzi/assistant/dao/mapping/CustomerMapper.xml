@@ -47,7 +47,7 @@
 
         UPDATE SAL_CLT_BASE
         <set>
-            <if test="comment!='' and comment!=null ">comment=#{comment},</if>
+            <if test="comment!='' and comment!=null ">CLT_MEMO=#{comment},</if>
         </set>
         WHERE CLT_CODE =#{customerCode}
     </update>

@@ -65,6 +65,9 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public void editCommentByCode(String customerCode, String comment) {
 
+        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+
         customerMapper.editCommentByCodeAndComment(customerCode,comment);
     }
 }
