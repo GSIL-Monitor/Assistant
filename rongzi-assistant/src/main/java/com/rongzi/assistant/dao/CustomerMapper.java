@@ -10,7 +10,7 @@ import java.util.List;
 public interface CustomerMapper {
 
 
-    List<Customer> queryAllCutomers(@Param("page") Page page, @Param("empCode") int empCode, @Param("customerExeStatus") int customerExeStatus);
+    List<Customer> queryAllCutomers(@Param("page") Page page, @Param("empCode") String empCode, @Param("customerExeStatus") int customerExeStatus);
 
     void editCommentByCodeAndComment(@Param("customerCode") String customerCode,@Param("comment") String comment);
 }

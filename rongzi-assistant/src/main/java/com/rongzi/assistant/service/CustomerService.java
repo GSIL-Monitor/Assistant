@@ -8,7 +8,7 @@ import java.util.List;
 public interface CustomerService {
 
 
-    List<Customer> findAllCustomers(Page page, int empCode, int customerExeStatus);
+    List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus);
 
     void editCommentByCode(String customerCode, String comment);
 }

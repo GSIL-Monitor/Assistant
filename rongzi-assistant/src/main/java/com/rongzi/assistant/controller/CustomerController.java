@@ -30,7 +30,7 @@ public class CustomerController {
     public String findCustomerList(@RequestParam("customerExeStatus") int customerExeStatus
             , @RequestParam("pageSize") int pageSize
             , @RequestParam("pageIndex") int pageIndex
-            , @RequestParam("empCode") int empCode) {
+            , @RequestParam("empCode") String empCode) {
 
         Page page = new Page(pageIndex, pageSize);
 

@@ -1,5 +1,7 @@
 package com.rongzi.assistant.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -54,6 +56,7 @@ public class Customer implements Serializable{
     /**
      * 用款时间
      */
+    @JSONField(format= "yyyy-MM-dd HH:mm:ss")
     private Date paymentDate;
 
     /**
@@ -68,7 +71,7 @@ public class Customer implements Serializable{
     private String comment;
 
     /**
-     * 客户进程
+     * 客户意向进程
      */
     private int exeStatus;
 
