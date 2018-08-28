@@ -2,6 +2,7 @@ package com.rongzi.assistant.model;
 
 public class UserInfo {
 
+    private String accountName;
     private String empCode;
     private String empName;
     private String cityCode;
@@ -75,4 +76,11 @@ public class UserInfo {
         this.roleName = roleName;
     }
 
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 }
