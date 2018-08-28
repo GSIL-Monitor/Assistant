@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rongzi.assistant.dao.AccountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rongzi.assistant.model.Account">
+        <id column="LGN_ACCOUNT" property="lgnAccount" />
+        <result column="LGN_ID" property="lgnId" />
+        <result column="LGN_PSWD" property="lgnPswd" />
+        <result column="CITY_CODE" property="cityCode" />
+        <result column="EMP_CODE" property="empCode" />
+        <result column="EMP_DESC" property="empDesc" />
+        <result column="CURR_CITY" property="currCity" />
+        <result column="SOFT_PHONE" property="softPhone" />
+        <result column="LGN_STATUS" property="lgnStatus" />
+        <result column="LGN_DATE" property="lgnDate" />
+        <result column="USE_FLAG" property="useFlag" />
+        <result column="CREATE_DATE" property="createDate" />
+        <result column="CREATOR" property="creator" />
+    </resultMap>
+
+</mapper>
