@@ -8,17 +8,14 @@ import com.rongzi.core.base.controller.BaseController;
 import com.rongzi.core.page.PageInfoBT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-@Controller
+@RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
 
@@ -34,8 +31,8 @@ public class CustomerController {
      * @param empCode
      * @return
      */
-    @GetMapping("/list")
-    public String findCustomerList(@RequestParam("customerExeStatus") int customerExeStatus
+    @PostMapping("/list")
+    public Map<String, Object> findCustomerList(@RequestParam("customerExeStatus") int customerExeStatus
             , @RequestParam("pageSize") int pageSize
             , @RequestParam("pageIndex") int pageIndex
             , @RequestParam("empCode") String empCode) {
@@ -57,7 +54,7 @@ public class CustomerController {
         resultMap.put("code", 0);
         resultMap.put("data", JSON.toJSONString(pageinfo));
 
-        return JSON.toJSONString(resultMap);
+        return resultMap;
 
     }
 
@@ -68,7 +65,7 @@ public class CustomerController {
      * @return
      */
     @PostMapping("/editComment")
-    public String editComment(@RequestParam("customerCode") String customerCode, @RequestParam("comment") String comment) {
+    public Map<String, Object> editComment(@RequestParam("customerCode") String customerCode, @RequestParam("comment") String comment) {
 
 
         customerService.editCommentByCode(customerCode, comment);
@@ -77,8 +74,7 @@ public class CustomerController {
         resultMap.put("msg", "操作成功");
         resultMap.put("code", 0);
         resultMap.put("data", null);
-
-        return JSON.toJSONString(resultMap);
+        return resultMap;
     }
 
 }

@@ -9,15 +9,13 @@ import com.rongzi.core.page.PageInfoBT;
 import org.beetl.core.statement.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/api/sms")
 public class SmsMessageController {
 
@@ -37,7 +35,7 @@ public class SmsMessageController {
      * @return
      */
     @PostMapping("/getMessages")
-    public String findAllMsgFromSaleSystem(@RequestParam("empCode") String empCode
+    public Map<String, Object> findAllMsgFromSaleSystem(@RequestParam("empCode") String empCode
             , @RequestParam("customerCode") String customerCode
             , @RequestParam("customerMobile") String customerMobile
             , @RequestParam("pageSize") int pageSize
@@ -56,7 +54,7 @@ public class SmsMessageController {
         resultMap.put("code", 0);
         resultMap.put("data", JSON.toJSONString(msgs));
 
-        return JSON.toJSONString(resultMap);
+        return resultMap;
 
     }
 
@@ -65,7 +63,7 @@ public class SmsMessageController {
      * 同步短信到销售系统
      */
     @PostMapping("/addMessages")
-    public String addMsgsToSaleSystem(@RequestParam("Msgs") String Msgs){
+    public Map<String, Object>  addMsgsToSaleSystem(@RequestParam("Msgs") String Msgs){
 
 
         List<SmsMessage> messages = JSON.parseArray(Msgs, SmsMessage.class);
@@ -78,7 +76,7 @@ public class SmsMessageController {
         resultMap.put("code", 0);
         resultMap.put("data", null);
 
-        return JSON.toJSONString(resultMap);
+        return resultMap;
     }
 
 
