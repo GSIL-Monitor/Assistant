@@ -2,6 +2,7 @@ package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.common.context.UserContextHolder;
 import com.rongzi.assistant.common.web.response.R;
+import com.rongzi.assistant.controller.dto.LoginRequest;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.Account;
 import com.rongzi.assistant.model.UserInfo;
@@ -9,7 +10,9 @@ import com.rongzi.assistant.service.AccountService;
 import com.rongzi.assistant.service.UserService;
 import com.rongzi.core.exception.GunsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -26,10 +29,10 @@ public class AccountController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public R login(String username, String password) {
+    public R login(@RequestBody LoginRequest loginRequest) {
         Account account = null;
         try {
-            account = accountService.login(username, password);
+            account = accountService.login(loginRequest.getUsername(), loginRequest.getPassword());
         } catch (GunsException ex) {
             return R.error(ex.getCode(), ex.getMessage());
         }
