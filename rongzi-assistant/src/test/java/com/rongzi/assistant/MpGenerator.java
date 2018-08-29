@@ -1,10 +1,6 @@
 package com.rongzi.assistant;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
@@ -37,15 +33,6 @@ public class MpGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-//        dsc.setTypeConvert(new MySqlTypeConvert(){
-//            // 自定义数据库表字段类型转换【可选】
-//            @Override
-//            public DbColumnType processTypeConvert(String fieldType) {
-//                System.out.println("转换类型：" + fieldType);
-//                // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
-//                return super.processTypeConvert(fieldType);
-//            }
-//        });
         dsc.setDbType(DbType.SQL_SERVER);
         dsc.setDriverName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         dsc.setUsername("zpt");
