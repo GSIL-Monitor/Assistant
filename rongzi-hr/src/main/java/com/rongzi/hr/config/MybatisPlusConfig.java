@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.rongzi.core.datasource.DruidProperties;
 import com.rongzi.core.mutidatasource.DynamicDataSource;
+import com.rongzi.hr.config.datasource.MutiDataSourceProperties;
 import com.rongzi.hr.core.common.constant.DatasourceEnum;
 import com.rongzi.hr.core.datascope.DataScopeInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
