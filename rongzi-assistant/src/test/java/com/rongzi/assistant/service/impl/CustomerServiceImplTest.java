@@ -1,12 +1,12 @@
 package com.rongzi.assistant.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.google.gson.JsonObject;
 import com.rongzi.AssistantApp;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.service.CustomerService;
-import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import com.rongzi.core.page.PageInfoBT;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = AssistantApp.class)
@@ -46,9 +44,17 @@ public class CustomerServiceImplTest {
 
         resultMap.put("msg", "操作成功");
         resultMap.put("code", 0);
-        resultMap.put("data", JSON.toJSONString(pageinfo));
+//        resultMap.put("data", JSON.toJSONString(pageinfo));
+        resultMap.put("data", JSON.toJSON(pageinfo));
 
-        System.out.println(JSON.toJSONString(pageinfo));
+       System.out.println(JSON.toJSONString(pageinfo));
+
+
+        JSONObject json = new JSONObject(resultMap);
+
+        System.out.println(json);
+
+
 
 
     }

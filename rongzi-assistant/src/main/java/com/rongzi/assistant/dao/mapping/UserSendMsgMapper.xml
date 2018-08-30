@@ -9,7 +9,7 @@
 
         SELECT  MsgContent AS content ,SendTime AS occurTime,
 
-        Signature,SendEmpName AS senderName
+        Signature AS signature,SendEmpName AS senderName
 
         FROM CustomerMsg WHERE
 

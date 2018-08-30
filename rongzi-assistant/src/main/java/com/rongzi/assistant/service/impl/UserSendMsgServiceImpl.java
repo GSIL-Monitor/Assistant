@@ -33,6 +33,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
 
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+//        DataSourceContextHolder.setDataSourceType("SUZHOU");
         /**
          * 1:销售发往客户
          */
@@ -46,6 +47,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             sendMsg.setSenderRole(1);
             sendMsg.setReceiver(customerCode);
             sendMsg.setReceiverMobile(customerMobile);
+//            sendMsg.setSignature("【东方融资网】");
             resultList.add(sendMsg);
         }
         return resultList;
@@ -61,6 +63,9 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
 
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+
+//        DataSourceContextHolder.setDataSourceType("SUZHOU");
+
 
         return userSendMsgMapper.addMsgsToSaleSystem(sendList);
     }

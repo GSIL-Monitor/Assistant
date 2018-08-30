@@ -92,12 +92,20 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             }
 
         }
-        boolean userflag=userSendMsgService.addMsgsToSaleSystem(sendList);
-        boolean customerFlag=customerReplyMsgService.addMsgsToSaleSystem(replyList);
-        if(userflag&&customerFlag){
-            return true;
+
+        if(sendList.size()>0){
+            boolean userflag=userSendMsgService.addMsgsToSaleSystem(sendList);
         }
-        return false;
+
+        if(replyList.size()>0){
+            boolean customerFlag=customerReplyMsgService.addMsgsToSaleSystem(replyList);
+        }
+//        boolean userflag=userSendMsgService.addMsgsToSaleSystem(sendList);
+//        boolean customerFlag=customerReplyMsgService.addMsgsToSaleSystem(replyList);
+//        if(userflag&&customerFlag){
+//            return true;
+//        }
+        return true;
 
     }
 }

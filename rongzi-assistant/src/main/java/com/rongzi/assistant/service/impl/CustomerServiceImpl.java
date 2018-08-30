@@ -3,6 +3,7 @@ package com.rongzi.assistant.service.impl;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.common.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
+import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.UserInfo;
@@ -47,6 +48,8 @@ public class CustomerServiceImpl implements CustomerService{
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
+//        DataSourceContextHolder.setDataSourceType("SUZHOU");
+
 
         List<Customer>  list=  customerMapper.queryAllCutomers(page,empCode,customerExeStatus);
         for (Customer customer : list) {
@@ -68,6 +71,32 @@ public class CustomerServiceImpl implements CustomerService{
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
+//        DataSourceContextHolder.setDataSourceType("SUZHOU");
         customerMapper.editCommentByCodeAndComment(customerCode,comment);
     }
+
+
+
+
+
+    /**
+     * 通过通话记录来更新客户的拨打状态
+     * @param callRecords
+     * @return
+     */
+    @Override
+    public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
+
+        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+
+//        DataSourceContextHolder.setDataSourceType("SUZHOU");
+
+        /**
+         * 修改为每隔50条更新一次
+         */
+        //TODO
+       return customerMapper.syncContactStatusByCallRecords(callRecords);
+    }
+
 }

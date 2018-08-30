@@ -30,7 +30,7 @@ public class SmsTemplateController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("msg", "操作成功");
         resultMap.put("code", 0);
-        resultMap.put("data", JSON.toJSONString(resultList));
+        resultMap.put("data", JSON.toJSON(resultList));
 
 
         return  resultMap;

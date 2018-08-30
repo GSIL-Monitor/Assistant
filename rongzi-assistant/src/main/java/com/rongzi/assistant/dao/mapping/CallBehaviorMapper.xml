@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongzi.assistant.dao.CallBehaviorMapper">
+
+
+    <sql id="Base_Column_List">
+        src, dst, billsec,calldate,CreateTime,UpdateTime
+    </sql>
+
+    <insert id="addCallBehaviorFromMobileToSystme" parameterType="com.rongzi.assistant.model.CallRecord">
+
+        INSERT INTO CallBehaviorRealTime
+        (
+        src, dst, billsec,calldate,CreateTime,UpdateTime
+        )VALUES
+        <foreach collection="callRecords" separator="," item="record" index="index">
+            (
+            #{record.src},#{record.dst},#{record.calldate},getdate(),getdate()
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>

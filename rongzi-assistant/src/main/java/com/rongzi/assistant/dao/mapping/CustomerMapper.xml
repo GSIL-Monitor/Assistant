@@ -23,7 +23,7 @@
         D.HasPolicy AS hasPolicy,
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
-        A.ContactStatus AS contactStatus
+        B.ContactStatus AS contactStatus
         FROM dbo.SAL_CLT_BASE A (NOLOCK)
         LEFT JOIN dbo.SAL_CLT_LNKMAN B (NOLOCK) ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
         LEFT JOIN dbo.SAL_CLT_REQUIRE C (NOLOCK) ON A.RQR_ID=C.RQR_ID
@@ -35,10 +35,12 @@
          <if test="empCode!=null and empCode!=''">
             AND  clt_owner=#{empCode}
          </if>
-         <if test="customerExeStatus!=null and customerExeStatus!=-1">
+         <if test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus!=5">
             AND   CLT_EXE_STATUS=#{customerExeStatus}
          </if>
-
+         <if test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus==5">
+            AND   CLT_EXE_STATUS IN ('5','6')
+         </if>
 
     </select>
 
@@ -51,5 +53,19 @@
         </set>
         WHERE CLT_CODE =#{customerCode}
     </update>
+
+    <update id="syncContactStatusByCallRecords" parameterType="com.rongzi.assistant.model.CallRecord">
+
+        <foreach collection="callRecords" separator="," item="record" index="index" open="" close="">
+
+            update SAL_CLT_BASE
+            <set>
+                SAL_CLT_BASE =#{record.callStatus}
+            </set>
+            WHERE LNK_MOBILE =#{record.mobile}
+        </foreach>
+    </update>
+
+
 
 </mapper>
