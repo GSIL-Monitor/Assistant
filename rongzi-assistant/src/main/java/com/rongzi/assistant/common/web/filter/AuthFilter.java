@@ -3,7 +3,8 @@ package com.rongzi.assistant.common.web.filter;
 import com.rongzi.assistant.common.constant.Constants;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.UserInfo;
-import io.jsonwebtoken.SignatureException;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,9 +15,16 @@ import java.io.IOException;
 
 public class AuthFilter extends OncePerRequestFilter {
 
+    protected PathMatcher pathMatcher = new AntPathMatcher();
+
+    private String[] excludesPattern = new String[]{
+            "/api/account/login",
+            "/swagger*",
+    };
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (isIgnoredUrl(request)) {
+        if (isExclusion(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -50,9 +58,15 @@ public class AuthFilter extends OncePerRequestFilter {
         }
     }
 
-    private boolean isIgnoredUrl(HttpServletRequest request) {
-        if (request.getServletPath().equals("/api/account/login")) {
-            return true;
+    private boolean isExclusion(String requestURI) {
+        if (excludesPattern == null || requestURI == null) {
+            return false;
+        }
+
+        for (String pattern : excludesPattern) {
+            if (pathMatcher.match(pattern, requestURI)) {
+                return true;
+            }
         }
 
         return false;
