@@ -12,7 +12,7 @@ public class TokenManager {
 
     public static String generateToken(UserInfo userInfo) {
         String jwtToken = JwtTokenUtil.generateToken(userInfo, userInfo.getEmpCode());
-        return "Bearer " + jwtToken;
+        return jwtToken;
     }
 
     public static UserInfo getUserInfoFromToken(String token) throws Exception {
