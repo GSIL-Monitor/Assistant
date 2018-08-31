@@ -35,5 +35,5 @@ hs_err_pid*
 
 .project
 .classpath
-/src/test
+/src/test/
 datasource
