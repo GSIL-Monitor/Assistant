@@ -55,11 +55,13 @@ public class CityDataSourceAop implements Ordered {
 
             String name = cityDataSource.name();
 
-            DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());
-
-
-
-            logger.debug("设置当前城市数据源为：" + currentUserInfo.getCityCode());
+            if(name.equals(CityDatasourceEnum.DATA_SOURCE_PRODUCT)){
+                DataSourceContextHolder.setDataSourceType(CityDatasourceEnum.DATA_SOURCE_PRODUCT);
+                logger.debug("系统当前所在数据源为：" + CityDatasourceEnum.DATA_SOURCE_PRODUCT);
+            }else{
+                DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());
+                logger.debug("设置当前城市数据源为：" + currentUserInfo.getCityCode());
+            }
 
         } else {
             DataSourceContextHolder.setDataSourceType(CityDatasourceEnum.DATA_SOURCE_GUNS);

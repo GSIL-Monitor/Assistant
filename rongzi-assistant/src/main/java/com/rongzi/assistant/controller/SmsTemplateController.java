@@ -28,14 +28,12 @@ public class SmsTemplateController {
     public Map<String, Object> getSmsTemplates() {
 
 
-
         List<SmsTemplate> resultList = smsTemplateService.findAllsmsTemplates();
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("msg", "操作成功");
         resultMap.put("code", 0);
         resultMap.put("data", JSON.toJSON(resultList));
-
 
         return resultMap;
 
