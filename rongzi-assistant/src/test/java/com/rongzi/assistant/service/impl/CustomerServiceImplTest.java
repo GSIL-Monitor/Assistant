@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,4 +63,19 @@ public class CustomerServiceImplTest {
     @Test
     public void editCommentByCode() {
     }
+
+
+    @Test
+    public void markWechatFriendship() {
+
+
+        String customerMobile="13357103466";
+        int friendStatus=1;
+
+
+        customerService.markWechatFriendship(customerMobile,friendStatus,new Date());
+    }
+
+
+
 }

@@ -90,6 +90,18 @@ public class Customer implements Serializable {
      */
     private int contactStatus;
 
+    /**
+     * 微信好友状态
+     */
+    private int  wechatFriendStatus;
+
+    public int getWechatFriendStatus() {
+        return wechatFriendStatus;
+    }
+
+    public void setWechatFriendStatus(int wechatFriendStatus) {
+        this.wechatFriendStatus = wechatFriendStatus;
+    }
 
     public String getName() {
         return name;
@@ -239,6 +251,7 @@ public class Customer implements Serializable {
                 ", customerCode='" + customerCode + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", contactStatus=" + contactStatus +
+                ", wechatFriendStatus=" + wechatFriendStatus +
                 '}';
     }
 }

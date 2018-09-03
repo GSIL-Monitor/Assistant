@@ -69,4 +69,21 @@ public class CustomerController {
     }
 
 
+    @PostMapping("/markWechatFriendship")
+    public Map<String, Object> markWechatFriendship(@RequestBody RequestJsonParam requestJsonParam) {
+
+
+
+        customerService.markWechatFriendship(requestJsonParam.getCustomerMobile(),requestJsonParam.getFriendStatus(),requestJsonParam.getAddFriendTime());
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("msg", "操作成功");
+        resultMap.put("code", 0);
+        resultMap.put("data", null);
+        return resultMap;
+    }
+
+
+
+
 }

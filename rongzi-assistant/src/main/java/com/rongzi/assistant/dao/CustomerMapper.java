@@ -6,6 +6,7 @@ import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.Customer;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CustomerMapper {
@@ -16,4 +17,6 @@ public interface CustomerMapper {
     void editCommentByCodeAndComment(@Param("customerCode") String customerCode, @Param("comment") String comment);
 
     boolean syncContactStatusByCallRecords(@Param("callRecords") List<CallRecord> callRecords);
+
+    void markWechatFriendship(@Param("customerMobile") String customerMobile,@Param("friendStatus") int friendStatus, @Param("addFriendTime") Date addFriendTime);
 }

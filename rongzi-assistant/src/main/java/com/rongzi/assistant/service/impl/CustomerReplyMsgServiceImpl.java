@@ -35,7 +35,7 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
     public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile, String customerCode, String empCode) {
 
 
-        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
+//        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
 
 
         List<SmsMessage> replyMsgs = customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
@@ -57,7 +57,7 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
             resultList.add(replyMsg);
         }
 
-        DataSourceContextHolder.clearDataSourceType();
+//        DataSourceContextHolder.clearDataSourceType();
 
         return resultList;
     }
@@ -71,11 +71,11 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
 
-        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
+//        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
 
         boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
 
-        DataSourceContextHolder.clearDataSourceType();
+//        DataSourceContextHolder.clearDataSourceType();
         return flag;
     }
 }

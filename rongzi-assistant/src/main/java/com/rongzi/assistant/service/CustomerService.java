@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.Customer;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CustomerService {
@@ -16,4 +17,5 @@ public interface CustomerService {
     boolean syncContactStatusByCallRecords(List<CallRecord> callRecords);
 
 
+    void markWechatFriendship(String customerMobile, int friendStatus, Date addFriendTime);
 }

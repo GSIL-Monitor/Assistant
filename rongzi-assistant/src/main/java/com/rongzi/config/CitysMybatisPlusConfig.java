@@ -3,6 +3,7 @@ package com.rongzi.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.rongzi.config.aop.CityDatasourceEnum;
 import com.rongzi.core.constant.DatasourceEnum;
 import com.rongzi.core.datasource.DruidProperties;
 import com.rongzi.core.mutidatasource.DynamicDataSource;
@@ -83,7 +84,7 @@ public class CitysMybatisPlusConfig {
             sql.printStackTrace();
         }
 
-        hashMap.put(DatasourceEnum.DATA_SOURCE_GUNS, dataSourceGuns);
+        hashMap.put(CityDatasourceEnum.DATA_SOURCE_GUNS, dataSourceGuns);
         dynamicDataSource.setTargetDataSources(hashMap);
         dynamicDataSource.setDefaultTargetDataSource(dataSourceGuns);
         return dynamicDataSource;

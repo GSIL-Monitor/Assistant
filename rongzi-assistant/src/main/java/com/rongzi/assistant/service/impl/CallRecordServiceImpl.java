@@ -64,18 +64,15 @@ public class CallRecordServiceImpl implements CallRecordService {
                 callRecord.setSrc(callRecord.getMobile());
                 callRecord.setDst(callRecord.getEmpCode().substring(2, callRecord.getEmpCode().length()));
             }
-
             callBehaviorData.add(callRecord);
 
         }
 
-        boolean flag = customerService.syncContactStatusByCallRecords(customerData);
-        boolean callBehaviorFlag = callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
-
-        if (flag && callBehaviorFlag) {
-
-            return true;
+        if(customerData.size()>0){
+            customerService.syncContactStatusByCallRecords(customerData);
         }
-        return false;
+        callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
+
+        return true;
     }
 }

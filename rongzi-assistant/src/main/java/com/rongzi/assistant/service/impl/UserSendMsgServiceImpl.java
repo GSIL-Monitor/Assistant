@@ -6,6 +6,8 @@ import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.UserSendMsgService;
+import com.rongzi.config.aop.CityDataSource;
+import com.rongzi.config.aop.CityDatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,11 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
      * @return
      */
     @Override
+    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
 
-        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+//        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+//        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         /**
          * 1:销售发往客户
          */
@@ -50,7 +53,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             resultList.add(sendMsg);
         }
 
-        DataSourceContextHolder.clearDataSourceType();
+//        DataSourceContextHolder.clearDataSourceType();
 
         return resultList;
     }
@@ -62,16 +65,17 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
      * @return
      */
     @Override
+    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean addMsgsToSaleSystem(List<SmsMessage> sendList) {
 
-        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+//        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+//        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
-//        DataSourceContextHolder.setDataSourceType("HANGZHOU");
+//       DataSourceContextHolder.setDataSourceType("HANGZHOU");
 
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);
 
-        DataSourceContextHolder.clearDataSourceType();
+//        DataSourceContextHolder.clearDataSourceType();
 
         return flag;
     }

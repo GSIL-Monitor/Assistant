@@ -5,8 +5,11 @@ import com.rongzi.assistant.dao.CallBehaviorMapper;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
+import com.rongzi.config.aop.CityDataSource;
+import com.rongzi.config.aop.CityDatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,16 +22,14 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
     @Autowired
     CallBehaviorMapper callBehaviorMapper;
 
-
+    /**
+     * 批量增加通话记录
+     * @param callRecords
+     * @return
+     */
     @Override
+    @CityDataSource(name=CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean addCallBehaviorFromMobileToSystme(List<CallRecord> callRecords) {
-
-        /**
-         * 批量增加通话记录
-         */
-        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-
 
         int batchCount = 100;
         List<CallRecord> temp = new ArrayList<CallRecord>();
@@ -42,8 +43,6 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
         }
 
         boolean flag = callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
-
-        DataSourceContextHolder.clearDataSourceType();
 
         return flag;
     }

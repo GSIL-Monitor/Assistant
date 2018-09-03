@@ -72,14 +72,14 @@ public class UserSendMsgServiceImplTest {
 
             //销售发送
             smsMessage.setSenderRole(1);
-            smsMessage.setSender("AA0252");
-            smsMessage.setSenderName("倪梨花[AA0252]");
+            smsMessage.setSender("AF1399");
+            smsMessage.setSenderName("黄瑛[AF1399]");
             smsMessage.setSenderMobile("");
 
             //客户接受
-            smsMessage.setReceiver("AAC13031200001");
-            smsMessage.setReceiverMobile("13140822535");
-            smsMessage.setReceiverName("客户1");
+            smsMessage.setReceiver("AFC15020400058");
+            smsMessage.setReceiverMobile("13357103466");
+            smsMessage.setReceiverName("AFC15020400058");
 
             //发送体
             smsMessage.setContent("这个是测试的第++"+i+"++个数据");

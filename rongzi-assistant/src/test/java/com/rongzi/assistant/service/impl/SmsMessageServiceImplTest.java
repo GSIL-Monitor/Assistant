@@ -53,24 +53,24 @@ public class SmsMessageServiceImplTest {
 
         List<SmsMessage> msgs=new ArrayList<SmsMessage>();
         //1:模拟客户回复短信到销售
-        for(int i=0;i<200;i++){
+        for(int i=0;i<300;i++){
 
             SmsMessage smsMessage=new SmsMessage();
 
             //发送者
-            smsMessage.setSender("AAC17011600001");
-            smsMessage.setSenderName("AAC17011600001");
-            smsMessage.setSenderMobile("10278185747");
+            smsMessage.setSender("AFC15020400058");
+            smsMessage.setSenderName("AFC15020400058");
+            smsMessage.setSenderMobile("13357103466");
             smsMessage.setSenderRole(2);
 
             //接受者
-            smsMessage.setReceiverName("刘超");
-            smsMessage.setReceiver("AA1611");
+            smsMessage.setReceiverName("黄瑛");
+            smsMessage.setReceiver("AF2799");
             smsMessage.setReceiverMobile("");
 
             //发送体
             smsMessage.setContent("客户发送给销售的第   "+i+"   条信息");
-            smsMessage.setOccurTime(new Date(System.currentTimeMillis()+(i*10)));
+            smsMessage.setOccurTime(new Date(System.currentTimeMillis()+(i*60)));
 
 
             //其他
@@ -84,24 +84,24 @@ public class SmsMessageServiceImplTest {
         }
         //2：模拟销售发送短信到客户
 
-        for(int j=0;j<200;j++){
+        for(int j=0;j<300;j++){
             SmsMessage smsMessage=new SmsMessage();
             //发送者
-            smsMessage.setSender("AA1611");
+            smsMessage.setSender("AF2799");
             smsMessage.setSenderMobile("");
-            smsMessage.setSenderName("刘超");
+            smsMessage.setSenderName("黄瑛");
             smsMessage.setSenderRole(1);
 
 
             //接受者
-            smsMessage.setReceiver("AAC17011600001");
-            smsMessage.setReceiverMobile("10278185747");
-            smsMessage.setReceiverName("AAC17011600001");
+            smsMessage.setReceiver("AFC15020400058");
+            smsMessage.setReceiverMobile("13357103466");
+            smsMessage.setReceiverName("AFC15020400058");
 
 
             //发送体
             smsMessage.setContent("销售发送给客户的第   "+j+"   条信息");
-            smsMessage.setOccurTime(new Date(System.currentTimeMillis()+(j*10)));
+            smsMessage.setOccurTime(new Date(System.currentTimeMillis()+(j*60)));
             smsMessage.setSignature("【东方融资网】");
             //其他
             smsMessage.setIsRead(1);
@@ -112,7 +112,39 @@ public class SmsMessageServiceImplTest {
 
         }
 
-        boolean flag = smsMessageService.addMsgsToSaleSystem(msgs);
+//        int count=7;
+//
+//        for(int i=1;i<msgs.size();i++){
+//
+//            if(i%count==0){
+//
+//
+//
+//            }
+//        }
+
+
+        List<SmsMessage> tempList=new ArrayList<>();
+
+
+        int count=msgs.size();
+
+
+        for(int i=0;i<count ;i++){
+
+            tempList.add(msgs.get(i));
+
+            if(i%200==0 && i>0){
+                smsMessageService.addMsgsToSaleSystem(tempList);
+                tempList.clear();
+            }
+
+        }
+        boolean flag =smsMessageService.addMsgsToSaleSystem(tempList);
+
+
+
+//        boolean flag = smsMessageService.addMsgsToSaleSystem(msgs);
 
         System.out.println(flag);
         System.out.println(System.currentTimeMillis()-time);
