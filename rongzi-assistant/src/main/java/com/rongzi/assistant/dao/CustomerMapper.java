@@ -13,7 +13,7 @@ public interface CustomerMapper {
 
     List<Customer> queryAllCutomers(@Param("page") Page page, @Param("empCode") String empCode, @Param("customerExeStatus") int customerExeStatus);
 
-    void editCommentByCodeAndComment(@Param("customerCode") String customerCode,@Param("comment") String comment);
+    void editCommentByCodeAndComment(@Param("customerCode") String customerCode, @Param("comment") String comment);
 
     boolean syncContactStatusByCallRecords(@Param("callRecords") List<CallRecord> callRecords);
 }

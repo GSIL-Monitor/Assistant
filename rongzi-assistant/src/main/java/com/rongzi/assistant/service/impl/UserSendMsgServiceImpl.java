@@ -22,23 +22,23 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     UserSendMsgMapper userSendMsgMapper;
 
     /**
-     *  从销售系统获取短信
+     * 从销售系统获取短信
+     *
      * @param empCode
      * @param customerMobile
      * @param customerCode
      * @return
      */
     @Override
-    public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile,String customerCode) {
+    public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
 
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-//        DataSourceContextHolder.setDataSourceType("SUZHOU");
         /**
          * 1:销售发往客户
          */
-        List<SmsMessage> sendMsgs=userSendMsgMapper.findAllMsgsByUserAndCustomer(empCode,customerMobile);
-        List<SmsMessage> resultList=new ArrayList<SmsMessage>();
+        List<SmsMessage> sendMsgs = userSendMsgMapper.findAllMsgsByUserAndCustomer(empCode, customerCode);
+        List<SmsMessage> resultList = new ArrayList<SmsMessage>();
 
         for (SmsMessage sendMsg : sendMsgs) {
             sendMsg.setSendStatus(1);
@@ -47,14 +47,17 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             sendMsg.setSenderRole(1);
             sendMsg.setReceiver(customerCode);
             sendMsg.setReceiverMobile(customerMobile);
-//            sendMsg.setSignature("【东方融资网】");
             resultList.add(sendMsg);
         }
+
+        DataSourceContextHolder.clearDataSourceType();
+
         return resultList;
     }
 
     /**
      * 增加客户发送的短信到销售系统
+     *
      * @param sendList
      * @return
      */
@@ -64,9 +67,12 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
-//        DataSourceContextHolder.setDataSourceType("SUZHOU");
+//        DataSourceContextHolder.setDataSourceType("HANGZHOU");
 
+        boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);
 
-        return userSendMsgMapper.addMsgsToSaleSystem(sendList);
+        DataSourceContextHolder.clearDataSourceType();
+
+        return flag;
     }
 }

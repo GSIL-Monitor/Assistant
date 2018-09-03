@@ -9,7 +9,7 @@ public class SmsTemplate implements Serializable {
     /**
      * 模板ID
      */
-    private  String id;
+    private String id;
 
     /**
      * 模板标题

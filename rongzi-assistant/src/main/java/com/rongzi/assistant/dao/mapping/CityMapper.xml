@@ -9,8 +9,6 @@
       SELECT  CityID AS cityID,CityName AS cityName FROM T_City
         
     </select>
-    
-    
 
 
 </mapper>

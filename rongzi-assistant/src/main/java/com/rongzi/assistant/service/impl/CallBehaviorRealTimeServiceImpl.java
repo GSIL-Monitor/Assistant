@@ -9,7 +9,9 @@ import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeService {
 
@@ -28,6 +30,21 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
 
-        return callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
+        int batchCount = 100;
+        List<CallRecord> temp = new ArrayList<CallRecord>();
+
+        for (int i = 0; i < callRecords.size(); i++) {
+            temp.add(callRecords.get(i));
+            if (i % batchCount == 0 && i > 0) {
+                callBehaviorMapper.addCallBehaviorFromMobileToSystme(temp);
+                temp.clear();
+            }
+        }
+
+        boolean flag = callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
+
+        DataSourceContextHolder.clearDataSourceType();
+
+        return flag;
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserSendMsgMapper {
 
 
-    List<SmsMessage> findAllMsgsByUserAndCustomer(@Param("empCode") String empCode, @Param("customerMobile") String customerMobile);
+    List<SmsMessage> findAllMsgsByUserAndCustomer(@Param("empCode") String empCode, @Param("customerCode") String customerCode);
 
     boolean addMsgsToSaleSystem(@Param("list") List<SmsMessage> sendList);
 }

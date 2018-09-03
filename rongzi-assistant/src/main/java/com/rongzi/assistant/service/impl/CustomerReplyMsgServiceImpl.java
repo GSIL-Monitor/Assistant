@@ -16,15 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
-
+public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
 
 
     @Autowired
     CustomerReplyMsgMapper customerReplyMsgMapper;
 
     /**
-     *  获取销售系统里面的客户回复的短信
+     * 获取销售系统里面的客户回复的短信
+     *
      * @param customerMobile
      * @param customerCode
      * @param empCode
@@ -32,16 +32,15 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
      * @return
      */
     @Override
-    public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile,String customerCode,String empCode) {
-
+    public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile, String customerCode, String empCode) {
 
 
         DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
 
 
-        List<SmsMessage> replyMsgs=  customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
+        List<SmsMessage> replyMsgs = customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
 
-        List<SmsMessage> resultList=new ArrayList<SmsMessage>();
+        List<SmsMessage> resultList = new ArrayList<SmsMessage>();
         /**
          * 客户回复方，没有签名和接受者手机号码。
          */
@@ -55,15 +54,17 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
             replyMsg.setSignature("");
 
 
-
-
             resultList.add(replyMsg);
         }
+
+        DataSourceContextHolder.clearDataSourceType();
+
         return resultList;
     }
 
     /**
      * 将客户回复的短信增加到销售系统
+     *
      * @param replyList
      * @return
      */
@@ -72,6 +73,9 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService{
 
         DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
 
-        return customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
+        boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
+
+        DataSourceContextHolder.clearDataSourceType();
+        return flag;
     }
 }

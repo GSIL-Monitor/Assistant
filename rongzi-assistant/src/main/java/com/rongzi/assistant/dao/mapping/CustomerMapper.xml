@@ -7,7 +7,7 @@
     <select id="queryAllCutomers" resultType="com.rongzi.assistant.model.Customer">
 
 
-     SELECT
+        SELECT
         A.CLT_MEMO AS comment,
         B.LNK_NAME AS name,
         B.LNK_MOBILE AS mobile,
@@ -31,16 +31,19 @@
         LEFT JOIN dbo.CustomerExtentInfo E (NOLOCK) ON A.CLT_CODE=E.CLT_CODE
         LEFT JOIN dbo.SYS_SELECT_LIST F (NOLOCK) ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
         WHERE
-         1=1
-         <if test="empCode!=null and empCode!=''">
-            AND  clt_owner=#{empCode}
-         </if>
-         <if test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus!=5">
-            AND   CLT_EXE_STATUS=#{customerExeStatus}
-         </if>
-         <if test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus==5">
-            AND   CLT_EXE_STATUS IN ('5','6')
-         </if>
+        A.CLT_STATUS='1' AND clt_owner=#{empCode}
+        <choose>
+            <when test="customerExeStatus!=null and customerExeStatus!=-1  and customerExeStatus !=0 and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
+                AND CLT_EXE_STATUS=#{customerExeStatus}
+            </when>
+            <when test="customerExeStatus!=null and customerExeStatus==5">
+                AND CLT_EXE_STATUS IN (5,6)
+            </when>
+            <otherwise>
+                AND CLT_EXE_STATUS !=0 AND CLT_EXE_STATUS !=10
+            </otherwise>
+        </choose>
+
 
     </select>
 
@@ -58,14 +61,13 @@
 
         <foreach collection="callRecords" separator="," item="record" index="index" open="" close="">
 
-            update SAL_CLT_BASE
+            update SAL_CLT_LNKMAN
             <set>
-                SAL_CLT_BASE =#{record.callStatus}
+                ContactStatus =#{record.callStatus}
             </set>
             WHERE LNK_MOBILE =#{record.mobile}
         </foreach>
     </update>
-
 
 
 </mapper>

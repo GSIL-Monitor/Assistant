@@ -31,9 +31,3 @@ hs_err_pid*
 .classpath
 .project
 .settings/
-
-
-.project
-.classpath
-/src/test/
-datasource

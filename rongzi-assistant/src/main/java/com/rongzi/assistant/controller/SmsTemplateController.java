@@ -1,12 +1,14 @@
 package com.rongzi.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.rongzi.assistant.model.RequestJsonParam;
 import com.rongzi.assistant.model.SmsTemplate;
 import com.rongzi.assistant.service.SmsTemplateService;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +25,11 @@ public class SmsTemplateController {
     SmsTemplateService smsTemplateService;
 
     @GetMapping("/templates")
-    public Map<String, Object> getSmsTemplates(){
+    public Map<String, Object> getSmsTemplates() {
 
-        List<SmsTemplate> resultList= smsTemplateService.findAllsmsTemplates();
+
+
+        List<SmsTemplate> resultList = smsTemplateService.findAllsmsTemplates();
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("msg", "操作成功");
@@ -33,7 +37,7 @@ public class SmsTemplateController {
         resultMap.put("data", JSON.toJSON(resultList));
 
 
-        return  resultMap;
+        return resultMap;
 
     }
 }

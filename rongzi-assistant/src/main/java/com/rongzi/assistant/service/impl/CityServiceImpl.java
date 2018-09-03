@@ -19,6 +19,7 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 获取所有的城市列表
+     *
      * @return
      */
     @Override
@@ -26,6 +27,10 @@ public class CityServiceImpl implements CityService {
 
         DataSourceContextHolder.setDataSourceType("PRODUCT");
 
-        return cityDao.queryAllCitys();
+        List<City> cities = cityDao.queryAllCitys();
+
+        DataSourceContextHolder.clearDataSourceType();
+
+        return cities;
     }
 }

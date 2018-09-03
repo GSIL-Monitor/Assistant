@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserSendMsgService {
 
-    List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile,String customerCode);
+    List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode);
 
     boolean addMsgsToSaleSystem(List<SmsMessage> sendList);
 }

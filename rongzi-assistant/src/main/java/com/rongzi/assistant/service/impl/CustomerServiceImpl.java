@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     CustomerMapper customerMapper;
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
 
-        List<Customer> resultList=new ArrayList<Customer>();
+        List<Customer> resultList = new ArrayList<Customer>();
 
         /**
          * 查询所有的城市信息
@@ -51,18 +51,16 @@ public class CustomerServiceImpl implements CustomerService{
 //        DataSourceContextHolder.setDataSourceType("SUZHOU");
 
 
-        List<Customer>  list=  customerMapper.queryAllCutomers(page,empCode,customerExeStatus);
+        List<Customer> list = customerMapper.queryAllCutomers(page, empCode, customerExeStatus);
         for (Customer customer : list) {
-            if(!StringUtils.isEmpty(customer.getWorkPlace())){
+            if (!StringUtils.isEmpty(customer.getWorkPlace())) {
                 customer.setWorkPlace(cityMap.get(Integer.parseInt(customer.getWorkPlace())));
             }
             resultList.add(customer);
         }
+        DataSourceContextHolder.clearDataSourceType();
         return resultList;
     }
-
-
-
 
 
     @Override
@@ -72,15 +70,15 @@ public class CustomerServiceImpl implements CustomerService{
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
 
 //        DataSourceContextHolder.setDataSourceType("SUZHOU");
-        customerMapper.editCommentByCodeAndComment(customerCode,comment);
+        customerMapper.editCommentByCodeAndComment(customerCode, comment);
+
+        DataSourceContextHolder.clearDataSourceType();
     }
-
-
-
 
 
     /**
      * 通过通话记录来更新客户的拨打状态
+     *
      * @param callRecords
      * @return
      */
@@ -92,11 +90,17 @@ public class CustomerServiceImpl implements CustomerService{
 
 //        DataSourceContextHolder.setDataSourceType("SUZHOU");
 
+
+        boolean flag = customerMapper.syncContactStatusByCallRecords(callRecords);
+
+
+        DataSourceContextHolder.clearDataSourceType();
+
         /**
          * 修改为每隔50条更新一次
          */
         //TODO
-       return customerMapper.syncContactStatusByCallRecords(callRecords);
+        return flag;
     }
 
 }

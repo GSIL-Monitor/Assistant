@@ -8,7 +8,6 @@ import java.util.List;
 public interface CustomerReplyMsgMapper {
 
 
-
     List<SmsMessage> queryCustomerReplyMsgs(@Param("customerMobile") String customerMobile);
 
     boolean addMsgsToSaleSystem(@Param("list") List<SmsMessage> replyList);

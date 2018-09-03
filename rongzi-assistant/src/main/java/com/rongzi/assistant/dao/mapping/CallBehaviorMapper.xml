@@ -16,7 +16,7 @@
         )VALUES
         <foreach collection="callRecords" separator="," item="record" index="index">
             (
-            #{record.src},#{record.dst},#{record.calldate},getdate(),getdate()
+            #{record.src},#{record.dst},#{record.billSec},#{record.callDate},getdate(),getdate()
             )
         </foreach>
     </insert>

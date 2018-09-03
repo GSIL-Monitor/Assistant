@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SmsMessage implements Serializable{
+public class SmsMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class SmsMessage implements Serializable{
      * 发送时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format= "yyyy-MM-dd HH:mm:ss" )
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date occurTime;
 
 
@@ -161,7 +161,7 @@ public class SmsMessage implements Serializable{
 //
 //        this.occurTime =simpleDateFormat.format(occurTime);
 
-        this.occurTime =occurTime;
+        this.occurTime = occurTime;
     }
 
     public String getContent() {

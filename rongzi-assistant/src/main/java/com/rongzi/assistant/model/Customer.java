@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Customer implements Serializable{
+public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -39,7 +39,7 @@ public class Customer implements Serializable{
     private int IsSecuityOrFund;
 
     /**
-     *  工作身份
+     * 工作身份
      */
     private String job;
 
@@ -56,7 +56,7 @@ public class Customer implements Serializable{
     /**
      * 用款时间
      */
-    @JSONField(format= "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date paymentDate;
 
     /**

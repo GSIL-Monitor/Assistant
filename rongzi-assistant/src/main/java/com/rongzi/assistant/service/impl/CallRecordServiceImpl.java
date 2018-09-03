@@ -30,7 +30,7 @@ public class CallRecordServiceImpl implements CallRecordService {
 
         /**
          * 在同一个库的两张表中增加数据
-         * 1：客户表  客户编号  通话状态
+         * 1：表 SAL_CLT_LNKMAN 客户编号  通话状态
          * 2：通话记录表  拨打者 接听者 通话时长  通话时间  同步时间 更新时间
          */
         /**
@@ -44,26 +44,25 @@ public class CallRecordServiceImpl implements CallRecordService {
          */
 
         //客户表数据
-        List<CallRecord> customerData=new ArrayList<CallRecord>();
+        List<CallRecord> customerData = new ArrayList<CallRecord>();
 
         //通话记录表数据
-        List<CallRecord> callBehaviorData=new ArrayList<CallRecord>();
+        List<CallRecord> callBehaviorData = new ArrayList<CallRecord>();
 
         for (CallRecord callRecord : callRecords) {
 
 
-
             int callStatus = callRecord.getCallStatus();
 
-            if(callStatus==1 || callStatus ==2){
+            if (callStatus == 1 || callStatus == 2) {
                 customerData.add(callRecord);
-                callRecord.setSrc(callRecord.getEmpCode().substring(2,callRecord.getEmpCode().length()));
+                callRecord.setSrc(callRecord.getEmpCode().substring(2, callRecord.getEmpCode().length()));
                 callRecord.setDst(callRecord.getMobile());
             }
 
-            if(callStatus==3 || callStatus ==4){
+            if (callStatus == 3 || callStatus == 4) {
                 callRecord.setSrc(callRecord.getMobile());
-                callRecord.setDst(callRecord.getEmpCode().substring(2,callRecord.getEmpCode().length()));
+                callRecord.setDst(callRecord.getEmpCode().substring(2, callRecord.getEmpCode().length()));
             }
 
             callBehaviorData.add(callRecord);
@@ -73,7 +72,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         boolean flag = customerService.syncContactStatusByCallRecords(customerData);
         boolean callBehaviorFlag = callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
 
-        if(flag&& callBehaviorFlag){
+        if (flag && callBehaviorFlag) {
 
             return true;
         }

@@ -13,7 +13,7 @@
 
         FROM CustomerMsg WHERE
 
-        SendEmpCode=#{empCode} AND LnkMobile =#{customerMobile}   ORDER  BY SendTime DESC
+        SendEmpCode=#{empCode} AND CltCode =#{customerCode}   ORDER  BY SendTime DESC
 
 
     </select>

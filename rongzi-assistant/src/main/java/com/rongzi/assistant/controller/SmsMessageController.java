@@ -20,32 +20,9 @@ public class SmsMessageController {
     SmsMessageService smsMessageService;
 
 
-//    @PostMapping("/getMessages")
-//    public Map<String, Object> findAllMsgFromSaleSystem(@RequestParam("empCode") String empCode
-//            , @RequestParam("customerCode") String customerCode
-//            , @RequestParam("customerMobile") String customerMobile
-//            , @RequestParam("pageSize") int pageSize
-//            , @RequestParam("pageIndex") int pageIndex
-//            ,@RequestParam("empName") String empName  ) {
-//
-////        Page page = new Page(pageIndex, pageSize);
-//        List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(empCode, customerCode, customerMobile);
-////        page.setRecords(msgs);
-//
-////        PageInfoBT<SmsMessage> pageinfo = new PageInfoBT<SmsMessage>(page);
-//
-//        Map<String, Object> resultMap = new HashMap<String, Object>();
-//
-//        resultMap.put("msg", "操作成功");
-//        resultMap.put("code", 0);
-//        resultMap.put("data", JSON.toJSONString(msgs));
-//
-//        return resultMap;
-//
-//    }
-
     /**
      * 获取销售系统短信信息到手机中
+     *
      * @param requestJsonParam
      * @return
      */
@@ -63,13 +40,12 @@ public class SmsMessageController {
 
     }
 
-
-
     /**
-     * 同步短信到销售系统
+     * 同步手机短信到销售系统
      */
     @PostMapping("/addMessages")
-    public Map<String, Object>  addMsgsToSaleSystem(@RequestBody List<SmsMessage> msgs){
+    public Map<String, Object> addMsgsToSaleSystem(@RequestBody List<SmsMessage> msgs) {
+
 
         smsMessageService.addMsgsToSaleSystem(msgs);
 

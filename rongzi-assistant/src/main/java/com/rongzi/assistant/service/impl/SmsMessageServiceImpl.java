@@ -21,14 +21,15 @@ import java.util.List;
 public class SmsMessageServiceImpl implements SmsMessageService {
 
 
-   @Autowired
+    @Autowired
     UserSendMsgService userSendMsgService;
 
-   @Autowired
+    @Autowired
     CustomerReplyMsgService customerReplyMsgService;
 
     /**
      * 从销售系统导入短信到手机
+     *
      * @param empCode
      * @param customerCode
      * @param customerMobile
@@ -38,9 +39,10 @@ public class SmsMessageServiceImpl implements SmsMessageService {
     @Override
     public List<SmsMessage> findMsgsFromSaleSystem(String empCode, String customerCode, String customerMobile) {
 
-        List<SmsMessage> sendMsgs = userSendMsgService.findMsgsFromSaleSystemByUserAndCustomer(empCode, customerMobile,customerCode);
+        List<SmsMessage> sendMsgs = userSendMsgService.findMsgsFromSaleSystemByUserAndCustomer(empCode, customerMobile, customerCode);
+
         List<SmsMessage> replyMsgs = customerReplyMsgService.findReplyMsgsByCustomerMobile(customerMobile, customerCode, empCode);
-        List<SmsMessage> results=new ArrayList<SmsMessage>();
+        List<SmsMessage> results = new ArrayList<SmsMessage>();
 
         results.addAll(sendMsgs);
         results.addAll(replyMsgs);
@@ -49,62 +51,66 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         return results;
     }
 
-    private void listSort(List<SmsMessage> msgs){
+    private void listSort(List<SmsMessage> msgs) {
 
         Collections.sort(msgs, new Comparator<SmsMessage>() {
 
             @Override
             public int compare(SmsMessage o1, SmsMessage o2) {
-                    Long time1=o1.getOccurTime().getTime();
-                    Long time2=o2.getOccurTime().getTime();
-                    if(time1>time2){
-                        return 1;
-                    }else if(time1<time2){
-                        return -1;
-                    }else{
-                        return 0;
-                    }
+                Long time1 = o1.getOccurTime().getTime();
+                Long time2 = o2.getOccurTime().getTime();
+                if (time1 > time2) {
+                    return 1;
+                } else if (time1 < time2) {
+                    return -1;
+                } else {
+                    return 0;
+                }
             }
         });
     }
 
     /**
      * 增加短信到销售系统
+     *
      * @param messages
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> messages) {
 
-        List<SmsMessage> sendList=new ArrayList<SmsMessage>();
+        List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
 
-        List<SmsMessage>  replyList=new ArrayList<SmsMessage>();
+        List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
 
         for (SmsMessage message : messages) {
             int senderRole = message.getSenderRole();
             /**
-             * 1:销售 2 客户
+             * 根据发送者角色来判断，如果是1，就是销售发出  2就是客户发出
+             * 销售发出保存到CustomerMsg
+             * 客户发出保存到smsReply
              */
-            if(senderRole==1){
-                sendList.add(message);
+            if (senderRole == 1) {
+                empSendMsgs.add(message);
 
-            }else{
-                replyList.add(message);
+            } else {
+                customerSendMsgs.add(message);
             }
 
+
         }
 
-        if(sendList.size()>0){
-            boolean userflag=userSendMsgService.addMsgsToSaleSystem(sendList);
+        boolean userflag = false;
+        boolean customerFlag = false;
+        if (empSendMsgs.size() > 0) {
+            userflag = userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
 
-        if(replyList.size()>0){
-            boolean customerFlag=customerReplyMsgService.addMsgsToSaleSystem(replyList);
+        if (customerSendMsgs.size() > 0) {
+            customerFlag = customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-//        boolean userflag=userSendMsgService.addMsgsToSaleSystem(sendList);
-//        boolean customerFlag=customerReplyMsgService.addMsgsToSaleSystem(replyList);
-//        if(userflag&&customerFlag){
-//            return true;
-//        }
+        if (userflag && customerFlag) {
+            return true;
+        }
         return true;
 
     }
