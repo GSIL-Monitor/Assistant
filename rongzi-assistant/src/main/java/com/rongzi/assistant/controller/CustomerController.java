@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.CustomerListParam;
-import com.rongzi.assistant.model.RequestJsonParam;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.core.page.PageInfoBT;
 import com.rongzi.util.ValidatorParamUtil;
@@ -97,18 +96,6 @@ public class CustomerController {
         return resultMap;
     }
 
-
-
-
-    @PostMapping("/markWechatFriendship")
-    public Map<String, Object> markWechatFriendship(@RequestBody RequestJsonParam requestJsonParam) {
-        customerService.markWechatFriendship(requestJsonParam.getCustomerMobile(), requestJsonParam.getFriendStatus(), requestJsonParam.getAddFriendTime());
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("msg", "操作成功");
-        resultMap.put("code", 0);
-        resultMap.put("data", null);
-        return resultMap;
-    }
 
 
 

@@ -1,16 +1,12 @@
 package com.rongzi.assistant.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.CustomerReplyMsgService;
 import com.rongzi.assistant.service.SmsMessageService;
 import com.rongzi.assistant.service.UserSendMsgService;
-import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -99,18 +95,15 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
         }
 
-        boolean userflag = false;
-        boolean customerFlag = false;
+
         if (empSendMsgs.size() > 0) {
-            userflag = userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
+           userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
 
         if (customerSendMsgs.size() > 0) {
-            customerFlag = customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
+            customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        if (userflag && customerFlag) {
-            return true;
-        }
+
         return true;
 
     }

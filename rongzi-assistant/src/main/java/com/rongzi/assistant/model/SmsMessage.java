@@ -17,13 +17,11 @@ public class SmsMessage implements Serializable {
     /**
      * 发送方编号
      */
-    @NotBlank
     private String sender;
 
     /**
      * 接收方编号
      */
-    @NotBlank
     private String receiver;
 
 

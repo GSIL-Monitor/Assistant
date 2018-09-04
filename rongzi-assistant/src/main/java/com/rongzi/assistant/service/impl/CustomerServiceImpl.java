@@ -91,10 +91,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
-    public void markWechatFriendship(String customerMobile, int friendStatus, Date addFriendTime) {
+    public Customer findCustomerCodeAndCustomerNameByCustomerMobile(String mobile) {
 
-        customerMapper.markWechatFriendship(customerMobile, friendStatus, addFriendTime);
-
+        return customerMapper.queryCustomerNameAndCustomerCode(mobile);
     }
+
+
+
+
 
 }
