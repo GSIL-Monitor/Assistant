@@ -7,7 +7,8 @@ import java.util.Date;
 
 public class Customer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4597661105769038855L;
+
     /**
      * 客户姓名
      */

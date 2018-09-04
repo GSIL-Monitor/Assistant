@@ -8,6 +8,7 @@ import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.CityService;
+import com.rongzi.assistant.service.CustomerListService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.config.aop.CityDataSource;
 import com.rongzi.config.aop.CityDatasourceEnum;
@@ -33,37 +34,28 @@ public class CustomerServiceImpl implements CustomerService {
     CityService cityService;
 
 
+    @Autowired
+    CustomerListService customerListService;
+
+
     @Override
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
 
         List<Customer> resultList = new ArrayList<Customer>();
 
-        /**
-         * 查询所有的城市信息
-         */
         List<City> allCitys = cityService.findAllCitys();
         Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
 
+        List<Customer> list = customerListService.findAllCustomers(page, empCode, customerExeStatus);
 
-        /**
-         * 切换数据源
-         */
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-
-//        DataSourceContextHolder.setDataSourceType("SUZHOU");
-
-        List<Customer> list = customerMapper.queryAllCutomers(page, empCode, customerExeStatus);
-
-
-        DataSourceContextHolder.clearDataSourceType();
         for (Customer customer : list) {
             if (!StringUtils.isEmpty(customer.getWorkPlace())) {
                 customer.setWorkPlace(cityMap.get(Integer.parseInt(customer.getWorkPlace())));
-            }else{
-                if(StringUtils.isEmpty(currentUser.getCityName())){
+            } else {
+                if (StringUtils.isEmpty(currentUser.getCityName())) {
                     customer.setWorkPlace(currentUser.getCityCode());
-                }else{
+                } else {
                     customer.setWorkPlace(currentUser.getCityName());
                 }
             }
@@ -93,11 +85,6 @@ public class CustomerServiceImpl implements CustomerService {
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
 
-
-
-        /**
-         * 修改为每隔50条更新一次
-         */
         //TODO
         return customerMapper.syncContactStatusByCallRecords(callRecords);
     }
@@ -106,8 +93,7 @@ public class CustomerServiceImpl implements CustomerService {
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public void markWechatFriendship(String customerMobile, int friendStatus, Date addFriendTime) {
 
-
-        customerMapper.markWechatFriendship(customerMobile,friendStatus,addFriendTime);
+        customerMapper.markWechatFriendship(customerMobile, friendStatus, addFriendTime);
 
     }
 
