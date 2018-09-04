@@ -1,17 +1,19 @@
 package com.rongzi.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.Customer;
+import com.rongzi.assistant.model.CustomerListParam;
 import com.rongzi.assistant.model.RequestJsonParam;
 import com.rongzi.assistant.service.CustomerService;
-import com.rongzi.core.base.controller.BaseController;
 import com.rongzi.core.page.PageInfoBT;
+import com.rongzi.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -30,19 +32,44 @@ public class CustomerController {
      * @return
      */
     @PostMapping("/list")
-    public Map<String, Object> findCustomerList(@RequestBody RequestJsonParam requestJsonParam) {
+    public Map<String, Object> findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("msg", "操作成功");
-        resultMap.put("code", 0);
-        Page page = new Page(requestJsonParam.getPageIndex(), requestJsonParam.getPageSize());
+        Map<String, Object> bindingResultMap = new HashMap<String, Object>();
+        Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
 
-        List<Customer> customers = customerService.findAllCustomers(page, requestJsonParam.getEmpCode(), requestJsonParam.getCustomerExeStatus());
+        List<Integer> status = Arrays.asList(customerExeStatus);
 
-        page.setRecords(customers);
+        boolean exeStatusFlag = status.contains(customerListParam.getCustomerExeStatus());
+        if (bindingResult.hasErrors() || (!exeStatusFlag)) {
 
-        PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
-        resultMap.put("data", JSON.toJSON(pageinfo));
+            if (!exeStatusFlag) {
+                bindingResultMap.put("customerExeStatus", "客户进程编号异常");
+            }
+            if (bindingResult.hasErrors()) {
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+                for (FieldError fieldError : fieldErrors) {
+                    String field = fieldError.getField();
+                    String defaultMessage = fieldError.getDefaultMessage();
+                    bindingResultMap.put(field, defaultMessage);
+                }
+            }
+            resultMap.put("msg", "参数失败");
+            resultMap.put("code", -1);
+            resultMap.put("data", JSON.toJSON(bindingResultMap));
+        } else {
+            resultMap.put("msg", "操作成功");
+            resultMap.put("code", 0);
+
+            Page page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+
+            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+
+            page.setRecords(customers);
+
+            PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
+            resultMap.put("data", JSON.toJSON(pageinfo));
+        }
         return resultMap;
 
 
@@ -52,37 +79,36 @@ public class CustomerController {
     /**
      * 编辑客户备注
      *
-     * @param customerCode
-     * @param comment
      * @return
      */
     @PostMapping("/editComment")
-    public Map<String, Object> editComment(@RequestBody Customer customer) {
-
-        customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
+    public Map<String, Object> editComment(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap.put("msg", "操作成功");
-        resultMap.put("code", 0);
-        resultMap.put("data", null);
+        Map<String, Object> bindingResultMap = new HashMap<String, Object>();
+        if (bindingResult.hasErrors()) {
+            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+        }else{
+            customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
+            resultMap.put("msg", "操作成功");
+            resultMap.put("code", 0);
+            resultMap.put("data", null);
+        }
         return resultMap;
     }
+
+
 
 
     @PostMapping("/markWechatFriendship")
     public Map<String, Object> markWechatFriendship(@RequestBody RequestJsonParam requestJsonParam) {
-
-
-
-        customerService.markWechatFriendship(requestJsonParam.getCustomerMobile(),requestJsonParam.getFriendStatus(),requestJsonParam.getAddFriendTime());
-
+        customerService.markWechatFriendship(requestJsonParam.getCustomerMobile(), requestJsonParam.getFriendStatus(), requestJsonParam.getAddFriendTime());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("msg", "操作成功");
         resultMap.put("code", 0);
         resultMap.put("data", null);
         return resultMap;
     }
-
 
 
 

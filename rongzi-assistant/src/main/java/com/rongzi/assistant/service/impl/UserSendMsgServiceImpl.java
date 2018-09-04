@@ -35,8 +35,6 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
 
-//        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-//        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         /**
          * 1:销售发往客户
          */
@@ -53,7 +51,6 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             resultList.add(sendMsg);
         }
 
-//        DataSourceContextHolder.clearDataSourceType();
 
         return resultList;
     }
@@ -68,14 +65,9 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean addMsgsToSaleSystem(List<SmsMessage> sendList) {
 
-//        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-//        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-
-//       DataSourceContextHolder.setDataSourceType("HANGZHOU");
 
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);
 
-//        DataSourceContextHolder.clearDataSourceType();
 
         return flag;
     }

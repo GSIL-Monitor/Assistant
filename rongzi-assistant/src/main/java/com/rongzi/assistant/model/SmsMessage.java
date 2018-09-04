@@ -3,23 +3,27 @@ package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SmsMessage implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -8311671458112781796L;
     /**
      * 发送方编号
      */
+    @NotBlank
     private String sender;
 
     /**
      * 接收方编号
      */
+    @NotBlank
     private String receiver;
 
 
@@ -42,7 +46,6 @@ public class SmsMessage implements Serializable {
     /**
      * 发送时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date occurTime;
 
@@ -50,10 +53,12 @@ public class SmsMessage implements Serializable {
     /**
      * 发送内容
      */
+    @NotBlank
     private String content;
     /**
      * 签名
      */
+    @NotBlank
     private String signature;
 
     /**
@@ -69,11 +74,13 @@ public class SmsMessage implements Serializable {
     /**
      * 发送状态  销售发送的
      */
+    @NotNull
     private int sendStatus;
 
     /**
      * 读取状态  客户回复的
      */
+    @NotNull
     private int isRead;
 
 

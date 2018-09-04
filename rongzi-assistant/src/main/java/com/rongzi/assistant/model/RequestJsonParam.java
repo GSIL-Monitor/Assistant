@@ -1,5 +1,6 @@
 package com.rongzi.assistant.model;
 
+import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class RequestJsonParam implements Serializable {
     /**
      * 每页记录行数
      */
+
     private int pageSize;
 
     /**

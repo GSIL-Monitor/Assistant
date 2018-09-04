@@ -1,6 +1,7 @@
 package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -69,6 +70,7 @@ public class Customer implements Serializable {
     /**
      * 备注
      */
+    @NotBlank
     private String comment;
 
     /**
@@ -79,6 +81,7 @@ public class Customer implements Serializable {
     /**
      * 客户编号
      */
+    @NotBlank
     private String customerCode;
 
     /**

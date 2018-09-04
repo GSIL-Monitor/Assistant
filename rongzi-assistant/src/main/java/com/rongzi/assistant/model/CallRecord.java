@@ -1,5 +1,8 @@
 package com.rongzi.assistant.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,16 +12,20 @@ public class CallRecord implements Serializable {
     /**
      * 通话号码
      */
+    @NotBlank
+    @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
     private String mobile;
 
     /**
      * 通话时长(秒)
      */
+    @NotBlank
     private int billSec;
 
     /**
      * 拨打时间
      */
+    @NotBlank
     private Date callDate;
 
     /**
@@ -29,6 +36,7 @@ public class CallRecord implements Serializable {
     /**
      * 销售编号
      */
+    @NotBlank
     private String empCode;
 
     /**
