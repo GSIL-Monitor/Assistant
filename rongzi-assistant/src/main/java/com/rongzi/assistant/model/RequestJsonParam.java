@@ -1,6 +1,5 @@
 package com.rongzi.assistant.model;
 
-import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 import java.util.Date;
 

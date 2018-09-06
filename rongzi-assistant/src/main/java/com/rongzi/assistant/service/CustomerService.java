@@ -17,11 +17,4 @@ public interface CustomerService {
     boolean syncContactStatusByCallRecords(List<CallRecord> callRecords);
 
 
-    /**
-     * 通过客户的手机号码去查询·客户编号和客户姓名
-     * @param mobile
-     * @return
-     */
-    Customer findCustomerCodeAndCustomerNameByCustomerMobile(String mobile);
-
 }

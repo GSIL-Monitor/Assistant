@@ -99,6 +99,21 @@ public class Customer implements Serializable {
      */
     private int  wechatFriendStatus;
 
+
+    /**
+     * 微信ID
+     */
+    private String customerWechatId;
+
+
+    public String getCustomerWechatId() {
+        return customerWechatId;
+    }
+
+    public void setCustomerWechatId(String customerWechatId) {
+        this.customerWechatId = customerWechatId;
+    }
+
     public int getWechatFriendStatus() {
         return wechatFriendStatus;
     }
@@ -256,6 +271,7 @@ public class Customer implements Serializable {
                 ", mobile='" + mobile + '\'' +
                 ", contactStatus=" + contactStatus +
                 ", wechatFriendStatus=" + wechatFriendStatus +
+                ", customerWechatId='" + customerWechatId + '\'' +
                 '}';
     }
 }

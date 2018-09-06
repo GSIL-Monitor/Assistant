@@ -7,8 +7,8 @@ import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.UserInfo;
+import com.rongzi.assistant.service.ApiService;
 import com.rongzi.assistant.service.CityService;
-import com.rongzi.assistant.service.CustomerListService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.config.aop.CityDataSource;
 import com.rongzi.config.aop.CityDatasourceEnum;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Autowired
-    CustomerListService customerListService;
+    ApiService apiService;
 
 
     @Override
@@ -46,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<City> allCitys = cityService.findAllCitys();
         Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
 
-        List<Customer> list = customerListService.findAllCustomers(page, empCode, customerExeStatus);
+        List<Customer> list = apiService.findAllCustomers(page, empCode, customerExeStatus);
 
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         for (Customer customer : list) {
@@ -82,22 +81,23 @@ public class CustomerServiceImpl implements CustomerService {
      * @return
      */
     @Override
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
 
-        //TODO
-        return customerMapper.syncContactStatusByCallRecords(callRecords);
+        for (int i = 0; i < callRecords.size(); i++) {
+            CallRecord callRecord = callRecords.get(i);
+            Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(callRecord.getMobile());
+            if (customer == null) {
+                callRecords.remove(callRecord);
+            }
+
+        }
+        UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
+        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
+
+        boolean flag = customerMapper.syncContactStatusByCallRecords(callRecords);
+        DataSourceContextHolder.clearDataSourceType();
+        return flag;
     }
-
-    @Override
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
-    public Customer findCustomerCodeAndCustomerNameByCustomerMobile(String mobile) {
-
-        return customerMapper.queryCustomerNameAndCustomerCode(mobile);
-    }
-
-
-
 
 
 }

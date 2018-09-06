@@ -6,6 +6,7 @@ import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.UserInfo;
+import com.rongzi.assistant.service.ApiService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.UserSendMsgService;
 import com.rongzi.config.aop.CityDataSource;
@@ -29,6 +30,10 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @Autowired
     CustomerService customerService;
 
+
+
+    @Autowired
+    ApiService apiService;
     /**
      * 从销售系统获取短信
      *
@@ -70,12 +75,22 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> sendList) {
 
-        for (SmsMessage smsMessage : sendList) {
-            /**
-             * 通过客户手机号码去查询客户的姓名和客户编号
-             */
-            Customer customer = customerService.findCustomerCodeAndCustomerNameByCustomerMobile(smsMessage.getReceiverMobile());
+
+        for(int i=0;i<sendList.size();i++){
+
+            SmsMessage smsMessage = sendList.get(i);
+
+            Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(smsMessage.getReceiverMobile());
+
+            if(customer==null){
+
+                sendList.remove(smsMessage);
+            }
             smsMessage.setReceiver(customer.getCustomerCode());
+
+            if(customer.getName()==null){
+                smsMessage.setReceiverName("");
+            }
             smsMessage.setReceiverName(customer.getName());
         }
 

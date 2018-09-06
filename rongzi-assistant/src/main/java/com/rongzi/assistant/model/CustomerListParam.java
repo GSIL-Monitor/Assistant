@@ -38,6 +38,19 @@ public class CustomerListParam implements Serializable {
     @NotBlank
     private String empCode;
 
+    /**
+     * 是否更新微信好友状态
+     */
+    @NotNull
+    private int refreshWX;
+
+    public int getRefreshWX() {
+        return refreshWX;
+    }
+
+    public void setRefreshWX(int refreshWX) {
+        this.refreshWX = refreshWX;
+    }
 
     public int getPageSize() {
         return pageSize;
@@ -79,6 +92,7 @@ public class CustomerListParam implements Serializable {
                 ", pageIndex=" + pageIndex +
                 ", customerExeStatus=" + customerExeStatus +
                 ", empCode='" + empCode + '\'' +
+                ", refreshWX=" + refreshWX +
                 '}';
     }
 }

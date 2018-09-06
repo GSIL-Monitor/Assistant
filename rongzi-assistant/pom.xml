@@ -77,6 +77,13 @@
             <artifactId>druid</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
         <!--shiro依赖-->
         <dependency>
             <groupId>org.apache.shiro</groupId>

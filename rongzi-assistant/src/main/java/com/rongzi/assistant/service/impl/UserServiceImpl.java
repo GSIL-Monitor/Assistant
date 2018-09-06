@@ -15,6 +15,8 @@ public class UserServiceImpl implements UserService {
         userInfo.setEmpCode(account.getEmpCode());
         userInfo.setEmpName(account.getEmpDesc());
         userInfo.setCityCode(account.getCityCode());
+        userInfo.setEmpWechatId("wxid_slhv0lqkbac222");
+        userInfo.setEmpWorkMobile("");
 // TODO
 //        userInfo.setCityName("上海");
 //        userInfo.setDprCode("dev");

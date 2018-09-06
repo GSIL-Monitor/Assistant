@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.CustomerListParam;
 import com.rongzi.assistant.service.CustomerService;
+import com.rongzi.assistant.service.WechatService;
 import com.rongzi.core.page.PageInfoBT;
 import com.rongzi.util.ValidatorParamUtil;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -24,6 +26,8 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    WechatService wechatService;
 
     /**
      * 获取客户列表
@@ -60,12 +64,22 @@ public class CustomerController {
             resultMap.put("msg", "操作成功");
             resultMap.put("code", 0);
 
-            Page page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+            Page page=null;
+            if (customerListParam.getRefreshWX() == 1) {
 
-            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
 
-            page.setRecords(customers);
-
+                /**
+                 * 调用奥创微信更新
+                 */
+                // TODO 接口现在没有开发。
+                page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+                List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                page.setRecords(customers);
+            } else {
+                page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+                List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                page.setRecords(customers);
+            }
             PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
             resultMap.put("data", JSON.toJSON(pageinfo));
         }
@@ -87,7 +101,7 @@ public class CustomerController {
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
             ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
-        }else{
+        } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
             resultMap.put("msg", "操作成功");
             resultMap.put("code", 0);
@@ -95,8 +109,6 @@ public class CustomerController {
         }
         return resultMap;
     }
-
-
 
 
 }

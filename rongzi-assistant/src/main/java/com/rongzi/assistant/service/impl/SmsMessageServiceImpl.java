@@ -81,7 +81,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         for (SmsMessage message : messages) {
             int senderRole = message.getSenderRole();
             /**
-             * 根据发送者角色来判断，如果是1，就是销售发出  2就是客户发出
+             * 根据发送者角色来判断，如果是1，就是销售发出  2就是客户发的
              * 销售发出保存到CustomerMsg
              * 客户发出保存到smsReply
              */
@@ -91,8 +91,6 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             } else {
                 customerSendMsgs.add(message);
             }
-
-
         }
 
 

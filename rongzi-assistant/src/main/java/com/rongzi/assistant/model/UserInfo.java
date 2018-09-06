@@ -1,7 +1,10 @@
 package com.rongzi.assistant.model;
 
-public class UserInfo {
+import java.io.Serializable;
 
+public class UserInfo implements Serializable{
+
+    private static final long serialVersionUID = 4673338693637430141L;
     private String accountName;
     private String empCode;
     private String empName;
@@ -11,6 +14,24 @@ public class UserInfo {
     private String dprName;
     private String roleCode;
     private String roleName;
+    private String empWorkMobile;
+    private String empWechatId;
+
+    public String getEmpWorkMobile() {
+        return empWorkMobile;
+    }
+
+    public void setEmpWorkMobile(String empWorkMobile) {
+        this.empWorkMobile = empWorkMobile;
+    }
+
+    public String getEmpWechatId() {
+        return empWechatId;
+    }
+
+    public void setEmpWechatId(String empWechatId) {
+        this.empWechatId = empWechatId;
+    }
 
     public String getEmpCode() {
         return empCode;
