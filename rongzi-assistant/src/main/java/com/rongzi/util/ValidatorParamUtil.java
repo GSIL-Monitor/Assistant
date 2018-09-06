@@ -1,6 +1,7 @@
 package com.rongzi.util;
 
 import com.alibaba.fastjson.JSON;
+import com.rongzi.config.tips.AssistantTip;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 public class ValidatorParamUtil {
 
 
-    public static void validatorParams(BindingResult bindingResult, Map<String, Object> resultMap, Map<String, Object> bindingResultMap) {
+    public static void validatorParams(BindingResult bindingResult, AssistantTip assistantTip, Map<String, Object> bindingResultMap) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
         for (FieldError fieldError : fieldErrors) {
@@ -22,8 +23,7 @@ public class ValidatorParamUtil {
 
             bindingResultMap.put(field, defaultMessage);
         }
-        resultMap.put("msg", "参数失败");
-        resultMap.put("code", -1);
-        resultMap.put("data", JSON.toJSON(bindingResultMap));
+        assistantTip=AssistantTip.error(-1,JSON.toJSON(bindingResultMap));
+
     }
 }

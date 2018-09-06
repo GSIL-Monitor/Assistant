@@ -2,6 +2,7 @@ package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.service.CallRecordService;
+import com.rongzi.config.tips.AssistantTip;
 import com.rongzi.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -30,19 +31,19 @@ public class CallRecordController {
      * @return
      */
     @PostMapping("/syncRecords")
-    public Map<String, Object> syncRecords(@RequestBody @Valid List<CallRecord> callRecord, BindingResult bindingResult) {
+    public AssistantTip syncRecords(@RequestBody @Valid List<CallRecord> callRecord, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+
+        AssistantTip assistantTip=new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-            resultMap.put("data", null);
+            assistantTip=AssistantTip.successNoReturn();
         }
-        return resultMap;
+        return assistantTip;
     }
 
 

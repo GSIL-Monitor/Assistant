@@ -2,6 +2,7 @@ package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.model.WechatParam;
 import com.rongzi.assistant.service.WechatService;
+import com.rongzi.config.tips.AssistantTip;
 import com.rongzi.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,24 +31,21 @@ public class WechatController {
     WechatService wechatService;
 
     @RequestMapping("/addFriend")
-    public Map<String, Object> sendRequestForAddFreiend(@RequestBody @Valid WechatParam wechatParam, BindingResult bindingResult) {
+    public AssistantTip sendRequestForAddFreiend(@RequestBody @Valid WechatParam wechatParam, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        AssistantTip assistantTip = new AssistantTip();
 
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             wechatParam.setAccountSecret(AccountSecret);
             wechatParam.setWeChatConstantStr(weChatConstantStr);
             int weChatCode = wechatService.addFriend(wechatParam);
-
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-            resultMap.put("data", weChatCode);
+            assistantTip=AssistantTip.successReturnData(weChatCode);
         }
-        return resultMap;
+        return assistantTip;
 
     }
 }

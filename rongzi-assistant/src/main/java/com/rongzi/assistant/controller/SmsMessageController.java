@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.SystemMessageParam;
 import com.rongzi.assistant.service.SmsMessageService;
+import com.rongzi.config.tips.AssistantTip;
 import com.rongzi.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -33,22 +34,18 @@ public class SmsMessageController {
      * @return
      */
     @PostMapping("/getMessages")
-    public Map<String, Object> findAllMsgFromSaleSystem(@RequestBody @Valid SystemMessageParam systemMessageParam, BindingResult bindingResult) {
+    public AssistantTip findAllMsgFromSaleSystem(@RequestBody @Valid SystemMessageParam systemMessageParam, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-
+        AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(systemMessageParam.getEmpCode(), systemMessageParam.getCustomerCode(), systemMessageParam.getCustomerMobile());
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-            resultMap.put("data", JSON.toJSON(msgs));
+            assistantTip=AssistantTip.successReturnData(JSON.toJSON(msgs));
         }
-        return resultMap;
-
+        return assistantTip;
     }
 
 
@@ -57,22 +54,18 @@ public class SmsMessageController {
      * 同步手机短信到销售系统
      */
     @PostMapping("/addMessages")
-    public Map<String, Object> addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
+    public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-
+        AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             smsMessageService.addMsgsToSaleSystem(msgs);
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-            resultMap.put("data", null);
+            assistantTip=AssistantTip.successNoReturn();
         }
-
-        return resultMap;
+        return assistantTip;
     }
 
 

@@ -23,6 +23,6 @@ public class SmsTemplateController {
     public AssistantTip getSmsTemplates() {
 
         List<SmsTemplate> resultList = smsTemplateService.findAllsmsTemplates();
-        return new AssistantTip("操作成功",0,JSON.toJSON(resultList));
+        return AssistantTip.successReturnData(JSON.toJSON(resultList));
     }
 }

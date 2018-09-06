@@ -6,6 +6,7 @@ import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.CustomerListParam;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.WechatService;
+import com.rongzi.config.tips.AssistantTip;
 import com.rongzi.core.page.PageInfoBT;
 import com.rongzi.util.ValidatorParamUtil;
 import com.sun.xml.internal.bind.v2.TODO;
@@ -35,10 +36,13 @@ public class CustomerController {
      * @return
      */
     @PostMapping("/list")
-    public Map<String, Object> findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
+    public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        AssistantTip assistantTip = new AssistantTip();
+
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
+
         Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
 
         List<Integer> status = Arrays.asList(customerExeStatus);
@@ -57,17 +61,10 @@ public class CustomerController {
                     bindingResultMap.put(field, defaultMessage);
                 }
             }
-            resultMap.put("msg", "参数失败");
-            resultMap.put("code", -1);
-            resultMap.put("data", JSON.toJSON(bindingResultMap));
+            assistantTip = AssistantTip.error(-1, JSON.toJSON(bindingResultMap));
         } else {
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-
-            Page page=null;
+            Page page = null;
             if (customerListParam.getRefreshWX() == 1) {
-
-
                 /**
                  * 调用奥创微信更新
                  */
@@ -81,9 +78,9 @@ public class CustomerController {
                 page.setRecords(customers);
             }
             PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
-            resultMap.put("data", JSON.toJSON(pageinfo));
+            assistantTip = AssistantTip.successReturnData(JSON.toJSON(pageinfo));
         }
-        return resultMap;
+        return assistantTip;
 
 
     }
@@ -95,19 +92,19 @@ public class CustomerController {
      * @return
      */
     @PostMapping("/editComment")
-    public Map<String, Object> editComment(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
+    public AssistantTip editComment(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        AssistantTip assistantTip = new AssistantTip();
+
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
+            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
-            resultMap.put("msg", "操作成功");
-            resultMap.put("code", 0);
-            resultMap.put("data", null);
+            assistantTip = AssistantTip.successNoReturn();
         }
-        return resultMap;
+        return assistantTip;
     }
 
 
