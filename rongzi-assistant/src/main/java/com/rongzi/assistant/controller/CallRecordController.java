@@ -35,17 +35,12 @@ public class CallRecordController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-
             ValidatorParamUtil.validatorParams(bindingResult, resultMap, bindingResultMap);
-
         } else {
             callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-
             resultMap.put("msg", "操作成功");
             resultMap.put("code", 0);
             resultMap.put("data", null);
-
-
         }
         return resultMap;
     }

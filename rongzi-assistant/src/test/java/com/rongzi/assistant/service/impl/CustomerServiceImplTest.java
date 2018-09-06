@@ -73,7 +73,7 @@ public class CustomerServiceImplTest {
         int friendStatus=1;
 
 
-        customerService.markWechatFriendship(customerMobile,friendStatus,new Date());
+//        customerService.markWechatFriendship(customerMobile,friendStatus,new Date());
     }
 
 
