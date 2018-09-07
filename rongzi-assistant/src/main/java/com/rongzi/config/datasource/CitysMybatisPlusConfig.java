@@ -1,10 +1,9 @@
-package com.rongzi.config;
+package com.rongzi.config.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.rongzi.config.aop.CityDatasourceEnum;
-import com.rongzi.core.constant.DatasourceEnum;
 import com.rongzi.core.datasource.DruidProperties;
 import com.rongzi.core.mutidatasource.DynamicDataSource;
 import org.mybatis.spring.annotation.MapperScan;

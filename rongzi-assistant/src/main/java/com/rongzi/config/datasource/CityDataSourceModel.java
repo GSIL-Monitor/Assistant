@@ -1,4 +1,4 @@
-package com.rongzi.config;
+package com.rongzi.config.datasource;
 
 public class CityDataSourceModel {
 

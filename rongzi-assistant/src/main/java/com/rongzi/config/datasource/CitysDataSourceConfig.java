@@ -1,4 +1,4 @@
-package com.rongzi.config;
+package com.rongzi.config.datasource;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
