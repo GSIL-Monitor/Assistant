@@ -18,18 +18,15 @@ public class WechatParam implements Serializable{
     @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
     private String customerMobile;
 
-
     /**
      * 客户姓名
      */
     @NotBlank
     private String customerName;
 
-
     /**
      * 客户微信ID
      */
-
     private String customerWechatId;
 
     /**
@@ -44,7 +41,6 @@ public class WechatParam implements Serializable{
      */
     @NotBlank
     private String empWechatId;
-
 
     /**
      * 销售名称
@@ -67,12 +63,10 @@ public class WechatParam implements Serializable{
      */
     private  String accountSecret;
 
-
     /**
      * 调用拼接所需字符串
      */
     private String weChatConstantStr;
-
 
     public String getCustomerName() {
         return customerName;

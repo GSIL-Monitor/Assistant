@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * 获取销售系统短信到手机的实体类
  */
-public class SystemMessageParam implements Serializable{
+public class SystemMessageParam implements Serializable {
 
 
     private static final long serialVersionUID = 4910613719976587532L;
@@ -20,27 +20,23 @@ public class SystemMessageParam implements Serializable{
     @NotBlank
     private String empCode;
 
-
     /**
      * 客户编号
      */
     @NotBlank
     private String customerCode;
 
-
     /**
      * 销售名称
      */
     private String empName;
 
-
     /**
      * 客户手机号码
      */
     @NotBlank
-    @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
+    @Pattern(regexp = "^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$", message = "手机号码格式不正确")
     private String customerMobile;
-
 
     /**
      * 每页记录行数
@@ -103,7 +99,6 @@ public class SystemMessageParam implements Serializable{
     public void setPageIndex(int pageIndex) {
         this.pageIndex = pageIndex;
     }
-
 
     @Override
     public String toString() {

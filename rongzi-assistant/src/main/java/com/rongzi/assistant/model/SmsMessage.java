@@ -24,7 +24,6 @@ public class SmsMessage implements Serializable {
      */
     private String receiver;
 
-
     /**
      * 发送者号码
      */
@@ -47,12 +46,12 @@ public class SmsMessage implements Serializable {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date occurTime;
 
-
     /**
      * 发送内容
      */
     @NotBlank
     private String content;
+
     /**
      * 签名
      */

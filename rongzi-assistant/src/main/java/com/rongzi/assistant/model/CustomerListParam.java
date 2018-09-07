@@ -24,13 +24,11 @@ public class CustomerListParam implements Serializable {
     @NotNull
     private int pageIndex;
 
-
     /**
      * 客户意向进程
      */
     @NotNull
     private int customerExeStatus;
-
 
     /**
      * 客户编号

@@ -48,7 +48,6 @@ public class CallRecord implements Serializable {
      */
     private int callStatus;
 
-
     /**
      * 拨打者
      */
@@ -59,11 +58,8 @@ public class CallRecord implements Serializable {
      */
     private String dst;
 
-
     /**
      * 客户编号
-     *
-     * @return
      */
     private String customerCode;
 

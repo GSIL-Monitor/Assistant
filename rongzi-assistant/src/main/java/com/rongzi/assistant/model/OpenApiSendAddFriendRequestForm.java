@@ -20,7 +20,6 @@ public class OpenApiSendAddFriendRequestForm implements Serializable {
      */
     private  String targetWechatId;
 
-
     /**
      * 客户手机号
      */

@@ -21,7 +21,6 @@ public class SmsTemplate implements Serializable {
      */
     private String content;
 
-
     public String getId() {
         return id;
     }
