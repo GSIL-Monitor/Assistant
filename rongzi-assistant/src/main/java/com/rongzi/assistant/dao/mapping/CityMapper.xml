@@ -3,12 +3,12 @@
 
 <mapper namespace="com.rongzi.assistant.dao.CityMapper">
 
-
     <select id="queryAllCitys" resultType="com.rongzi.assistant.model.City">
-
-      SELECT  CityID AS cityID,CityName AS cityName FROM T_City
-        
+      SELECT
+          CityID AS cityID,
+          CityCode AS cityCode,
+          CityName AS cityName
+      FROM T_City
     </select>
-
 
 </mapper>

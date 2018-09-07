@@ -17,6 +17,8 @@
         <result column="USE_FLAG" property="useFlag" />
         <result column="CREATE_DATE" property="createDate" />
         <result column="CREATOR" property="creator" />
+        <result column="EmpWorkMobile" property="empWorkMobile" />
+        <result column="EmpWorkMobile" property="empWorkMobile" />
     </resultMap>
 
 </mapper>
