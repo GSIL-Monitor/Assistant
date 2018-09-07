@@ -32,9 +32,7 @@ public class CityServiceImpl implements CityService {
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.CITYS_NAME + "'")
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_PRODUCT)
     public List<City> findAllCitys() {
-
         List<City> cities = cityDao.queryAllCitys();
-
         return cities;
     }
 }

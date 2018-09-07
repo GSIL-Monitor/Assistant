@@ -28,15 +28,9 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
     @Override
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsTemplate> findAllsmsTemplates() {
-
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
-//        DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-
         String empCode = currentUser.getEmpCode();
-
         List<SmsTemplate> smsTemplates = smsTemplateMapper.queryAllsmsTemplates(empCode);
-//        DataSourceContextHolder.clearDataSourceType();
-
         return smsTemplates;
     }
 }

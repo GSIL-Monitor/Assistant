@@ -19,4 +19,6 @@ public interface CustomerMapper {
     boolean syncContactStatusByCallRecords(@Param("callRecords") List<CallRecord> callRecords);
 
     Customer queryCustomerNameAndCustomerCode(@Param("mobile")String mobile);
+
+    void updateCustomerWechatStatus(@Param("wechatFriendStatus") int weChatStatus, @Param("date") Date date, @Param("customerMobile") String customerMobile);
 }

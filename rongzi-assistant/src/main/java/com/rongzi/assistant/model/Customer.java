@@ -99,6 +99,11 @@ public class Customer implements Serializable {
      */
     private int  wechatFriendStatus;
 
+    /**
+     * 申请好友的时间
+     */
+    private Date addFriendTime;
+
 
     /**
      * 微信ID

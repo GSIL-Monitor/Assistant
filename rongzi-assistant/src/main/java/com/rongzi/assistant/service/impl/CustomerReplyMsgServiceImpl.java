@@ -33,17 +33,8 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      */
     @Override
     public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile, String customerCode, String empCode) {
-
-
-//        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
-
-
         List<SmsMessage> replyMsgs = customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
-
         List<SmsMessage> resultList = new ArrayList<SmsMessage>();
-        /**
-         * 客户回复方，没有签名和接受者手机号码。
-         */
         for (SmsMessage replyMsg : replyMsgs) {
             replyMsg.setSenderRole(2);
             replyMsg.setSender(customerCode);
@@ -52,13 +43,8 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
             replyMsg.setReceiver(empCode);
             replyMsg.setIsRead(1);
             replyMsg.setSignature("");
-
-
             resultList.add(replyMsg);
         }
-
-//        DataSourceContextHolder.clearDataSourceType();
-
         return resultList;
     }
 
@@ -70,12 +56,7 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
-
-//        DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_GUNS);
-
         boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
-
-//        DataSourceContextHolder.clearDataSourceType();
         return flag;
     }
 }

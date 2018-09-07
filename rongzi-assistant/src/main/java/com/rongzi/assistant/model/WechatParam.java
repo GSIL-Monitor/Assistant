@@ -18,22 +18,39 @@ public class WechatParam implements Serializable{
     @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
     private String customerMobile;
 
+
+    /**
+     * 客户姓名
+     */
+    @NotBlank
+    private String customerName;
+
+
     /**
      * 客户微信ID
      */
-    @NotBlank
+
     private String customerWechatId;
 
     /**
      * 销售工作手机
      */
+    @NotBlank
+    @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
     private String empWorkMobile;
 
     /**
      * 销售微信ID
      */
+    @NotBlank
     private String empWechatId;
 
+
+    /**
+     * 销售名称
+     */
+    @NotBlank
+    private String empName;
 
     /**
      *  招呼语
@@ -56,6 +73,22 @@ public class WechatParam implements Serializable{
      */
     private String weChatConstantStr;
 
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
 
     public String getWeChatConstantStr() {
         return weChatConstantStr;
@@ -126,9 +159,11 @@ public class WechatParam implements Serializable{
     public String toString() {
         return "WechatParam{" +
                 "customerMobile='" + customerMobile + '\'' +
+                ", customerName='" + customerName + '\'' +
                 ", customerWechatId='" + customerWechatId + '\'' +
                 ", empWorkMobile='" + empWorkMobile + '\'' +
                 ", empWechatId='" + empWechatId + '\'' +
+                ", empName='" + empName + '\'' +
                 ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 ", accountSecret='" + accountSecret + '\'' +

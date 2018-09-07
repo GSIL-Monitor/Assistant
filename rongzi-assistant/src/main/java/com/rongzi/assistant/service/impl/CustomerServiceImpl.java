@@ -38,12 +38,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
-
         List<Customer> resultList = new ArrayList<Customer>();
-
         List<City> allCitys = cityService.findAllCitys();
         Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
-
         List<Customer> customers = apiService.findAllCustomers(page, empCode, customerExeStatus);
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         for (Customer customer : customers) {
@@ -52,10 +49,8 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 customer.setWorkPlace(currentUser.getCityName());
             }
-
             resultList.add(customer);
         }
-
         return resultList;
     }
 
@@ -73,7 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
-
         for (int i = 0; i < callRecords.size(); i++) {
             CallRecord callRecord = callRecords.get(i);
             Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(callRecord.getMobile());

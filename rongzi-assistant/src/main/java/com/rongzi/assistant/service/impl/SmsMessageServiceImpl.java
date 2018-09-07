@@ -34,9 +34,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      */
     @Override
     public List<SmsMessage> findMsgsFromSaleSystem(String empCode, String customerCode, String customerMobile) {
-
         List<SmsMessage> sendMsgs = userSendMsgService.findMsgsFromSaleSystemByUserAndCustomer(empCode, customerMobile, customerCode);
-
         List<SmsMessage> replyMsgs = customerReplyMsgService.findReplyMsgsByCustomerMobile(customerMobile, customerCode, empCode);
         List<SmsMessage> results = new ArrayList<SmsMessage>();
 
@@ -48,7 +46,6 @@ public class SmsMessageServiceImpl implements SmsMessageService {
     }
 
     private void listSort(List<SmsMessage> msgs) {
-
         Collections.sort(msgs, new Comparator<SmsMessage>() {
 
             @Override
@@ -73,36 +70,22 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> messages) {
-
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
-
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
-
         for (SmsMessage message : messages) {
             int senderRole = message.getSenderRole();
-            /**
-             * 根据发送者角色来判断，如果是1，就是销售发出  2就是客户发的
-             * 销售发出保存到CustomerMsg
-             * 客户发出保存到smsReply
-             */
             if (senderRole == 1) {
                 empSendMsgs.add(message);
-
             } else {
                 customerSendMsgs.add(message);
             }
         }
-
-
         if (empSendMsgs.size() > 0) {
-           userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
+            userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
-
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-
         return true;
-
     }
 }

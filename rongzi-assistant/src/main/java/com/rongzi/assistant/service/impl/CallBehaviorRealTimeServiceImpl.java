@@ -24,16 +24,15 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
 
     /**
      * 批量增加通话记录
+     *
      * @param callRecords
      * @return
      */
     @Override
-    @CityDataSource(name=CityDatasourceEnum.DATA_SOURCE_CITY)
+    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public boolean addCallBehaviorFromMobileToSystme(List<CallRecord> callRecords) {
-
-        int batchCount = 100;
+        int batchCount = 50;
         List<CallRecord> temp = new ArrayList<CallRecord>();
-
         for (int i = 0; i < callRecords.size(); i++) {
             temp.add(callRecords.get(i));
             if (i % batchCount == 0 && i > 0) {
@@ -41,9 +40,6 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
                 temp.clear();
             }
         }
-
-        boolean flag = callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
-
-        return flag;
+        return callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
     }
 }

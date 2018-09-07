@@ -23,6 +23,7 @@
         D.HasPolicy AS hasPolicy,
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
+        B.customerWechatId AS customerWechatId,
         B.ContactStatus AS contactStatus,
         B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE A (NOLOCK)
@@ -77,5 +78,12 @@
         SELECT  CLT_CODE AS customerCode,LNK_NAME AS  name FROM  SAL_CLT_LNKMAN WHERE LNK_MOBILE=#{mobile}
 
     </select>
+
+    <update id="updateCustomerWechatStatus" parameterType="com.rongzi.assistant.model.Customer">
+
+        UPDATE SAL_CLT_LNKMAN SET wechatFriendStatus=#{wechatFriendStatus},addFriendTime=#{date}
+
+        WHERE LNK_MOBILE=#{customerMobile}
+    </update>
 
 </mapper>

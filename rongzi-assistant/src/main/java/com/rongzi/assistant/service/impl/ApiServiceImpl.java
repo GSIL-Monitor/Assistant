@@ -21,14 +21,12 @@ public class ApiServiceImpl implements ApiService {
     @Override
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
-
         return customerMapper.queryAllCutomers(page, empCode, customerExeStatus);
     }
 
     @Override
     @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
     public Customer findCustomerCodeAndCustomerNameByCustomerMobile(String mobile) {
-
         return customerMapper.queryCustomerNameAndCustomerCode(mobile);
     }
 
