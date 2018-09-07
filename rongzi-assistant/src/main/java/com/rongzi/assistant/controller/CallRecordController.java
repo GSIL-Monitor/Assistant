@@ -33,15 +33,13 @@ public class CallRecordController {
     @PostMapping("/syncRecords")
     public AssistantTip syncRecords(@RequestBody @Valid List<CallRecord> callRecord, BindingResult bindingResult) {
 
-
-
         AssistantTip assistantTip=new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-            assistantTip=AssistantTip.successNoReturn();
+            assistantTip=AssistantTip.successReturnNull();
         }
         return assistantTip;
     }

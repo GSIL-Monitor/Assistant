@@ -63,7 +63,7 @@ public class SmsMessageController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             smsMessageService.addMsgsToSaleSystem(msgs);
-            assistantTip=AssistantTip.successNoReturn();
+            assistantTip=AssistantTip.successReturnNull();
         }
         return assistantTip;
     }

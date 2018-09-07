@@ -48,7 +48,7 @@ public class AssistantTip implements Serializable {
         this.data = data;
     }
 
-    public static AssistantTip successNoReturn() {
+    public static AssistantTip successReturnNull() {
 
         AssistantTip tip = new AssistantTip();
         tip.code = 0;

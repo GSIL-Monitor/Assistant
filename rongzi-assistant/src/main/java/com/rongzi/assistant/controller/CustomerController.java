@@ -9,7 +9,6 @@ import com.rongzi.assistant.service.WechatService;
 import com.rongzi.config.tips.AssistantTip;
 import com.rongzi.core.page.PageInfoBT;
 import com.rongzi.util.ValidatorParamUtil;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -102,7 +101,7 @@ public class CustomerController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
-            assistantTip = AssistantTip.successNoReturn();
+            assistantTip = AssistantTip.successReturnNull();
         }
         return assistantTip;
     }
