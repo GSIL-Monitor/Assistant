@@ -92,7 +92,8 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             smsMessage.setReceiverName(customer.getName());
         }
         if(sendList.size()<=0){
-            throw new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
+            return true;
+//            throw new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
         }
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());

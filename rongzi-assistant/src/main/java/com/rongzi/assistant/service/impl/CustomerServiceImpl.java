@@ -83,7 +83,8 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         if(callRecords.size()<=0){
-            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
+            return true;
+//            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
         }
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
