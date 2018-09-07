@@ -47,7 +47,10 @@ public class Account extends Model<Account> {
     private Date createDate;
     @TableField("CREATOR")
     private String creator;
-
+    @TableField("EmpWorkMobile")
+    private String empWorkMobile;
+    @TableField("EmpWechatId")
+    private String empWechatId;
 
     public Long getLgnId() {
         return lgnId;
@@ -158,22 +161,40 @@ public class Account extends Model<Account> {
         return this.lgnAccount;
     }
 
+    public String getEmpWorkMobile() {
+        return empWorkMobile;
+    }
+
+    public void setEmpWorkMobile(String empWorkMobile) {
+        this.empWorkMobile = empWorkMobile;
+    }
+
+    public String getEmpWechatId() {
+        return empWechatId;
+    }
+
+    public void setEmpWechatId(String empWechatId) {
+        this.empWechatId = empWechatId;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
-        "lgnId=" + lgnId +
-        ", lgnAccount=" + lgnAccount +
-        ", lgnPswd=" + lgnPswd +
-        ", cityCode=" + cityCode +
-        ", empCode=" + empCode +
-        ", empDesc=" + empDesc +
-        ", currCity=" + currCity +
-        ", softPhone=" + softPhone +
-        ", lgnStatus=" + lgnStatus +
-        ", lgnDate=" + lgnDate +
-        ", useFlag=" + useFlag +
-        ", createDate=" + createDate +
-        ", creator=" + creator +
-        "}";
+                "lgnId=" + lgnId +
+                ", lgnAccount='" + lgnAccount + '\'' +
+                ", lgnPswd='" + lgnPswd + '\'' +
+                ", cityCode='" + cityCode + '\'' +
+                ", empCode='" + empCode + '\'' +
+                ", empDesc='" + empDesc + '\'' +
+                ", currCity='" + currCity + '\'' +
+                ", softPhone='" + softPhone + '\'' +
+                ", lgnStatus=" + lgnStatus +
+                ", lgnDate=" + lgnDate +
+                ", useFlag=" + useFlag +
+                ", createDate=" + createDate +
+                ", creator='" + creator + '\'' +
+                ", empWorkMobile='" + empWorkMobile + '\'' +
+                ", empWechatId='" + empWechatId + '\'' +
+                '}';
     }
 }
