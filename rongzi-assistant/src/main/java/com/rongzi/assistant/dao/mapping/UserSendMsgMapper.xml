@@ -24,7 +24,8 @@
         (
         CltCode,LnkMobile,MsgContent,SendEmpCode,SendEmpName,Signature,SendStatus
         ,SendTime,CreateTime,ReportResult
-        )VALUES
+        )
+        VALUES
         <foreach collection="list" index="index" item="sms" separator=",">
             (
             #{sms.receiver},#{sms.receiverMobile},#{sms.content},#{sms.sender},#{sms.senderName},

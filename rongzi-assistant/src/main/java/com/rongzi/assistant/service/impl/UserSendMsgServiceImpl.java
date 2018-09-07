@@ -11,7 +11,10 @@ import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.UserSendMsgService;
 import com.rongzi.config.aop.CityDataSource;
 import com.rongzi.config.aop.CityDatasourceEnum;
+import com.rongzi.config.exception.AssistantExceptionEnum;
+import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,25 +78,22 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> sendList) {
 
-
         for(int i=0;i<sendList.size();i++){
-
             SmsMessage smsMessage = sendList.get(i);
-
             Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(smsMessage.getReceiverMobile());
-
             if(customer==null){
-
                 sendList.remove(smsMessage);
+                continue;
             }
             smsMessage.setReceiver(customer.getCustomerCode());
-
-            if(customer.getName()==null){
+            if(StringUtils.isEmpty(customer.getName())){
                 smsMessage.setReceiverName("");
             }
             smsMessage.setReceiverName(customer.getName());
         }
-
+        if(sendList.size()<=0){
+            throw new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
+        }
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);

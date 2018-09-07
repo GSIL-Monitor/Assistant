@@ -12,6 +12,8 @@ import com.rongzi.assistant.service.CityService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.config.aop.CityDataSource;
 import com.rongzi.config.aop.CityDatasourceEnum;
+import com.rongzi.config.exception.AssistantExceptionEnum;
+import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,16 +79,16 @@ public class CustomerServiceImpl implements CustomerService {
             Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(callRecord.getMobile());
             if (customer == null) {
                 callRecords.remove(callRecord);
+                continue;
             }
         }
-
+        if(callRecords.size()<=0){
+            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
+        }
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-
         boolean flag = customerMapper.syncContactStatusByCallRecords(callRecords);
-
         DataSourceContextHolder.clearDataSourceType();
-
         return flag;
     }
 

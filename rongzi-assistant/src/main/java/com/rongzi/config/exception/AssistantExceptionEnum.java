@@ -20,7 +20,8 @@ public enum AssistantExceptionEnum implements ServiceExceptionEnum {
 	WECHAT_ADDFRIEND_ERROR(500,"微信添加好友请求失败"),
 	REQUEST_NULL(400, "请求有错误"),
 	SESSION_TIMEOUT(400, "会话超时"),
-	SERVER_ERROR(500, "服务器异常");
+	SERVER_ERROR(500, "服务器异常"),
+	CUSTOMER_NOT_FOUNT(500,"该客户并不存在数据库中");
 
 	AssistantExceptionEnum(int code, String message) {
 		this.code = code;
