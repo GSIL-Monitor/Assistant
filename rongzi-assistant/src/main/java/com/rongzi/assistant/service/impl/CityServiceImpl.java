@@ -3,18 +3,15 @@ package com.rongzi.assistant.service.impl;
 import com.rongzi.assistant.dao.CityMapper;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.service.CityService;
-import com.rongzi.config.aop.CityDataSource;
-import com.rongzi.config.aop.CityDatasourceEnum;
-import com.rongzi.config.cache.Cache;
-import com.rongzi.config.cache.CacheKey;
-import com.rongzi.core.mutidatasource.DataSourceContextHolder;
+import com.rongzi.assistant.common.datasource.CityDataSource;
+import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
+import com.rongzi.assistant.common.cache.Cache;
+import com.rongzi.assistant.common.cache.CacheKey;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CityServiceImpl implements CityService {

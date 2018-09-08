@@ -1,4 +1,4 @@
-package com.rongzi.config.exception;
+package com.rongzi.assistant.common.exception;
 
 import com.rongzi.core.exception.ServiceExceptionEnum;
 

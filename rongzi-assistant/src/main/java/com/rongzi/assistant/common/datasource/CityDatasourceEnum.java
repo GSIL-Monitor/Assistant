@@ -1,4 +1,4 @@
-package com.rongzi.config.aop;
+package com.rongzi.assistant.common.datasource;
 
 /**
  * 
@@ -14,18 +14,14 @@ public interface CityDatasourceEnum {
 	 */
 	String DATA_SOURCE_GUNS = "dataSourceGuns";
 
-
 	/**
 	 * 单独的产品数据库
 	 */
 	String DATA_SOURCE_PRODUCT="PRODUCT";
 
-
     /**
      * 城市的数据库
 	 */
 	String DATA_SOURCE_CITY="CITY";
-
-
 
 }

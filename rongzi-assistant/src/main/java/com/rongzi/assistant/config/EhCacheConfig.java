@@ -1,4 +1,4 @@
-package com.rongzi.config.web;
+package com.rongzi.assistant.config;
 
 import net.sf.ehcache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

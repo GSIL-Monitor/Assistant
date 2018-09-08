@@ -1,6 +1,7 @@
 package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.common.context.UserContextHolder;
+import com.rongzi.assistant.common.exception.RongziExceptionEnum;
 import com.rongzi.assistant.common.web.response.R;
 import com.rongzi.assistant.controller.dto.LoginRequest;
 import com.rongzi.assistant.manager.TokenManager;
@@ -50,7 +51,8 @@ public class AccountController {
     public R test(String username, String password) {
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         System.out.println(currentUser.getEmpName());
-        return R.ok();
+        throw new GunsException(RongziExceptionEnum.INVALID_TOKEN);
+        //return R.ok();
     }
 
 }

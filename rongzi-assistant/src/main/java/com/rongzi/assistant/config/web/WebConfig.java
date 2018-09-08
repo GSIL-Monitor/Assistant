@@ -1,4 +1,4 @@
-package com.rongzi.config.web;
+package com.rongzi.assistant.config.web;
 
 import com.rongzi.assistant.common.web.filter.AuthFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

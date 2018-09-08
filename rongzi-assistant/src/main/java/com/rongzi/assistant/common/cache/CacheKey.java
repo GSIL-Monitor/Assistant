@@ -1,4 +1,4 @@
-package com.rongzi.config.cache;
+package com.rongzi.assistant.common.cache;
 
 /**
  * 缓存标识前缀集合,常用在ConstantFactory类中

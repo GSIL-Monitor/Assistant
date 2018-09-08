@@ -1,6 +1,6 @@
-package com.rongzi.config.exception;
+package com.rongzi.assistant.common.exception;
 
-import com.rongzi.config.tips.AssistantTip;
+import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.core.exception.GunsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

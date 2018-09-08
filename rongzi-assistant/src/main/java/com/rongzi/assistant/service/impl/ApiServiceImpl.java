@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.dao.CustomerMapper;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.service.ApiService;
-import com.rongzi.config.aop.CityDataSource;
-import com.rongzi.config.aop.CityDatasourceEnum;
+import com.rongzi.assistant.common.datasource.CityDataSource;
+import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

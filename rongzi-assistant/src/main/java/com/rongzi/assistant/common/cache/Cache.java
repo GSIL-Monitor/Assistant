@@ -1,4 +1,4 @@
-package com.rongzi.config.cache;
+package com.rongzi.assistant.common.cache;
 
 /**
  * 所有缓存名称的集合

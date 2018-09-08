@@ -1,6 +1,5 @@
 package com.rongzi.assistant.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.common.context.UserContextHolder;
 import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.Customer;
@@ -9,10 +8,8 @@ import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.ApiService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.UserSendMsgService;
-import com.rongzi.config.aop.CityDataSource;
-import com.rongzi.config.aop.CityDatasourceEnum;
-import com.rongzi.config.exception.AssistantExceptionEnum;
-import com.rongzi.core.exception.GunsException;
+import com.rongzi.assistant.common.datasource.CityDataSource;
+import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

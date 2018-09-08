@@ -2,8 +2,8 @@ package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.model.WechatParam;
 import com.rongzi.assistant.service.WechatService;
-import com.rongzi.config.tips.AssistantTip;
-import com.rongzi.util.ValidatorParamUtil;
+import com.rongzi.assistant.common.tips.AssistantTip;
+import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
