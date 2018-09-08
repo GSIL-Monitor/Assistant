@@ -1,6 +1,6 @@
 package com.rongzi.assistant.common.datasource;
 
-import com.rongzi.assistant.common.context.UserContextHolder;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;

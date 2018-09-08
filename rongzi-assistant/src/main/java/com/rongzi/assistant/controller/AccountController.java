@@ -1,7 +1,6 @@
 package com.rongzi.assistant.controller;
 
-import com.rongzi.assistant.common.context.UserContextHolder;
-import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.common.web.response.R;
 import com.rongzi.assistant.controller.dto.LoginRequest;
 import com.rongzi.assistant.manager.TokenManager;

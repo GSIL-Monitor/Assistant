@@ -2,7 +2,7 @@ package com.rongzi.assistant.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rongzi.assistant.common.context.UserContextHolder;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
 import com.rongzi.assistant.model.OpenApiSendAddFriendRequestForm;
 import com.rongzi.assistant.model.UserInfo;

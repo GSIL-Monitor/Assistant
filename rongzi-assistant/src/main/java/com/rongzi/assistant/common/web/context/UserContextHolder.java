@@ -1,10 +1,8 @@
-package com.rongzi.assistant.common.context;
+package com.rongzi.assistant.common.web.context;
 
 import com.rongzi.assistant.common.constant.Constants;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.core.support.HttpKit;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 

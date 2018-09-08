@@ -1,6 +1,6 @@
 package com.rongzi.assistant.service.impl;
 
-import com.rongzi.assistant.common.context.UserContextHolder;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.SmsTemplateMapper;
 import com.rongzi.assistant.model.SmsTemplate;
 import com.rongzi.assistant.model.UserInfo;
