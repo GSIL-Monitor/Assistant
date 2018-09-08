@@ -1,14 +1,11 @@
 package com.rongzi.assistant.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.AssistantApp;
-import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.SmsMessage;
-import com.rongzi.assistant.service.CustomerReplyMsgService;
+import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.core.constant.DatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
-import com.rongzi.core.page.PageInfoBT;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = AssistantApp.class)

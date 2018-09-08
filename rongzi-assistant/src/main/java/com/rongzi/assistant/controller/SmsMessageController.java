@@ -3,7 +3,7 @@ package com.rongzi.assistant.controller;
 import com.alibaba.fastjson.JSON;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.SystemMessageParam;
-import com.rongzi.assistant.service.SmsMessageService;
+import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
