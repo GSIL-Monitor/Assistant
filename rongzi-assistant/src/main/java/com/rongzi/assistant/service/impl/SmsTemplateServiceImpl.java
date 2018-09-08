@@ -5,8 +5,8 @@ import com.rongzi.assistant.dao.SmsTemplateMapper;
 import com.rongzi.assistant.model.SmsTemplate;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.SmsTemplateService;
-import com.rongzi.assistant.common.datasource.CityDataSource;
-import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class SmsTemplateServiceImpl implements SmsTemplateService {
      * @return
      */
     @Override
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsTemplate> findAllsmsTemplates() {
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         String empCode = currentUser.getEmpCode();

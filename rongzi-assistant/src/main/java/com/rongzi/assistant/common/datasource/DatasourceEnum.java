@@ -7,21 +7,21 @@ package com.rongzi.assistant.common.datasource;
  * @author fengshuonan
  * @date 2017年3月5日 上午10:15:02
  */
-public interface CityDatasourceEnum {
+public interface DatasourceEnum {
 
     /**
      * 默认的MNG库
 	 */
-	String DATA_SOURCE_GUNS = "dataSourceGuns";
+	String DATA_SOURCE_MNG = "DFSSMNG";
 
 	/**
-	 * 单独的产品数据库
+	 * 产品数据库
 	 */
 	String DATA_SOURCE_PRODUCT="PRODUCT";
 
     /**
-     * 城市的数据库
+     * 城市数据库
 	 */
-	String DATA_SOURCE_CITY="CITY";
+	String DATA_SOURCE_CITY="dataSourceCity";
 
 }

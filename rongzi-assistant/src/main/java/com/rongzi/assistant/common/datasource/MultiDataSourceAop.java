@@ -18,17 +18,16 @@ import java.lang.reflect.Method;
 
 @Aspect
 @Component
-public class CityDataSourceAop implements Ordered {
+public class MultiDataSourceAop implements Ordered {
 
-    private Logger logger = LoggerFactory.getLogger(CityDataSourceAop.class);
+    private Logger logger = LoggerFactory.getLogger(MultiDataSourceAop.class);
 
-    @Pointcut(value = "@annotation(com.rongzi.assistant.common.datasource.CityDataSource)")
+    @Pointcut(value = "@annotation(com.rongzi.assistant.common.datasource.DataSource)")
     public void cut() {
     }
 
     @Around("cut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-
         Signature signature = proceedingJoinPoint.getSignature();
         if (!(signature instanceof MethodSignature)) {
             throw new IllegalArgumentException("该注解只能用于方法");
@@ -37,20 +36,24 @@ public class CityDataSourceAop implements Ordered {
         MethodSignature methodSignature = (MethodSignature) signature;
         Object target = proceedingJoinPoint.getTarget();
         Method currentMethod = target.getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
-        CityDataSource cityDataSource = currentMethod.getAnnotation(CityDataSource.class);
-        if (cityDataSource != null) {
-            UserInfo currentUserInfo = UserContextHolder.getCurrentUserInfo();
-            String name = cityDataSource.name();
-            if (name.equals(CityDatasourceEnum.DATA_SOURCE_PRODUCT)) {
-                DataSourceContextHolder.setDataSourceType(CityDatasourceEnum.DATA_SOURCE_PRODUCT);
-                logger.debug("系统当前所在数据源为：" + CityDatasourceEnum.DATA_SOURCE_PRODUCT);
+        DataSource dataSource = currentMethod.getAnnotation(DataSource.class);
+
+        if (dataSource != null) {
+            String name = dataSource.name();
+            if (name.equals(DatasourceEnum.DATA_SOURCE_PRODUCT)) {
+                // 产品数据库
+                DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_PRODUCT);
+                logger.debug("系统当前所在数据源为：" + DatasourceEnum.DATA_SOURCE_PRODUCT);
             } else {
+                // 分公司城市库
+                UserInfo currentUserInfo = UserContextHolder.getCurrentUserInfo();
                 DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());
                 logger.debug("设置当前城市数据源为：" + currentUserInfo.getCityCode());
             }
         } else {
-            DataSourceContextHolder.setDataSourceType(CityDatasourceEnum.DATA_SOURCE_GUNS);
-            logger.debug("系统当前所在数据源为：" + "DFSSMNG");
+            // 未加注解默认访问DFSSMNG数据库
+            DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_MNG);
+            logger.debug("系统当前所在数据源为：" + DatasourceEnum.DATA_SOURCE_MNG);
         }
 
         try {
@@ -58,7 +61,6 @@ public class CityDataSourceAop implements Ordered {
         } finally {
             DataSourceContextHolder.clearDataSourceType();
         }
-
     }
 
     @Override

@@ -8,8 +8,8 @@ import com.rongzi.assistant.model.OpenApiSendAddFriendRequestForm;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.model.WechatParam;
 import com.rongzi.assistant.service.WechatService;
-import com.rongzi.assistant.common.datasource.CityDataSource;
-import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.util.ByteMergeUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.client.ClientProtocolException;
@@ -36,7 +36,7 @@ public class WechatServiceImpl implements WechatService {
 
 
     @Override
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public int addFriend(WechatParam wechatParam) {
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         OpenApiSendAddFriendRequestForm addFriendData=new OpenApiSendAddFriendRequestForm();

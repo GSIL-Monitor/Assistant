@@ -3,8 +3,8 @@ package com.rongzi.assistant.service.impl;
 import com.rongzi.assistant.dao.CityMapper;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.service.CityService;
-import com.rongzi.assistant.common.datasource.CityDataSource;
-import com.rongzi.assistant.common.datasource.CityDatasourceEnum;
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.constant.cache.Cache;
 import com.rongzi.assistant.common.constant.cache.CacheKey;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,7 +27,7 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.CITYS_NAME + "'")
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_PRODUCT)
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_PRODUCT)
     public List<City> findAllCitys() {
         List<City> cities = cityDao.queryAllCitys();
         return cities;

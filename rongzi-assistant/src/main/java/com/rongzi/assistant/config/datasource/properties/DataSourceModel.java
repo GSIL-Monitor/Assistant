@@ -1,9 +1,9 @@
-package com.rongzi.assistant.config.datasource;
+package com.rongzi.assistant.config.datasource.properties;
 
-public class CityDataSourceModel {
+public class DataSourceModel {
 
     private String city;
-    private String driver;
+    private String driverClassName;
     private String url;
     private String username;
     private String password;
@@ -16,12 +16,12 @@ public class CityDataSourceModel {
         this.city = city;
     }
 
-    public String getDriver() {
-        return driver;
+    public String getDriverClassName() {
+        return driverClassName;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
     }
 
     public String getUrl() {
@@ -52,10 +52,11 @@ public class CityDataSourceModel {
     public String toString() {
         return "DataSourceModel{" +
                 "city='" + city + '\'' +
-                ", driver='" + driver + '\'' +
+                ", driverClassName='" + driverClassName + '\'' +
                 ", url='" + url + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
