@@ -1,4 +1,4 @@
-package com.rongzi.assistant.common.cache;
+package com.rongzi.assistant.common.constant.cache;
 
 /**
  * 缓存标识前缀集合,常用在ConstantFactory类中
@@ -12,8 +12,5 @@ public interface CacheKey {
      * 城市名称(多个)
      */
     String CITYS_NAME = "city_name_";
-
-
-
 
 }
