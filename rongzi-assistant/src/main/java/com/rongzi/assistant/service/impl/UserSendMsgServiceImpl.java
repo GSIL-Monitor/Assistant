@@ -5,8 +5,7 @@ import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.UserInfo;
-import com.rongzi.assistant.service.ApiService;
-import com.rongzi.assistant.service.CustomerService;
+import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.UserSendMsgService;
 import com.rongzi.assistant.common.datasource.DataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
@@ -18,19 +17,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class UserSendMsgServiceImpl implements UserSendMsgService {
-
 
     @Autowired
     UserSendMsgMapper userSendMsgMapper;
 
     @Autowired
-    CustomerService customerService;
-
-    @Autowired
-    ApiService apiService;
+    CustomerInternalService customerInternalService;
 
     /**
      * 从销售系统获取短信
@@ -67,7 +61,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     public boolean addMsgsToSaleSystem(List<SmsMessage> sendList) {
         for (int i = 0; i < sendList.size(); i++) {
             SmsMessage smsMessage = sendList.get(i);
-            Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(smsMessage.getReceiverMobile());
+            Customer customer = customerInternalService.findCustomerCodeAndNameByMobile(smsMessage.getReceiverMobile());
             if (customer == null) {
                 sendList.remove(smsMessage);
                 continue;
@@ -78,10 +72,11 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
             }
             smsMessage.setReceiverName(customer.getName());
         }
+
         if (sendList.size() <= 0) {
             return true;
-//            throw new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
         }
+
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);
