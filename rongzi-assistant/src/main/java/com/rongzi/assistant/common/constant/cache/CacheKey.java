@@ -11,6 +11,6 @@ public interface CacheKey {
     /**
      * 城市名称(多个)
      */
-    String CITYS_NAME = "city_name_";
+    String CITY_NAME = "city_name_";
 
 }

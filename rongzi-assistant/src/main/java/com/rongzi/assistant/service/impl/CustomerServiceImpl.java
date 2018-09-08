@@ -9,7 +9,7 @@ import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.UserInfo;
-import com.rongzi.assistant.service.CityService;
+import com.rongzi.assistant.service.RegionService;
 import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    CityService cityService;
+    RegionService regionService;
 
     @Autowired
     CustomerInternalService customerInternalService;
@@ -37,8 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
         List<Customer> resultList = new ArrayList<Customer>();
-        List<City> allCitys = cityService.findAllCitys();
-        Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
+        List<City> allCities = regionService.findAllCities();
+        Map<Integer, String> cityMap = allCities.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
         List<Customer> customers = customerInternalService.findAllCustomers(page, empCode, customerExeStatus);
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         for (Customer customer : customers) {
