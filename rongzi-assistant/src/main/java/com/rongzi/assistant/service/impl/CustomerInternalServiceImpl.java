@@ -1,10 +1,10 @@
 package com.rongzi.assistant.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.rongzi.assistant.dao.CustomerMapper;
-import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.common.datasource.DataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.dao.CustomerMapper;
+import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.service.CustomerInternalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerReplyMsgService {
 
-    List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile,String customerCode,String empCode);
+    List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile, String customerCode, String empCode);
 
     boolean addMsgsToSaleSystem(List<SmsMessage> replyList);
 

@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class CallRecordServiceImpl implements CallRecordService {
 
-
     @Autowired
     CallRecordService callRecordService;
 
@@ -22,7 +21,6 @@ public class CallRecordServiceImpl implements CallRecordService {
 
     @Autowired
     CallBehaviorRealTimeService callBehaviorRealTimeService;
-
 
     @Override
     public boolean syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
@@ -41,10 +39,11 @@ public class CallRecordServiceImpl implements CallRecordService {
             }
             callBehaviorData.add(callRecord);
         }
-        if(customerData.size()>0){
+        if (customerData.size() > 0) {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
         return true;
     }
+
 }

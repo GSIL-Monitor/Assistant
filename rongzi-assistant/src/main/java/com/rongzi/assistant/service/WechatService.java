@@ -6,10 +6,10 @@ public interface WechatService {
 
     /**
      * 添加好友
+     *
      * @param wechatParam
      * @return
      */
     int addFriend(WechatParam wechatParam);
-
 
 }

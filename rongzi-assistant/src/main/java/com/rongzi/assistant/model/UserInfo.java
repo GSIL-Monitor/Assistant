@@ -2,7 +2,7 @@ package com.rongzi.assistant.model;
 
 import java.io.Serializable;
 
-public class UserInfo implements Serializable{
+public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 4673338693637430141L;
     private String accountName;

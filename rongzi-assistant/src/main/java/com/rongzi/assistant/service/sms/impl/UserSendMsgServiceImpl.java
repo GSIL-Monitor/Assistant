@@ -1,5 +1,7 @@
 package com.rongzi.assistant.service.sms.impl;
 
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.UserSendMsgMapper;
 import com.rongzi.assistant.model.Customer;
@@ -7,8 +9,6 @@ import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
-import com.rongzi.assistant.common.datasource.DataSource;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

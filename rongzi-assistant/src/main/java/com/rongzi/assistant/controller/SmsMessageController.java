@@ -1,11 +1,11 @@
 package com.rongzi.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.rongzi.assistant.common.tips.AssistantTip;
+import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.SystemMessageParam;
 import com.rongzi.assistant.service.sms.SmsMessageService;
-import com.rongzi.assistant.common.tips.AssistantTip;
-import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,11 +43,10 @@ public class SmsMessageController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(systemMessageParam.getEmpCode(), systemMessageParam.getCustomerCode(), systemMessageParam.getCustomerMobile());
-            assistantTip=AssistantTip.ok(JSON.toJSON(msgs));
+            assistantTip = AssistantTip.ok(JSON.toJSON(msgs));
         }
         return assistantTip;
     }
-
 
 
     /**
@@ -63,7 +62,7 @@ public class SmsMessageController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             smsMessageService.addMsgsToSaleSystem(msgs);
-            assistantTip=AssistantTip.ok();
+            assistantTip = AssistantTip.ok();
         }
         return assistantTip;
     }

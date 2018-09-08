@@ -1,10 +1,10 @@
 package com.rongzi.assistant.service.impl;
 
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.dao.CallBehaviorMapper;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
-import com.rongzi.assistant.common.datasource.DataSource;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeService {
-
 
     @Autowired
     CallBehaviorMapper callBehaviorMapper;
@@ -36,6 +35,8 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
                 temp.clear();
             }
         }
+
         return callBehaviorMapper.addCallBehaviorFromMobileToSystme(callRecords);
     }
+
 }

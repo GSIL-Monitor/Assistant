@@ -9,6 +9,7 @@ public interface CustomerInternalService {
 
     /**
      * 分页查询所有的客户列表信息
+     *
      * @param page
      * @param empCode
      * @param customerExeStatus
@@ -18,6 +19,7 @@ public interface CustomerInternalService {
 
     /**
      * 通过客户的手机号码去查询·客户编号和客户姓名
+     *
      * @param mobile
      * @return
      */

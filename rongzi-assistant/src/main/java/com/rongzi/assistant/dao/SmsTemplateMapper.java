@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SmsTemplateMapper {
 
-
     List<SmsTemplate> queryAllsmsTemplates(@Param("empCode") String empCode);
+
 }

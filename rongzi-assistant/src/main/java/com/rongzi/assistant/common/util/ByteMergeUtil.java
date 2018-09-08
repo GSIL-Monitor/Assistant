@@ -2,8 +2,7 @@ package com.rongzi.assistant.common.util;
 
 public class ByteMergeUtil {
 
-
-    public  static byte[] byteMergerAll(byte[]... values) {
+    public static byte[] byteMergerAll(byte[]... values) {
         int length_byte = 0;
         for (int i = 0; i < values.length; i++) {
             length_byte += values[i].length;
@@ -17,7 +16,5 @@ public class ByteMergeUtil {
         }
         return all_byte;
     }
-
-
 
 }

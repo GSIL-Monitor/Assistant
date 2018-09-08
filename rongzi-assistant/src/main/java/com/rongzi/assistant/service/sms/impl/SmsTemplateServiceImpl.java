@@ -1,12 +1,12 @@
 package com.rongzi.assistant.service.sms.impl;
 
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.SmsTemplateMapper;
 import com.rongzi.assistant.model.SmsTemplate;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.service.sms.SmsTemplateService;
-import com.rongzi.assistant.common.datasource.DataSource;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

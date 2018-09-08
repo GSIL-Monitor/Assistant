@@ -10,7 +10,7 @@ public class UserContextHolder {
 
     public static UserInfo getCurrentUserInfo() {
         HttpServletRequest httpRequest = HttpKit.getRequest();
-        return (UserInfo)httpRequest.getAttribute(Constants.CURRENT_USER_INFO_KEY );
+        return (UserInfo) httpRequest.getAttribute(Constants.CURRENT_USER_INFO_KEY);
     }
 
 }

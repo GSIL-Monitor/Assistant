@@ -21,4 +21,5 @@ public class ValidatorParamUtil {
 
         assistantTip = AssistantTip.error(-1, JSON.toJSONString(bindingResultMap));
     }
+
 }

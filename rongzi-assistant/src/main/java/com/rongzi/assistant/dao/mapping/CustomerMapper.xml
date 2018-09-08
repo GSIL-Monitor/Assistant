@@ -71,7 +71,6 @@
     </update>
 
 
-
     <select id="queryCustomerNameAndCustomerCode" resultType="com.rongzi.assistant.model.Customer">
 
         SELECT  CLT_CODE AS customerCode,LNK_NAME AS  name FROM  SAL_CLT_LNKMAN WHERE LNK_MOBILE=#{mobile}
