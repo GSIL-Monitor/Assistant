@@ -43,7 +43,7 @@ public class SmsMessageController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(systemMessageParam.getEmpCode(), systemMessageParam.getCustomerCode(), systemMessageParam.getCustomerMobile());
-            assistantTip=AssistantTip.successReturnData(JSON.toJSON(msgs));
+            assistantTip=AssistantTip.ok(JSON.toJSON(msgs));
         }
         return assistantTip;
     }
@@ -63,7 +63,7 @@ public class SmsMessageController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             smsMessageService.addMsgsToSaleSystem(msgs);
-            assistantTip=AssistantTip.successReturnNull();
+            assistantTip=AssistantTip.ok();
         }
         return assistantTip;
     }

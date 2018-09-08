@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 @ControllerAdvice
 @Order(-1)
-public class AssisantGlobalExceptionHandler {
+public class AssistantGlobalExceptionHandler {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -26,7 +25,7 @@ public class AssisantGlobalExceptionHandler {
     @ResponseBody
     public AssistantTip notFount(GunsException e) {
         log.error("业务异常:", e);
-        return new AssistantTip("操作失败",e.getCode(),e.getMessage());
+        return AssistantTip.error(e.getCode(), e.getMessage());
     }
 
     /**
@@ -37,6 +36,6 @@ public class AssisantGlobalExceptionHandler {
     @ResponseBody
     public AssistantTip notFount(RuntimeException e) {
         log.error("运行时异常:", e);
-        return new AssistantTip("操作失败",AssistantExceptionEnum.SERVER_ERROR.getCode(), AssistantExceptionEnum.SERVER_ERROR.getMessage());
+        return AssistantTip.error(AssistantExceptionEnum.SERVER_ERROR.getCode(), AssistantExceptionEnum.SERVER_ERROR.getMessage());
     }
 }

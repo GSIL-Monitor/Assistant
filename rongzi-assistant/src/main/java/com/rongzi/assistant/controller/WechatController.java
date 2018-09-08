@@ -43,7 +43,7 @@ public class WechatController {
             wechatParam.setAccountSecret(AccountSecret);
             wechatParam.setWeChatConstantStr(weChatConstantStr);
             int weChatCode = wechatService.addFriend(wechatParam);
-            assistantTip=AssistantTip.successReturnData(weChatCode);
+            assistantTip=AssistantTip.ok(weChatCode);
         }
         return assistantTip;
 

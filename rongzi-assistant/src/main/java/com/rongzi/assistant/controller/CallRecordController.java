@@ -39,7 +39,7 @@ public class CallRecordController {
             ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
         } else {
             callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-            assistantTip=AssistantTip.successReturnNull();
+            assistantTip=AssistantTip.ok();
         }
         return assistantTip;
     }
