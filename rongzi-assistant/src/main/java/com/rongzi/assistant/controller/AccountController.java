@@ -1,7 +1,7 @@
 package com.rongzi.assistant.controller;
 
 import com.rongzi.assistant.common.context.UserContextHolder;
-import com.rongzi.assistant.common.exception.RongziExceptionEnum;
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.web.response.R;
 import com.rongzi.assistant.controller.dto.LoginRequest;
 import com.rongzi.assistant.manager.TokenManager;
@@ -13,7 +13,6 @@ import com.rongzi.core.exception.GunsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -51,8 +50,7 @@ public class AccountController {
     public R test(String username, String password) {
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         System.out.println(currentUser.getEmpName());
-        throw new GunsException(RongziExceptionEnum.INVALID_TOKEN);
-        //return R.ok();
+        return R.ok();
     }
 
 }

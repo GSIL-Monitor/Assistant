@@ -1,7 +1,7 @@
 package com.rongzi.assistant.common.web.filter;
 
 import com.rongzi.assistant.common.constant.Constants;
-import com.rongzi.assistant.common.exception.RongziExceptionEnum;
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.core.exception.GunsException;
@@ -53,7 +53,7 @@ public class AuthFilter extends OncePerRequestFilter {
                 // Add the userInfo to request header
                 request.setAttribute(Constants.CURRENT_USER_INFO_KEY, userInfo);
             } catch (Exception e) {
-                throw new GunsException(RongziExceptionEnum.INVALID_TOKEN);
+                throw new GunsException(AssistantExceptionEnum.INVALID_TOKEN);
             }
 
             filterChain.doFilter(request, response);

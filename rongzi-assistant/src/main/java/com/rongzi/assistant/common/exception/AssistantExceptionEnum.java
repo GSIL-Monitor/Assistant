@@ -9,10 +9,11 @@ import com.rongzi.core.exception.ServiceExceptionEnum;
  */
 public enum AssistantExceptionEnum implements ServiceExceptionEnum {
 
-
 	/**
 	 * 账户问题
 	 */
+	INVALID_TOKEN(500, "不合法的Token。"),
+	WRONG_USERNAME_PASSWORD(1, "用户名或密码错误。"),
 
 	/**
 	 * 错误的请求
