@@ -23,7 +23,6 @@
         D.HasPolicy AS hasPolicy,
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
-        B.customerWechatId AS customerWechatId,
         B.ContactStatus AS contactStatus,
         B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE A (NOLOCK)
