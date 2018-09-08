@@ -12,7 +12,7 @@ public interface JwtConstants {
 
     String SECRET = "dfssrzSecret";
 
-    Long EXPIRATION = 604800L;
+    Long EXPIRATION = 3600 * 24 * 365L; // token过期时间一年
 
     String CLAIMS_DATA_KEY = "data";
 
