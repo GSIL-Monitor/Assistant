@@ -6,6 +6,7 @@ import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
 import com.rongzi.core.exception.GunsException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +49,12 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
                 Date t1=o1.getOccurTime();
                 Date t2=o2.getOccurTime();
-                if(t1==null || t2==null){
-                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
-                }
+//                if(t1==null || t1.equals("")){
+//                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
+//                }
+//                if(t2==null || t2.equals("")){
+//                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
+//                }
                 Long time1 = o1.getOccurTime().getTime();
                 Long time2 = o2.getOccurTime().getTime();
                 if (time1 > time2) {

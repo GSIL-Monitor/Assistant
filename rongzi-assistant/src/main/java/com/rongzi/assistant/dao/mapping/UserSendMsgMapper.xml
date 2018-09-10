@@ -11,9 +11,12 @@
 
         Signature AS signature,SendEmpName AS senderName
 
-        FROM CustomerMsg WHERE
+        FROM CustomerMsg
 
-        SendEmpCode=#{empCode} AND CltCode =#{customerCode}   ORDER  BY SendTime DESC
+        WHERE
+        SendEmpCode=#{empCode}
+        AND CltCode =#{customerCode} AND  SendTime is not NULL
+        ORDER  BY SendTime DESC
 
 
     </select>

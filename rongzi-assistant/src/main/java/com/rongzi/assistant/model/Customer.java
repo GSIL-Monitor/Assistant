@@ -1,6 +1,9 @@
 package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
+import com.rongzi.core.exception.GunsException;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
