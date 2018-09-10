@@ -1,9 +1,9 @@
 package com.rongzi.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.model.SmsTemplate;
-import com.rongzi.assistant.service.SmsTemplateService;
-import com.rongzi.config.tips.AssistantTip;
+import com.rongzi.assistant.service.sms.SmsTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +23,6 @@ public class SmsTemplateController {
     public AssistantTip getSmsTemplates() {
 
         List<SmsTemplate> resultList = smsTemplateService.findAllsmsTemplates();
-        return AssistantTip.successReturnData(JSON.toJSON(resultList));
+        return AssistantTip.ok(JSON.toJSON(resultList));
     }
 }

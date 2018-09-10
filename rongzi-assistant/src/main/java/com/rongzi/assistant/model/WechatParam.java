@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
-public class WechatParam implements Serializable{
+public class WechatParam implements Serializable {
 
 
     private static final long serialVersionUID = 471859428024316880L;
@@ -15,7 +15,7 @@ public class WechatParam implements Serializable{
      * 客户手机号码
      */
     @NotBlank
-    @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
+    @Pattern(regexp = "^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$", message = "手机号码格式不正确")
     private String customerMobile;
 
     /**
@@ -33,7 +33,7 @@ public class WechatParam implements Serializable{
      * 销售工作手机
      */
     @NotBlank
-    @Pattern(regexp="^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$",message="手机号码格式不正确")
+    @Pattern(regexp = "^(((13[0-9])|(14[579])|(15([0-3]|[5-9]))|(16[6])|(17[0135678])|(18[0-9])|(19[89]))\\d{8})$", message = "手机号码格式不正确")
     private String empWorkMobile;
 
     /**
@@ -49,19 +49,19 @@ public class WechatParam implements Serializable{
     private String empName;
 
     /**
-     *  招呼语
+     * 招呼语
      */
-    private  String message;
+    private String message;
 
     /**
      * 备注
      */
-    private  String remark;
+    private String remark;
 
     /**
-     *  Api调用者身份
+     * Api调用者身份
      */
-    private  String accountSecret;
+    private String accountSecret;
 
     /**
      * 调用拼接所需字符串

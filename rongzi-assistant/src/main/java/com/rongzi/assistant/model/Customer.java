@@ -99,7 +99,7 @@ public class Customer implements Serializable,Comparable<Customer> {
     /**
      * 微信好友状态
      */
-    private int  wechatFriendStatus;
+    private int wechatFriendStatus;
 
     /**
      * 申请好友的时间

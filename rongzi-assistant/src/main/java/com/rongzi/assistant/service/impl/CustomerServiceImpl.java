@@ -1,19 +1,17 @@
 package com.rongzi.assistant.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.rongzi.assistant.common.context.UserContextHolder;
+import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.UserInfo;
-import com.rongzi.assistant.service.ApiService;
-import com.rongzi.assistant.service.CityService;
+import com.rongzi.assistant.service.RegionService;
+import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.CustomerService;
-import com.rongzi.config.aop.CityDataSource;
-import com.rongzi.config.aop.CityDatasourceEnum;
-import com.rongzi.config.exception.AssistantExceptionEnum;
-import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +26,20 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
+    RegionService regionService;
+
+    @Autowired
+    CustomerInternalService customerInternalService;
+
+    @Autowired
     CustomerMapper customerMapper;
-
-    @Autowired
-    CityService cityService;
-
-    @Autowired
-    ApiService apiService;
 
     @Override
     public List<Customer> findAllCustomers(Page page, String empCode, int customerExeStatus) {
         List<Customer> resultList = new ArrayList<Customer>();
-        List<City> allCitys = cityService.findAllCitys();
-        Map<Integer, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
-        List<Customer> customers = apiService.findAllCustomers(page, empCode, customerExeStatus);
+        List<City> allCities = regionService.findAllCities();
+        Map<Integer, String> cityMap = allCities.stream().collect(Collectors.toMap(City::getCityID, City::getCityName));
+        List<Customer> customers = customerInternalService.findAllCustomers(page, empCode, customerExeStatus);
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         for (Customer customer : customers) {
             if (!StringUtils.isEmpty(customer.getWorkPlace())) {
@@ -55,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @CityDataSource(name = CityDatasourceEnum.DATA_SOURCE_CITY)
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public void editCommentByCode(String customerCode, String comment) {
         customerMapper.editCommentByCodeAndComment(customerCode, comment);
     }
@@ -70,16 +68,18 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
         for (int i = 0; i < callRecords.size(); i++) {
             CallRecord callRecord = callRecords.get(i);
-            Customer customer = apiService.findCustomerCodeAndCustomerNameByCustomerMobile(callRecord.getMobile());
+            Customer customer = customerInternalService.findCustomerCodeAndNameByMobile(callRecord.getMobile());
             if (customer == null) {
                 callRecords.remove(callRecord);
                 continue;
             }
         }
-        if(callRecords.size()<=0){
+
+        if (callRecords.size() <= 0) {
             return true;
 //            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
         }
+
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = customerMapper.syncContactStatusByCallRecords(callRecords);

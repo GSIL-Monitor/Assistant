@@ -1,8 +1,5 @@
 package com.rongzi.assistant.model;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 public class OpenApiSendAddFriendRequestForm implements Serializable {
@@ -11,34 +8,34 @@ public class OpenApiSendAddFriendRequestForm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     *  销售微信本身id
+     * 销售微信本身id
      */
     private String wechatId;
 
     /**
      * 客户微信号
      */
-    private  String targetWechatId;
+    private String targetWechatId;
 
     /**
      * 客户手机号
      */
-    private  String phone;
+    private String phone;
 
     /**
-     *  招呼语
+     * 招呼语
      */
-    private  String message;
+    private String message;
 
     /**
      * 备注
      */
-    private  String remark;
+    private String remark;
 
     /**
-     *  Api调用者身份
+     * Api调用者身份
      */
-    private  String accountSecret;
+    private String accountSecret;
 
 
     public String getWechatId() {

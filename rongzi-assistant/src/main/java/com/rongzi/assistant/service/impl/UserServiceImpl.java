@@ -3,7 +3,7 @@ package com.rongzi.assistant.service.impl;
 import com.rongzi.assistant.model.Account;
 import com.rongzi.assistant.model.City;
 import com.rongzi.assistant.model.UserInfo;
-import com.rongzi.assistant.service.CityService;
+import com.rongzi.assistant.service.RegionService;
 import com.rongzi.assistant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private CityService cityService;
+    private RegionService regionService;
 
     @Override
     public UserInfo getUserInfo(Account account) {
-        List<City> allCitys = cityService.findAllCitys();
-        Map<String, String> cityMap = allCitys.stream().collect(Collectors.toMap(City::getCityCode, City::getCityName));
+        List<City> allCities = regionService.findAllCities();
+        Map<String, String> cityMap = allCities.stream().collect(Collectors.toMap(City::getCityCode, City::getCityName));
 
         UserInfo userInfo = new UserInfo();
         userInfo.setAccountName(account.getLgnAccount());

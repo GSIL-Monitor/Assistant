@@ -1,7 +1,7 @@
 package com.rongzi.assistant.dao;
 
-import com.rongzi.assistant.model.Account;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.rongzi.assistant.model.Account;
 
 /**
  * <p>

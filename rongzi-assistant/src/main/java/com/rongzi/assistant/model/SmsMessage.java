@@ -2,12 +2,10 @@ package com.rongzi.assistant.model;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SmsMessage implements Serializable {
