@@ -33,7 +33,7 @@
         LEFT JOIN dbo.CustomerExtentInfo E (NOLOCK) ON A.CLT_CODE=E.CLT_CODE
         LEFT JOIN dbo.SYS_SELECT_LIST F (NOLOCK) ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
         WHERE
-        A.CLT_STATUS='1' AND clt_owner=#{empCode} AND B.LNK_NAME is NOT  NULL
+        A.CLT_STATUS='1' AND clt_owner=#{empCode}
         <choose>
             <when test="customerExeStatus!=null and customerExeStatus!=-1  and customerExeStatus !=0 and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
                 AND CLT_EXE_STATUS=#{customerExeStatus}
