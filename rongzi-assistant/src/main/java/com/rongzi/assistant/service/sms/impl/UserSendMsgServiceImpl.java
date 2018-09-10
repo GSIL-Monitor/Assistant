@@ -52,7 +52,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     }
 
     /**
-     * 增加客户发送的短信到销售系统
+     * 增加销售发送的短信到销售系统
      *
      * @param sendList
      * @return
@@ -76,7 +76,11 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
         if (sendList.size() <= 0) {
             return true;
         }
-
+        System.out.println("**************销售发送的短信******************");
+        for (SmsMessage smsMessage : sendList) {
+            System.out.println(smsMessage);
+        }
+        System.out.println("**************销售发送的短信******************");
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);

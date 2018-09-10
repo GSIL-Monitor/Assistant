@@ -48,6 +48,13 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
+
+        System.out.println("****************客户回复的短信*********************************");
+        for (SmsMessage smsMessage : replyList) {
+            System.out.println(smsMessage);
+        }
+        System.out.println("*******************客户回复的短信**********************************");
+
         boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
         return flag;
     }

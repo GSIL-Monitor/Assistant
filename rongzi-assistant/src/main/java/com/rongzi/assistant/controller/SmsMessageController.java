@@ -40,7 +40,7 @@ public class SmsMessageController {
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(systemMessageParam.getEmpCode(), systemMessageParam.getCustomerCode(), systemMessageParam.getCustomerMobile());
             assistantTip = AssistantTip.ok(JSON.toJSON(msgs));
@@ -55,11 +55,12 @@ public class SmsMessageController {
     @PostMapping("/addMessages")
     public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
+
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             smsMessageService.addMsgsToSaleSystem(msgs);
             assistantTip = AssistantTip.ok();

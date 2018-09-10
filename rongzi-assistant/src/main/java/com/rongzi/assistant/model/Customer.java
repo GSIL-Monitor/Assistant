@@ -1,11 +1,10 @@
 package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
-import com.rongzi.core.exception.GunsException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Date;
@@ -76,6 +75,7 @@ public class Customer implements Serializable,Comparable<Customer> {
      * 备注
      */
     @NotBlank
+    @Size(min = 1,max = 10)
     private String comment;
 
     /**

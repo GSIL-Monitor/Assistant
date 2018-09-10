@@ -98,18 +98,15 @@ public class CustomerController {
     @PostMapping("/editComment")
     public AssistantTip editComment(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
 
-
         AssistantTip assistantTip = new AssistantTip();
-
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip,bindingResultMap);
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
             assistantTip = AssistantTip.ok();
         }
         return assistantTip;
     }
-
 
 }

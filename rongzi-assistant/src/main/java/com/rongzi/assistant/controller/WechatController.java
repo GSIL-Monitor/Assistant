@@ -38,7 +38,7 @@ public class WechatController {
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             wechatParam.setAccountSecret(AccountSecret);
             wechatParam.setWeChatConstantStr(weChatConstantStr);

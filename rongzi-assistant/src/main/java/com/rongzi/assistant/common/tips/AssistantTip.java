@@ -10,6 +10,13 @@ public class AssistantTip implements Serializable {
     private String msg;
     private Object data;
 
+
+    public AssistantTip(int code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public AssistantTip() {
     }
 

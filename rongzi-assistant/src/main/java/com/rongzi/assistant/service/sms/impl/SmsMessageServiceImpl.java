@@ -85,6 +85,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 customerSendMsgs.add(message);
             }
         }
+
         if (empSendMsgs.size() > 0) {
             userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
