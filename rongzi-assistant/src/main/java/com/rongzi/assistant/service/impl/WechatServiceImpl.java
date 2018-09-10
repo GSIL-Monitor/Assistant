@@ -77,8 +77,8 @@ public class WechatServiceImpl implements WechatService {
                     return 3;
                 }
             }else{
-                return  7;
-//                throw  new GunsException(AssistantExceptionEnum.WECHAT_ADDFRIEND_ERROR);
+//                return  7;
+                throw  new GunsException(AssistantExceptionEnum.WECHAT_ADDFRIEND_ERROR);
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

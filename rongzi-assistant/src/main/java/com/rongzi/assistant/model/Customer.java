@@ -4,9 +4,11 @@ import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Date;
+import java.util.Locale;
 
-public class Customer implements Serializable {
+public class Customer implements Serializable,Comparable<Customer> {
 
     private static final long serialVersionUID = 4597661105769038855L;
 
@@ -278,5 +280,10 @@ public class Customer implements Serializable {
                 ", wechatFriendStatus=" + wechatFriendStatus +
                 ", customerWechatId='" + customerWechatId + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Customer o) {
+        return Collator.getInstance(Locale.CHINA).compare(this.name,o.name);
     }
 }

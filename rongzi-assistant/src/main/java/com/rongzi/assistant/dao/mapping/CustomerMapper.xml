@@ -23,7 +23,7 @@
         D.HasPolicy AS hasPolicy,
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
-        B.customerWechatId AS customerWechatId,
+        '' AS customerWechatId,
         B.ContactStatus AS contactStatus,
         B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE A (NOLOCK)
@@ -61,7 +61,7 @@
 
     <update id="syncContactStatusByCallRecords" parameterType="com.rongzi.assistant.model.CallRecord">
 
-        <foreach collection="callRecords" separator="," item="record" index="index" open="" close="">
+        <foreach collection="callRecords" separator=";" item="record" index="index" open="" close="">
 
             update SAL_CLT_LNKMAN
             <set>

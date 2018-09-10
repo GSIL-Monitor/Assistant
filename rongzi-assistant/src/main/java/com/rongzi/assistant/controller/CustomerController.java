@@ -70,10 +70,12 @@ public class CustomerController {
                 // TODO 接口现在没有开发。
                 page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
                 List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                Collections.sort(customers);
                 page.setRecords(customers);
             } else {
                 page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
                 List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                Collections.sort(customers);
                 page.setRecords(customers);
             }
             PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
