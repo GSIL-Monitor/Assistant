@@ -14,4 +14,14 @@
         WHERE  empCode=#{empCode}
     </update>
 
+
+    <insert id="insertSyncInfo" parameterType="com.rongzi.assistant.model.MobileDataSyncInfo">
+
+        INSERT  INTO MobileDataSyncInfo(empCode,lastSmsSyncTime,lastCallRecordSyncTime,updateTime)
+        VALUES
+        (
+       #{empCode},#{lastSmsSyncTime},#{lastCallRecordSyncTime},#{updateTime}
+        )
+    </insert>
+
 </mapper>

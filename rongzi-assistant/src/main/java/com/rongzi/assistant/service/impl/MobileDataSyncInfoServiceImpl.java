@@ -16,9 +16,8 @@ public class MobileDataSyncInfoServiceImpl implements MobileDataSnycInfoService 
     public void syncSmsMessageAndCallRecordInfo(MobileDataSyncInfo mobileDataSyncInfo) {
 
         int count= mobileDataSyncMapper.updateSyncInfo(mobileDataSyncInfo);
-
-        if(count>0){
-
+        if(count<=0){
+            mobileDataSyncMapper.insertSyncInfo(mobileDataSyncInfo);
         }
     }
 }

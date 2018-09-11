@@ -34,10 +34,11 @@ public class CallRecordServiceImpl implements CallRecordService {
 
         String empCode=null;
         Date callDate=null;
-        if(callRecords.size()>1){
+        if(callRecords.size()>=1){
             CallRecord callRecord = callRecords.get(callRecords.size() - 1);
             empCode = callRecord.getEmpCode();
             callDate=callRecord.getCallDate();
+            System.out.println(empCode+"*************************");
         }
 
         List<CallRecord> customerData = new ArrayList<CallRecord>();

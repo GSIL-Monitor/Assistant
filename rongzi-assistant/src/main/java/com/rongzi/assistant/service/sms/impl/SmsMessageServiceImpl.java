@@ -83,7 +83,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
         Date lastSmsSyncTime=null;
         String empCode=null;
-        if(messages.size()>1){
+        if(messages.size()>=1){
             lastSmsSyncTime=messages.get(messages.size()-1).getOccurTime();
         }
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
