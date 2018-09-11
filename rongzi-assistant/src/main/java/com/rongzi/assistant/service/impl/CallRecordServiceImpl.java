@@ -1,13 +1,16 @@
 package com.rongzi.assistant.service.impl;
 
 import com.rongzi.assistant.model.CallRecord;
+import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
+import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,8 +25,21 @@ public class CallRecordServiceImpl implements CallRecordService {
     @Autowired
     CallBehaviorRealTimeService callBehaviorRealTimeService;
 
+
+    @Autowired
+    MobileDataSnycInfoService mobileDataSnycInfoService;
+
     @Override
-    public boolean syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
+    public Date syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
+
+        String empCode=null;
+        Date callDate=null;
+        if(callRecords.size()>1){
+            CallRecord callRecord = callRecords.get(callRecords.size() - 1);
+            empCode = callRecord.getEmpCode();
+            callDate=callRecord.getCallDate();
+        }
+
         List<CallRecord> customerData = new ArrayList<CallRecord>();
         List<CallRecord> callBehaviorData = new ArrayList<CallRecord>();
         for (CallRecord callRecord : callRecords) {
@@ -43,7 +59,8 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
-        return true;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode,null,callDate,new Date()));
+        return callDate;
     }
 
 }

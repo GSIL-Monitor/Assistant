@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class CallRecordController {
         if (bindingResult.hasErrors()) {
             assistantTip =ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
-            callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-            assistantTip = AssistantTip.ok();
+            Date lastCallRecordSyncTime = callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
+            assistantTip = AssistantTip.ok(lastCallRecordSyncTime);
         }
         return assistantTip;
     }

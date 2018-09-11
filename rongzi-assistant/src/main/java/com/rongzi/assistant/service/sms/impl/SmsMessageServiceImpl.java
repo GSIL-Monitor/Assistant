@@ -1,7 +1,9 @@
 package com.rongzi.assistant.service.sms.impl;
 
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
+import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.model.SmsMessage;
+import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
@@ -20,6 +22,9 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
     @Autowired
     CustomerReplyMsgService customerReplyMsgService;
+
+    @Autowired
+    MobileDataSnycInfoService mobileDataSnycInfoService;
 
     /**
      * 从销售系统导入短信到手机
@@ -74,24 +79,31 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      * @param messages
      */
     @Override
-    public boolean addMsgsToSaleSystem(List<SmsMessage> messages) {
+    public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
+
+        Date lastSmsSyncTime=null;
+        String empCode=null;
+        if(messages.size()>1){
+            lastSmsSyncTime=messages.get(messages.size()-1).getOccurTime();
+        }
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
             int senderRole = message.getSenderRole();
             if (senderRole == 1) {
+                empCode= message.getSender();
                 empSendMsgs.add(message);
             } else {
                 customerSendMsgs.add(message);
             }
         }
-
         if (empSendMsgs.size() > 0) {
             userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        return true;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode,lastSmsSyncTime,null,new Date()));
+        return lastSmsSyncTime;
     }
 }

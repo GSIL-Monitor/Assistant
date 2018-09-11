@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,15 +56,13 @@ public class SmsMessageController {
     @PostMapping("/addMessages")
     public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
-
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
-
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
-            smsMessageService.addMsgsToSaleSystem(msgs);
-            assistantTip = AssistantTip.ok();
+            Date lastSmsSyncTime= smsMessageService.addMsgsToSaleSystem(msgs);
+            assistantTip = AssistantTip.ok(lastSmsSyncTime);
         }
         return assistantTip;
     }
