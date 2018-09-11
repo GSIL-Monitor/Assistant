@@ -38,7 +38,6 @@ public class CallRecordServiceImpl implements CallRecordService {
             CallRecord callRecord = callRecords.get(callRecords.size() - 1);
             empCode = callRecord.getEmpCode();
             callDate=callRecord.getCallDate();
-            System.out.println(empCode+"*************************");
         }
 
         List<CallRecord> customerData = new ArrayList<CallRecord>();
