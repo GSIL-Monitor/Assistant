@@ -95,4 +95,10 @@ public class WechatServiceImpl implements WechatService {
         }
         return 5;
     }
+
+    @Override
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    public void updateFriendStatus(WechatParam wechatParam) {
+        customerMapper.updateCustomerWechatStatus(wechatParam.getFriendStatus(),new Date(),wechatParam.getCustomerMobile());
+    }
 }

@@ -64,6 +64,19 @@ public class WechatParam implements Serializable {
     private String accountSecret;
 
     /**
+     * 微信好友状态
+     */
+    private int friendStatus;
+
+    public int getFriendStatus() {
+        return friendStatus;
+    }
+
+    public void setFriendStatus(int friendStatus) {
+        this.friendStatus = friendStatus;
+    }
+
+    /**
      * 调用拼接所需字符串
      */
     private String weChatConstantStr;
@@ -161,6 +174,7 @@ public class WechatParam implements Serializable {
                 ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 ", accountSecret='" + accountSecret + '\'' +
+                ", friendStatus=" + friendStatus +
                 ", weChatConstantStr='" + weChatConstantStr + '\'' +
                 '}';
     }
