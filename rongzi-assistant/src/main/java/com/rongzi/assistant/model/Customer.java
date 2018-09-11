@@ -287,7 +287,7 @@ public class Customer implements Serializable,Comparable<Customer> {
 
     @Override
     public int compareTo(Customer o) {
-        if((!StringUtils.isEmpty(o.name)) || (!StringUtils.isEmpty(this.name))){
+        if((!StringUtils.isEmpty(o.name)) && (!StringUtils.isEmpty(this.name))){
             return Collator.getInstance(Locale.CHINA).compare(this.name, o.name);
         }else{
             return this.mobile.compareTo(o.mobile);
