@@ -11,6 +11,8 @@ import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ import java.util.List;
 
 @Service
 public class UserSendMsgServiceImpl implements UserSendMsgService {
+
+
+    private Logger logger= LoggerFactory.getLogger(UserSendMsgServiceImpl.class);
 
     @Autowired
     UserSendMsgMapper userSendMsgMapper;
@@ -76,11 +81,11 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
         if (sendList.size() <= 0) {
             return true;
         }
-        System.out.println("**************销售发送的短信******************");
+        logger.info("**************销售发送的短信******************");
         for (SmsMessage smsMessage : sendList) {
-            System.out.println(smsMessage);
+            logger.info(smsMessage.toString());
         }
-        System.out.println("**************销售发送的短信******************");
+        logger.info("**************销售发送的短信******************");
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);

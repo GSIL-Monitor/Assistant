@@ -3,6 +3,8 @@ package com.rongzi.assistant.service.sms.impl;
 import com.rongzi.assistant.dao.CustomerReplyMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ import java.util.List;
 
 @Service
 public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
+
+
+    private Logger logger= LoggerFactory.getLogger(UserSendMsgServiceImpl.class);
 
     @Autowired
     CustomerReplyMsgMapper customerReplyMsgMapper;
@@ -49,12 +54,11 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
 
-        System.out.println("****************客户回复的短信*********************************");
+        logger.info("****************客户回复的短信*********************************");
         for (SmsMessage smsMessage : replyList) {
-            System.out.println(smsMessage);
+            logger.info(smsMessage.toString());
         }
-        System.out.println("*******************客户回复的短信**********************************");
-
+        logger.info("*******************客户回复的短信**********************************");
         boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
         return flag;
     }

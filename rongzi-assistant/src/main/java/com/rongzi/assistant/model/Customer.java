@@ -75,7 +75,7 @@ public class Customer implements Serializable,Comparable<Customer> {
      * 备注
      */
     @NotBlank
-    @Size(min = 1,max = 10)
+    @Size(min = 1,max = 500)
     private String comment;
 
     /**
