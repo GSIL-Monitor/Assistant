@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.rongzi.assistant.common.datasource.DataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.util.ByteMergeUtil;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
@@ -11,6 +12,7 @@ import com.rongzi.assistant.model.OpenApiSendAddFriendRequestForm;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.assistant.model.WechatParam;
 import com.rongzi.assistant.service.WechatService;
+import com.rongzi.core.exception.GunsException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -73,7 +75,8 @@ public class WechatServiceImpl implements WechatService {
                     return 3;
                 }
             } else {
-                return 7;
+                throw  new GunsException(AssistantExceptionEnum.WECHAT_ADDFRIEND_ERROR);
+//                return 7;
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

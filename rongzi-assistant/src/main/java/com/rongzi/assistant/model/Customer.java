@@ -3,6 +3,7 @@ package com.rongzi.assistant.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -70,6 +71,7 @@ public class Customer implements Serializable {
     /**
      * 备注
      */
+    @Size(min = 1,max = 500)
     @NotBlank
     private String comment;
 

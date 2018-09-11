@@ -4,6 +4,8 @@ import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ import java.util.List;
 
 @Service
 public class SmsMessageServiceImpl implements SmsMessageService {
+
+
+
+    private Logger logger= LoggerFactory.getLogger(SmsMessageServiceImpl.class);
 
     @Autowired
     UserSendMsgService userSendMsgService;
@@ -76,6 +82,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 customerSendMsgs.add(message);
             }
         }
+
+
         if (empSendMsgs.size() > 0) {
             userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
