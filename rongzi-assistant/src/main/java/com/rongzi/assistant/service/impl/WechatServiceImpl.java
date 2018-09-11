@@ -73,6 +73,8 @@ public class WechatServiceImpl implements WechatService {
                 if(0==ret){
                     customerMapper.updateCustomerWechatStatus(3,new Date(),wechatParam.getCustomerMobile());
                     return 3;
+                }else {
+                    throw  new GunsException(AssistantExceptionEnum.WECHAT_ADDFRIEND_ERROR);
                 }
             }else{
 //                return  7;
