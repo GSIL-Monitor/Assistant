@@ -40,18 +40,12 @@ public class CustomerController {
     @PostMapping("/list")
     public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
 
-
         AssistantTip assistantTip = new AssistantTip();
-
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
-
         Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
-
         List<Integer> status = Arrays.asList(customerExeStatus);
-
         boolean exeStatusFlag = status.contains(customerListParam.getCustomerExeStatus());
         if (bindingResult.hasErrors() || (!exeStatusFlag)) {
-
             if (!exeStatusFlag) {
                 bindingResultMap.put("customerExeStatus", "客户进程编号异常");
             }

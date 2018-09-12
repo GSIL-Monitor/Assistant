@@ -6,6 +6,7 @@ import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,12 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             lowCallDate = messages.get(messages.size() - 1).getOccurTime();
             HighCallDate = messages.get(0).getOccurTime();
         }
+        for(int i=0;i<messages.size();i++){
+            if(StringUtils.isEmpty(messages.get(i).getSenderMobile())){
+                messages.remove(messages.get(i));
+                continue;
+            }
+        }
         logger.info("最大的时间数据是： "+HighCallDate);
         logger.info("最小的时间数据是： "+lowCallDate);
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
@@ -112,8 +119,6 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         }
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
         logger.info("返回的时间数据是： "+HighCallDate);
-
-
         return HighCallDate;
     }
 }
