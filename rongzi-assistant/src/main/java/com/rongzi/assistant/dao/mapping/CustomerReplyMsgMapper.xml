@@ -19,12 +19,12 @@
 
         INSERT INTO CustomerSmsReply
         (
-        ReplyMobile,ReplyTime,ReplyContent,CreateTime,UpdateTime,IsRead
+        ReplyMobile,ReplyTime,ReplyContent,CreateTime,UpdateTime,IsRead,Provider
         )
         VALUES
         <foreach collection="list" index="index" item="sms" separator=",">
             (
-            #{sms.senderMobile},#{sms.occurTime},#{sms.content},getdate(),getdate(),#{sms.isRead}
+            #{sms.senderMobile},#{sms.occurTime},#{sms.content},getdate(),getdate(),#{sms.isRead},'mobile'
             )
         </foreach>
 
