@@ -46,8 +46,8 @@ public class CallRecordServiceImpl implements CallRecordService {
             lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
             HighCallDate= callRecords.get(0).getCallDate();
         }
-        logger.info("最大的时间数据是："+HighCallDate);
-        logger.info("最小的时间数据是："+lowCallDate);
+        logger.info("通话记录最大的时间数据是："+HighCallDate);
+        logger.info("通话记录最小的时间数据是："+lowCallDate);
         for(int i=0;i<callRecords.size();i++){
             if(StringUtils.isEmpty(callRecords.get(i).getMobile())){
                 callRecords.remove(callRecords.get(i));
@@ -57,9 +57,14 @@ public class CallRecordServiceImpl implements CallRecordService {
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
+
+                logger.info("通话  数据库里面保存的时间是："+dataSyncInfo.getLastCallRecordSyncTime()+"毫秒数目是："+dataSyncInfo.getLastCallRecordSyncTime().getTime());
+                logger.info("通话  传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
+
                 if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
-                    logger.info("返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
-                    return dataSyncInfo.getLastCallRecordSyncTime();
+                    logger.info("通话  数据库时间大于等于最小时间,所以返回： "+dataSyncInfo.getLastCallRecordSyncTime());
+                    Date lastCallRecordSyncTime = dataSyncInfo.getLastCallRecordSyncTime();
+                    return lastCallRecordSyncTime;
                 }
             }
         }
@@ -82,8 +87,10 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
+
+        HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
-        logger.info("返回的时间数据是： "+HighCallDate);
+        logger.info("通话  记录返回的时间数据是： "+HighCallDate);
         return HighCallDate;
     }
 

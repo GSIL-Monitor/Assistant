@@ -87,9 +87,21 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 messages.remove(messages.get(i));
                 continue;
             }
+            if(messages.get(i).getSenderMobile()!=null){
+                if(messages.get(i).getSenderMobile().startsWith("+86")){
+                    String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
+                    messages.get(i).setSenderMobile(newSenderMobile);
+                }
+            }
+            if(messages.get(i).getReceiverMobile()!=null){
+                if(messages.get(i).getReceiverMobile().startsWith("+86")){
+                    String newReceiveMobile = messages.get(i).getReceiverMobile().substring(3, messages.get(i).getReceiverMobile().length());
+                    messages.get(i).setReceiverMobile(newReceiveMobile);
+                }
+            }
         }
-        logger.info("最大的时间数据是： "+HighCallDate);
-        logger.info("最小的时间数据是： "+lowCallDate);
+        logger.info("短信同步最大的时间数据是： "+HighCallDate);
+        logger.info("短信同步最小的时间数据是： "+lowCallDate);
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
@@ -105,20 +117,26 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
+                logger.info("短信  数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
+                logger.info("短信  传入过来的时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
-                    return mobileDataSyncInfo.getLastSmsSyncTime();
+                    logger.info("短信  数据库时间大于等于最小时间,所以返回： "+mobileDataSyncInfo.getLastSmsSyncTime());
+                    Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
+                    return lastSmsSyncTime;
                 }
             }
         }
         if (empSendMsgs.size() > 0) {
+            logger.info("开始调用**********增加销售发送的短信到销售系统");
             userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
         if (customerSendMsgs.size() > 0) {
+            logger.info("开始调用*********将客户回复的短信增加到销售系统");
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
+        HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
-        logger.info("返回的时间数据是： "+HighCallDate);
+        logger.info("短信  同步返回的时间数据是： "+HighCallDate);
         return HighCallDate;
     }
 }
