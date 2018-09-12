@@ -74,15 +74,15 @@ public class SmsMessageServiceImpl implements SmsMessageService {
     @Override
     public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
 
-        Date lastSmsSyncTime = null;
-        Date firstSmsSyncTime = null;
+        Date HighCallDate = null;
+        Date lowCallDate = null;
         String empCode = null;
         if (messages.size() >= 1) {
-            firstSmsSyncTime = messages.get(messages.size() - 1).getOccurTime();
-            lastSmsSyncTime = messages.get(0).getOccurTime();
+            lowCallDate = messages.get(messages.size() - 1).getOccurTime();
+            HighCallDate = messages.get(0).getOccurTime();
         }
-        logger.info("最大的时间数据是： "+firstSmsSyncTime);
-        logger.info("最小的时间数据是： "+lastSmsSyncTime);
+        logger.info("最大的时间数据是： "+HighCallDate);
+        logger.info("最小的时间数据是： "+lowCallDate);
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
@@ -98,7 +98,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
-                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lastSmsSyncTime.getTime()) {
+                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
                     logger.info("返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
                     return mobileDataSyncInfo.getLastSmsSyncTime();
                 }
@@ -110,10 +110,10 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, firstSmsSyncTime, null, new Date()));
-        logger.info("返回的时间数据是： "+firstSmsSyncTime);
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
+        logger.info("返回的时间数据是： "+HighCallDate);
 
 
-        return firstSmsSyncTime;
+        return HighCallDate;
     }
 }
