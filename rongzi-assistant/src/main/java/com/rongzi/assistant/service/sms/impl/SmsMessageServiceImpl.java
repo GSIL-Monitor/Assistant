@@ -87,6 +87,18 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 messages.remove(messages.get(i));
                 continue;
             }
+            if(messages.get(i).getSenderMobile()!=null){
+                if(messages.get(i).getSenderMobile().startsWith("+86")){
+                    String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
+                    messages.get(i).setSenderMobile(newSenderMobile);
+                }
+            }
+            if(messages.get(i).getReceiverMobile()!=null){
+                if(messages.get(i).getReceiverMobile().startsWith("+86")){
+                    String newReceiveMobile = messages.get(i).getReceiverMobile().substring(3, messages.get(i).getReceiverMobile().length());
+                    messages.get(i).setReceiverMobile(newReceiveMobile);
+                }
+            }
         }
         logger.info("短信同步最大的时间数据是： "+HighCallDate);
         logger.info("短信同步最小的时间数据是： "+lowCallDate);
@@ -115,9 +127,11 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             }
         }
         if (empSendMsgs.size() > 0) {
+            logger.info("开始调用**********增加销售发送的短信到销售系统");
             userSendMsgService.addMsgsToSaleSystem(empSendMsgs);
         }
         if (customerSendMsgs.size() > 0) {
+            logger.info("开始调用*********将客户回复的短信增加到销售系统");
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
         HighCallDate.setTime(HighCallDate.getTime()+1000);
