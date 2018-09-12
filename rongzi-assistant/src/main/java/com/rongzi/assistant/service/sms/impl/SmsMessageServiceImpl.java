@@ -117,10 +117,10 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
-                logger.info("数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
-                logger.info("传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
+                logger.info("短信  数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
+                logger.info("短信  传入过来的时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("数据库时间大于等于最小时间,所以返回： "+mobileDataSyncInfo.getLastSmsSyncTime());
+                    logger.info("短信  数据库时间大于等于最小时间,所以返回： "+mobileDataSyncInfo.getLastSmsSyncTime());
                     Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
                     return lastSmsSyncTime;
                 }
@@ -136,7 +136,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         }
         HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
-        logger.info("短信同步返回的时间数据是： "+HighCallDate);
+        logger.info("短信  同步返回的时间数据是： "+HighCallDate);
         return HighCallDate;
     }
 }
