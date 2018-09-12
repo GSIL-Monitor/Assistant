@@ -7,4 +7,6 @@ public interface MobileDataSyncMapper {
     int updateSyncInfo(MobileDataSyncInfo mobileDataSyncInfo);
 
     void insertSyncInfo(MobileDataSyncInfo mobileDataSyncInfo);
+
+    MobileDataSyncInfo queryLastTime(String empCode);
 }

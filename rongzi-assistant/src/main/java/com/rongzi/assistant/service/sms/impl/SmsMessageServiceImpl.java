@@ -52,8 +52,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             @Override
             public int compare(SmsMessage o1, SmsMessage o2) {
 
-                Date t1=o1.getOccurTime();
-                Date t2=o2.getOccurTime();
+                Date t1 = o1.getOccurTime();
+                Date t2 = o2.getOccurTime();
 //                if(t1==null || t1.equals("")){
 //                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
 //                }
@@ -81,20 +81,31 @@ public class SmsMessageServiceImpl implements SmsMessageService {
     @Override
     public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
 
-        Date lastSmsSyncTime=null;
-        String empCode=null;
-        if(messages.size()>=1){
-            lastSmsSyncTime=messages.get(messages.size()-1).getOccurTime();
+        Date lastSmsSyncTime = null;
+        Date firstSmsSyncTime = null;
+        String empCode = null;
+        if (messages.size() >= 1) {
+            lastSmsSyncTime = messages.get(messages.size() - 1).getOccurTime();
+            firstSmsSyncTime = messages.get(0).getOccurTime();
         }
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
             int senderRole = message.getSenderRole();
             if (senderRole == 1) {
-                empCode= message.getSender();
+                empCode = message.getSender();
                 empSendMsgs.add(message);
             } else {
+                empCode = message.getReceiver();
                 customerSendMsgs.add(message);
+            }
+        }
+        MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
+        if (mobileDataSyncInfo != null) {
+            if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
+                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= firstSmsSyncTime.getTime()) {
+                    return mobileDataSyncInfo.getLastSmsSyncTime();
+                }
             }
         }
         if (empSendMsgs.size() > 0) {
@@ -103,7 +114,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode,lastSmsSyncTime,null,new Date()));
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, lastSmsSyncTime, null, new Date()));
+
         return lastSmsSyncTime;
     }
 }

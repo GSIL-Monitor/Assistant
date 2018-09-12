@@ -6,6 +6,7 @@ import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.MobileDataSnycInfoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +33,22 @@ public class CallRecordServiceImpl implements CallRecordService {
     @Override
     public Date syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
 
-        String empCode=null;
-        Date callDate=null;
-        if(callRecords.size()>=1){
-            CallRecord callRecord = callRecords.get(callRecords.size() - 1);
-            empCode = callRecord.getEmpCode();
-            callDate=callRecord.getCallDate();
+        String empCode = null;
+        Date lastCallDate = null;
+        Date firstCallDate = null;
+        if (callRecords.size() >= 1) {
+            empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
+            lastCallDate = callRecords.get(callRecords.size() - 1).getCallDate();
+            firstCallDate = callRecords.get(0).getCallDate();
         }
-
+        MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
+        if (dataSyncInfo != null) {
+            if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
+                if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(firstCallDate.getTime())) {
+                    return dataSyncInfo.getLastCallRecordSyncTime();
+                }
+            }
+        }
         List<CallRecord> customerData = new ArrayList<CallRecord>();
         List<CallRecord> callBehaviorData = new ArrayList<CallRecord>();
         for (CallRecord callRecord : callRecords) {
@@ -59,8 +68,9 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode,null,callDate,new Date()));
-        return callDate;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, lastCallDate, new Date()));
+
+        return lastCallDate;
     }
 
 }

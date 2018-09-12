@@ -6,6 +6,8 @@ import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.model.SystemMessageParam;
 import com.rongzi.assistant.service.sms.SmsMessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/sms")
 public class SmsMessageController {
+
+    private Logger logger= LoggerFactory.getLogger(SmsMessageController.class);
 
 
     @Autowired
@@ -56,12 +60,15 @@ public class SmsMessageController {
     @PostMapping("/addMessages")
     public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
+        long time=System.currentTimeMillis();
+        logger.info("******短信同步请求时间：*********"+new Date());
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             Date lastSmsSyncTime= smsMessageService.addMsgsToSaleSystem(msgs);
+            logger.info("******同步短信返回时间毫秒差：*********"+(System.currentTimeMillis()-time));
             assistantTip = AssistantTip.ok(lastSmsSyncTime);
         }
         return assistantTip;

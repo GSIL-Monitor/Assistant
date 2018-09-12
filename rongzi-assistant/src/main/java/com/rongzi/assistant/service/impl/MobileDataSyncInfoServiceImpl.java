@@ -20,4 +20,11 @@ public class MobileDataSyncInfoServiceImpl implements MobileDataSnycInfoService 
             mobileDataSyncMapper.insertSyncInfo(mobileDataSyncInfo);
         }
     }
+
+    @Override
+    public MobileDataSyncInfo findLastTime(String empCode) {
+
+        return mobileDataSyncMapper.queryLastTime(empCode);
+    }
+
 }

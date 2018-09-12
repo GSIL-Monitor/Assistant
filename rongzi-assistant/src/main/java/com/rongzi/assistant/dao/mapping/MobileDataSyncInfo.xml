@@ -24,4 +24,11 @@
         )
     </insert>
 
+
+
+    <select id="queryLastTime" resultType="com.rongzi.assistant.model.MobileDataSyncInfo">
+
+        SELECT  * FROM  MobileDataSyncInfo WHERE empCode=#{empCode}
+    </select>
+
 </mapper>
