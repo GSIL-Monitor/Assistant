@@ -7,6 +7,8 @@ import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class CallRecordServiceImpl implements CallRecordService {
+
+    private Logger logger= LoggerFactory.getLogger(CallRecordServiceImpl.class);
 
     @Autowired
     CallRecordService callRecordService;
@@ -39,13 +43,16 @@ public class CallRecordServiceImpl implements CallRecordService {
         Date HighCallDate = null;
         if (callRecords.size() >= 1) {
             empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
-            HighCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
-            lowCallDate= callRecords.get(0).getCallDate();
+            lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
+            HighCallDate= callRecords.get(0).getCallDate();
         }
+        logger.info("最大的时间数据是："+HighCallDate);
+        logger.info("最小的时间数据是："+lowCallDate);
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
                 if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
+                    logger.info("返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
                     return dataSyncInfo.getLastCallRecordSyncTime();
                 }
             }
@@ -70,6 +77,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
+        logger.info("返回的时间数据是： "+HighCallDate);
         return HighCallDate;
     }
 

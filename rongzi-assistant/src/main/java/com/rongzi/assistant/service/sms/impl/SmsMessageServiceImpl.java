@@ -1,14 +1,13 @@
 package com.rongzi.assistant.service.sms.impl;
 
-import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
-import com.rongzi.core.exception.GunsException;
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,9 @@ import java.util.*;
 @Service
 public class SmsMessageServiceImpl implements SmsMessageService {
 
+
+
+    private Logger logger= LoggerFactory.getLogger(SmsMessageServiceImpl.class);
     @Autowired
     UserSendMsgService userSendMsgService;
 
@@ -79,6 +81,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             firstSmsSyncTime = messages.get(messages.size() - 1).getOccurTime();
             lastSmsSyncTime = messages.get(0).getOccurTime();
         }
+        logger.info("最大的时间数据是： "+firstSmsSyncTime);
+        logger.info("最小的时间数据是： "+lastSmsSyncTime);
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
@@ -95,6 +99,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lastSmsSyncTime.getTime()) {
+                    logger.info("返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
                     return mobileDataSyncInfo.getLastSmsSyncTime();
                 }
             }
@@ -106,6 +111,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, firstSmsSyncTime, null, new Date()));
+        logger.info("返回的时间数据是： "+firstSmsSyncTime);
+
 
         return firstSmsSyncTime;
     }
