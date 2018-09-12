@@ -70,7 +70,6 @@ public class CallRecordServiceImpl implements CallRecordService {
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
-
         return HighCallDate;
     }
 

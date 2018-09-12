@@ -20,6 +20,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,10 @@ import java.util.Date;
 @Service
 public class WechatServiceImpl implements WechatService {
 
+    private Logger logger= LoggerFactory.getLogger(WechatServiceImpl.class);
 
     @Autowired
     CustomerMapper customerMapper;
-
 
     @Override
     @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
@@ -67,9 +69,11 @@ public class WechatServiceImpl implements WechatService {
             hpost.setEntity(new StringEntity(bodyParam, Charset.forName("UTF-8")));
             response = httpclient.execute(hpost);
             int statusCode = response.getStatusLine().getStatusCode();
+            logger.info("请求奥创返回的状态码是："+statusCode);
             if(200==statusCode){
                 JSONObject jsonObject = JSONObject.parseObject(EntityUtils.toString(response.getEntity(), "UTF-8"));
                 int ret = (Integer) jsonObject.get("ret");
+                logger.info("请求奥创添加微信返回的状态码是："+ret);
                 if(0==ret){
                     customerMapper.updateCustomerWechatStatus(3,new Date(),wechatParam.getCustomerMobile());
                     return 3;
