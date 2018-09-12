@@ -36,10 +36,8 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
             replyMsg.setSenderRole(2);
             replyMsg.setSender(customerCode);
             replyMsg.setSenderMobile(customerMobile);
-            replyMsg.setReceiverMobile("");
             replyMsg.setReceiver(empCode);
             replyMsg.setIsRead(1);
-            replyMsg.setSignature("");
             resultList.add(replyMsg);
         }
         return resultList;
@@ -53,7 +51,6 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
-
         logger.info("****************客户回复的短信*********************************");
         for (SmsMessage smsMessage : replyList) {
             logger.info(smsMessage.toString());

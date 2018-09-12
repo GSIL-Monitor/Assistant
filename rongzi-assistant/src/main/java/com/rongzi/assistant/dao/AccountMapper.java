@@ -13,4 +13,7 @@ import com.rongzi.assistant.model.Account;
  */
 public interface AccountMapper extends BaseMapper<Account> {
 
+
+
+
 }

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.Highlighter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,17 +35,17 @@ public class CallRecordServiceImpl implements CallRecordService {
     public Date syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
 
         String empCode = null;
-        Date lastCallDate = null;
-        Date firstCallDate = null;
+        Date lowCallDate = null;
+        Date HighCallDate = null;
         if (callRecords.size() >= 1) {
             empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
-            lastCallDate = callRecords.get(callRecords.size() - 1).getCallDate();
-            firstCallDate = callRecords.get(0).getCallDate();
+            HighCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
+            lowCallDate= callRecords.get(0).getCallDate();
         }
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
-                if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(firstCallDate.getTime())) {
+                if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
                     return dataSyncInfo.getLastCallRecordSyncTime();
                 }
             }
@@ -68,9 +69,9 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, lastCallDate, new Date()));
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
 
-        return lastCallDate;
+        return HighCallDate;
     }
 
 }

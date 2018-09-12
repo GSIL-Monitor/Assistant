@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,14 +41,15 @@ public class SmsMessageController {
      */
     @PostMapping("/getMessages")
     public AssistantTip findAllMsgFromSaleSystem(@RequestBody @Valid SystemMessageParam systemMessageParam, BindingResult bindingResult) {
-
+        long time=System.currentTimeMillis();
+        logger.info("******短信同步请求时间：*********"+new Date());
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
-
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             List<SmsMessage> msgs = smsMessageService.findMsgsFromSaleSystem(systemMessageParam.getEmpCode(), systemMessageParam.getCustomerCode(), systemMessageParam.getCustomerMobile());
+            logger.info("******同步短信返回时间毫秒差：*********"+(System.currentTimeMillis()-time));
             assistantTip = AssistantTip.ok(JSON.toJSON(msgs));
         }
         return assistantTip;
@@ -60,19 +62,15 @@ public class SmsMessageController {
     @PostMapping("/addMessages")
     public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
-        long time=System.currentTimeMillis();
-        logger.info("******短信同步请求时间：*********"+new Date());
+        logger.info("*********************开始同步短信，时间是："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             Date lastSmsSyncTime= smsMessageService.addMsgsToSaleSystem(msgs);
-            logger.info("******同步短信返回时间毫秒差：*********"+(System.currentTimeMillis()-time));
             assistantTip = AssistantTip.ok(lastSmsSyncTime);
         }
         return assistantTip;
     }
-
-
 }

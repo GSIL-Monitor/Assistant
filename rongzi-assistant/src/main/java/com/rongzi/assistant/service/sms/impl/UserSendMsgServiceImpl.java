@@ -43,6 +43,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
         List<SmsMessage> sendMsgs = userSendMsgMapper.findAllMsgsByUserAndCustomer(empCode, customerCode);
+
         List<SmsMessage> resultList = new ArrayList<SmsMessage>();
         for (SmsMessage sendMsg : sendMsgs) {
             sendMsg.setSendStatus(1);

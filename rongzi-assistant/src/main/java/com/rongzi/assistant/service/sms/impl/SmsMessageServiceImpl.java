@@ -51,15 +51,6 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         Collections.sort(msgs, new Comparator<SmsMessage>() {
             @Override
             public int compare(SmsMessage o1, SmsMessage o2) {
-
-                Date t1 = o1.getOccurTime();
-                Date t2 = o2.getOccurTime();
-//                if(t1==null || t1.equals("")){
-//                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
-//                }
-//                if(t2==null || t2.equals("")){
-//                    throw  new GunsException(AssistantExceptionEnum.DATA_NULL);
-//                }
                 Long time1 = o1.getOccurTime().getTime();
                 Long time2 = o2.getOccurTime().getTime();
                 if (time1 > time2) {
@@ -85,8 +76,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         Date firstSmsSyncTime = null;
         String empCode = null;
         if (messages.size() >= 1) {
-            lastSmsSyncTime = messages.get(messages.size() - 1).getOccurTime();
-            firstSmsSyncTime = messages.get(0).getOccurTime();
+            firstSmsSyncTime = messages.get(messages.size() - 1).getOccurTime();
+            lastSmsSyncTime = messages.get(0).getOccurTime();
         }
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
@@ -103,7 +94,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
-                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= firstSmsSyncTime.getTime()) {
+                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lastSmsSyncTime.getTime()) {
                     return mobileDataSyncInfo.getLastSmsSyncTime();
                 }
             }
@@ -114,8 +105,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, lastSmsSyncTime, null, new Date()));
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, firstSmsSyncTime, null, new Date()));
 
-        return lastSmsSyncTime;
+        return firstSmsSyncTime;
     }
 }
