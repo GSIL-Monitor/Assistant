@@ -10,16 +10,15 @@ import java.util.Map;
 
 public class ValidatorParamUtil {
 
-    public static void validatorParams(BindingResult bindingResult, AssistantTip assistantTip, Map<String, Object> bindingResultMap) {
+    public static AssistantTip getAssistantTip(BindingResult bindingResult,AssistantTip assistantTip, Map<String, Object> bindingResultMap) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-
         for (FieldError fieldError : fieldErrors) {
             String field = fieldError.getField();
             String defaultMessage = fieldError.getDefaultMessage();
             bindingResultMap.put(field, defaultMessage);
         }
-
         assistantTip = AssistantTip.error(-1, JSON.toJSONString(bindingResultMap));
+        return assistantTip;
     }
 
 }

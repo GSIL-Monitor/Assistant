@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CallBehaviorMapper {
 
-    boolean addCallBehaviorFromMobileToSystme(@Param("callRecords") List<CallRecord> callRecords);
 
+    boolean addCallBehaviorFromMobileToSystme(@Param("callRecords") List<CallRecord> callRecords);
 }

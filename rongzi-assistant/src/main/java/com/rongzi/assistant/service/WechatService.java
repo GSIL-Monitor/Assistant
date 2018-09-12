@@ -12,4 +12,9 @@ public interface WechatService {
      */
     int addFriend(WechatParam wechatParam);
 
+    /**
+     * 更新微信好友状态
+     * @param wechatParam
+     */
+    void updateFriendStatus(WechatParam wechatParam);
 }

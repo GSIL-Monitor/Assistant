@@ -7,6 +7,8 @@ import com.rongzi.assistant.service.WechatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,15 +32,15 @@ public class WechatController {
     @Autowired
     WechatService wechatService;
 
-    @RequestMapping("/addFriend")
-    public AssistantTip sendRequestForAddFreiend(@RequestBody @Valid WechatParam wechatParam, BindingResult bindingResult) {
+    @PostMapping("/addFriend")
+    public AssistantTip sendRequestForAddFreiend(@RequestBody @Validated(value = WechatParam.AddFriend.class) WechatParam wechatParam, BindingResult bindingResult) {
 
         AssistantTip assistantTip = new AssistantTip();
 
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             wechatParam.setAccountSecret(AccountSecret);
             wechatParam.setWeChatConstantStr(weChatConstantStr);
@@ -46,6 +48,25 @@ public class WechatController {
             assistantTip = AssistantTip.ok(weChatCode);
         }
         return assistantTip;
+    }
+
+    @PostMapping("/updateFriendStatus")
+    public AssistantTip updateWeChatStatus(@RequestBody @Validated(value = WechatParam.UpdateStatus.class) WechatParam wechatParam, BindingResult bindingResult){
+
+        AssistantTip assistantTip = new AssistantTip();
+
+        Map<String, Object> bindingResultMap = new HashMap<String, Object>();
+        if (bindingResult.hasErrors()) {
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
+        } else {
+            wechatService.updateFriendStatus(wechatParam);
+            assistantTip = AssistantTip.ok(wechatParam.getFriendStatus());
+        }
+        return assistantTip;
+
 
     }
+
+
+
 }

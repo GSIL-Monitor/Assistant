@@ -3,7 +3,6 @@ package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.validator.constraints.NotBlank;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +35,7 @@ public class SmsMessage implements Serializable {
     /**
      * 发送标志 1为销售 2为客户
      */
+    @NotNull
     private int senderRole;
 
     /**
@@ -159,10 +159,6 @@ public class SmsMessage implements Serializable {
 
     public void setOccurTime(Date occurTime) {
 
-//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//        this.occurTime =simpleDateFormat.format(occurTime);
-
         this.occurTime = occurTime;
     }
 
@@ -198,6 +194,8 @@ public class SmsMessage implements Serializable {
     public void setIsRead(int isRead) {
         this.isRead = isRead;
     }
+
+
 
 
 }

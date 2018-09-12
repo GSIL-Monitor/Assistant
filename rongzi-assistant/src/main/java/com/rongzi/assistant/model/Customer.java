@@ -1,13 +1,16 @@
 package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.Date;
+import java.util.Locale;
 
-public class Customer implements Serializable {
+public class Customer implements Serializable,Comparable<Customer> {
 
     private static final long serialVersionUID = 4597661105769038855L;
 
@@ -73,6 +76,7 @@ public class Customer implements Serializable {
      */
     @Size(min = 1,max = 500)
     @NotBlank
+    @Size(min = 1,max = 500)
     private String comment;
 
     /**
@@ -280,5 +284,14 @@ public class Customer implements Serializable {
                 ", wechatFriendStatus=" + wechatFriendStatus +
                 ", customerWechatId='" + customerWechatId + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Customer o) {
+        if((!StringUtils.isEmpty(o.name)) && (!StringUtils.isEmpty(this.name))){
+            return Collator.getInstance(Locale.CHINA).compare(this.name, o.name);
+        }else{
+            return this.mobile.compareTo(o.mobile);
+        }
     }
 }

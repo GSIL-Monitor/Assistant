@@ -1,17 +1,26 @@
 package com.rongzi.assistant.service.impl;
 
 import com.rongzi.assistant.model.CallRecord;
+import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
+import com.rongzi.assistant.service.MobileDataSnycInfoService;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.Highlighter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class CallRecordServiceImpl implements CallRecordService {
+
+    private Logger logger= LoggerFactory.getLogger(CallRecordServiceImpl.class);
 
     @Autowired
     CallRecordService callRecordService;
@@ -22,8 +31,38 @@ public class CallRecordServiceImpl implements CallRecordService {
     @Autowired
     CallBehaviorRealTimeService callBehaviorRealTimeService;
 
+
+    @Autowired
+    MobileDataSnycInfoService mobileDataSnycInfoService;
+
     @Override
-    public boolean syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
+    public Date syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
+
+        String empCode = null;
+        Date lowCallDate = null;
+        Date HighCallDate = null;
+        if (callRecords.size() >= 1) {
+            empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
+            lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
+            HighCallDate= callRecords.get(0).getCallDate();
+        }
+        logger.info("最大的时间数据是："+HighCallDate);
+        logger.info("最小的时间数据是："+lowCallDate);
+        for(int i=0;i<callRecords.size();i++){
+            if(StringUtils.isEmpty(callRecords.get(i).getMobile())){
+                callRecords.remove(callRecords.get(i));
+                continue;
+            }
+        }
+        MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
+        if (dataSyncInfo != null) {
+            if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
+                if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
+                    logger.info("返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
+                    return dataSyncInfo.getLastCallRecordSyncTime();
+                }
+            }
+        }
         List<CallRecord> customerData = new ArrayList<CallRecord>();
         List<CallRecord> callBehaviorData = new ArrayList<CallRecord>();
         for (CallRecord callRecord : callRecords) {
@@ -43,7 +82,9 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
-        return true;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
+        logger.info("返回的时间数据是： "+HighCallDate);
+        return HighCallDate;
     }
 
 }

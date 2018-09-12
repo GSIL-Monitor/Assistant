@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 public class UserSendMsgServiceImpl implements UserSendMsgService {
 
+
     private Logger logger= LoggerFactory.getLogger(UserSendMsgServiceImpl.class);
 
     @Autowired
@@ -42,6 +43,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
     @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
         List<SmsMessage> sendMsgs = userSendMsgMapper.findAllMsgsByUserAndCustomer(empCode, customerCode);
+
         List<SmsMessage> resultList = new ArrayList<SmsMessage>();
         for (SmsMessage sendMsg : sendMsgs) {
             sendMsg.setSendStatus(1);
@@ -80,14 +82,11 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
         if (sendList.size() <= 0) {
             return true;
         }
-
-        logger.info("****************销售发送的短信***************************");
+        logger.info("**************销售发送的短信******************");
         for (SmsMessage smsMessage : sendList) {
             logger.info(smsMessage.toString());
         }
-        logger.info("****************销售发送的短信***************************");
-
-
+        logger.info("**************销售发送的短信******************");
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
         boolean flag = userSendMsgMapper.addMsgsToSaleSystem(sendList);

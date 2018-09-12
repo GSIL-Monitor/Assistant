@@ -12,11 +12,11 @@
 
         INSERT INTO CallBehaviorRealTime
         (
-        src, dst, billsec,calldate,CreateTime,UpdateTime
+        src, dst, billsec,calldate,CreateTime,UpdateTime,CallSource
         )VALUES
         <foreach collection="callRecords" separator="," item="record" index="index">
             (
-            #{record.src},#{record.dst},#{record.billSec},#{record.callDate},getdate(),getdate()
+            #{record.src},#{record.dst},#{record.billSec},#{record.callDate},getdate(),getdate(),100
             )
         </foreach>
     </insert>

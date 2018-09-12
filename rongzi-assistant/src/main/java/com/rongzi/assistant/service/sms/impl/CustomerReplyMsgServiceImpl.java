@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
 
 
-    private Logger logger= LoggerFactory.getLogger(SmsMessageServiceImpl.class);
+    private Logger logger= LoggerFactory.getLogger(UserSendMsgServiceImpl.class);
 
     @Autowired
     CustomerReplyMsgMapper customerReplyMsgMapper;
@@ -36,10 +36,8 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
             replyMsg.setSenderRole(2);
             replyMsg.setSender(customerCode);
             replyMsg.setSenderMobile(customerMobile);
-            replyMsg.setReceiverMobile("");
             replyMsg.setReceiver(empCode);
             replyMsg.setIsRead(1);
-            replyMsg.setSignature("");
             resultList.add(replyMsg);
         }
         return resultList;
@@ -53,13 +51,13 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      */
     @Override
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
-
-        logger.info("***************客户回复发送的短信**************************");
+        logger.info("****************客户回复的短信*********************************");
         for (SmsMessage smsMessage : replyList) {
             logger.info(smsMessage.toString());
         }
-        logger.info("***************客户回复发送的短信**************************");
-        return customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
+        logger.info("*******************客户回复的短信**********************************");
+        boolean flag = customerReplyMsgMapper.addMsgsToSaleSystem(replyList);
+        return flag;
     }
 
 }

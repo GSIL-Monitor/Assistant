@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -43,18 +40,12 @@ public class CustomerController {
     @PostMapping("/list")
     public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
 
-
         AssistantTip assistantTip = new AssistantTip();
-
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
-
         Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
-
         List<Integer> status = Arrays.asList(customerExeStatus);
-
         boolean exeStatusFlag = status.contains(customerListParam.getCustomerExeStatus());
         if (bindingResult.hasErrors() || (!exeStatusFlag)) {
-
             if (!exeStatusFlag) {
                 bindingResultMap.put("customerExeStatus", "客户进程编号异常");
             }
@@ -76,10 +67,12 @@ public class CustomerController {
                 // TODO 接口现在没有开发。
                 page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
                 List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                Collections.sort(customers);
                 page.setRecords(customers);
             } else {
                 page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
                 List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+                Collections.sort(customers);
                 page.setRecords(customers);
             }
             PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
@@ -99,18 +92,15 @@ public class CustomerController {
     @PostMapping("/editComment")
     public AssistantTip editComment(@RequestBody @Valid Customer customer, BindingResult bindingResult) {
 
-
         AssistantTip assistantTip = new AssistantTip();
-
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-            ValidatorParamUtil.validatorParams(bindingResult, assistantTip, bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip,bindingResultMap);
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
             assistantTip = AssistantTip.ok();
         }
         return assistantTip;
     }
-
 
 }

@@ -9,7 +9,8 @@
 
         SELECT  ReplyContent AS content,ReplyTime AS occurTime FROM CustomerSmsReply
 
-         WHERE ReplyMobile=#{customerMobile}   ORDER BY ReplyTime DESC
+         WHERE ReplyMobile=#{customerMobile}   AND ReplyTime is NOT  NULL
+         ORDER BY ReplyTime DESC
 
     </select>
 
