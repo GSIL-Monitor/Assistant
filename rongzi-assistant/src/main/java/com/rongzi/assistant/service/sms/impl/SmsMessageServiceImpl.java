@@ -108,7 +108,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 logger.info("数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
                 logger.info("传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("短信同步返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
+                    logger.info("数据库时间大于等于最小时间,所以返回： "+mobileDataSyncInfo.getLastSmsSyncTime());
                     Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
                     return lastSmsSyncTime;
                 }

@@ -62,7 +62,7 @@ public class CallRecordServiceImpl implements CallRecordService {
                 logger.info("传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
 
                 if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
-                    logger.info("通话记录返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
+                    logger.info("数据库时间大于等于最小时间,所以返回： "+dataSyncInfo.getLastCallRecordSyncTime());
                     Date lastCallRecordSyncTime = dataSyncInfo.getLastCallRecordSyncTime();
                     return lastCallRecordSyncTime;
                 }
