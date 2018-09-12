@@ -57,6 +57,10 @@ public class CallRecordServiceImpl implements CallRecordService {
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
+
+                logger.info("数据库里面保存的时间是："+dataSyncInfo.getLastCallRecordSyncTime()+"毫秒数目是："+dataSyncInfo.getLastCallRecordSyncTime().getTime());
+                logger.info("传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
+
                 if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
                     logger.info("通话记录返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
                     Date lastCallRecordSyncTime = dataSyncInfo.getLastCallRecordSyncTime();

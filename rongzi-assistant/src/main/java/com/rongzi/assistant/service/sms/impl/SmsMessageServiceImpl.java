@@ -105,11 +105,10 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
-                logger.info("数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime());
-                logger.info("传入过来的通话时间是："+lowCallDate);
+                logger.info("数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
+                logger.info("传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
                     logger.info("短信同步返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
-
                     Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
                     return lastSmsSyncTime;
                 }
