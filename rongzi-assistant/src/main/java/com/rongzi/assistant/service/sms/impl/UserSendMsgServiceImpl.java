@@ -73,6 +73,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
                 continue;
             }
             smsMessage.setReceiver(customer.getCustomerCode());
+            smsMessage.setSendStatus(1);
             if (StringUtils.isEmpty(customer.getName())) {
                 smsMessage.setReceiverName("");
             }

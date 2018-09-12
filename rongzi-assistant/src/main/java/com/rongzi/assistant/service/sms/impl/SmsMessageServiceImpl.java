@@ -88,8 +88,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                 continue;
             }
         }
-        logger.info("最大的时间数据是： "+HighCallDate);
-        logger.info("最小的时间数据是： "+lowCallDate);
+        logger.info("短信同步最大的时间数据是： "+HighCallDate);
+        logger.info("短信同步最小的时间数据是： "+lowCallDate);
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
@@ -106,7 +106,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
+                    logger.info("短信同步返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
                     return mobileDataSyncInfo.getLastSmsSyncTime();
                 }
             }
@@ -118,7 +118,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
-        logger.info("返回的时间数据是： "+HighCallDate);
+        logger.info("短信同步返回的时间数据是： "+HighCallDate);
         return HighCallDate;
     }
 }
