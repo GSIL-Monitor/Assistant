@@ -59,7 +59,8 @@ public class CallRecordServiceImpl implements CallRecordService {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
                 if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
                     logger.info("通话记录返回的时间数据是： "+dataSyncInfo.getLastCallRecordSyncTime());
-                    return dataSyncInfo.getLastCallRecordSyncTime();
+                    Date lastCallRecordSyncTime = dataSyncInfo.getLastCallRecordSyncTime();
+                    return lastCallRecordSyncTime;
                 }
             }
         }
@@ -82,6 +83,8 @@ public class CallRecordServiceImpl implements CallRecordService {
             customerService.syncContactStatusByCallRecords(customerData);
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
+
+        HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
         logger.info("通话记录返回的时间数据是： "+HighCallDate);
         return HighCallDate;

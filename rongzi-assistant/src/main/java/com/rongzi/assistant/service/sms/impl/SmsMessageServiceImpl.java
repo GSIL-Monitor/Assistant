@@ -105,9 +105,13 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
             if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
+                logger.info("数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime());
+                logger.info("传入过来的通话时间是："+lowCallDate);
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
                     logger.info("短信同步返回的时间数据是： "+mobileDataSyncInfo.getLastSmsSyncTime());
-                    return mobileDataSyncInfo.getLastSmsSyncTime();
+
+                    Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
+                    return lastSmsSyncTime;
                 }
             }
         }
@@ -117,6 +121,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         if (customerSendMsgs.size() > 0) {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
+        HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
         logger.info("短信同步返回的时间数据是： "+HighCallDate);
         return HighCallDate;
