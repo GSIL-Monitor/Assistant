@@ -137,7 +137,7 @@ public class SmsMessageServiceImplTest {
             }
 
         }
-        boolean flag =smsMessageService.addMsgsToSaleSystem(tempList);
+        Date flag =smsMessageService.addMsgsToSaleSystem(tempList);
 
 
 
