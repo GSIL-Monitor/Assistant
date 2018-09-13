@@ -1,6 +1,7 @@
 package com.rongzi.assistant.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -62,7 +63,8 @@ public class Customer implements Serializable,Comparable<Customer> {
     /**
      * 用款时间
      */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
+//    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date paymentDate;
 
     /**

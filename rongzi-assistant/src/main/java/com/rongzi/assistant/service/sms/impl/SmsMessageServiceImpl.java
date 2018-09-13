@@ -79,32 +79,32 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         Date HighCallDate = null;
         Date lowCallDate = null;
         String empCode = null;
-        if (messages.size() >= 1) {
+        if(messages.size() >= 1){
+            for (int i = 0; i < messages.size(); i++) {
+                if (StringUtils.isEmpty(messages.get(i).getSenderMobile())) {
+                    messages.remove(messages.get(i));
+                    continue;
+                }
+                if (messages.get(i).getSenderMobile() != null) {
+                    if (messages.get(i).getSenderMobile().startsWith("+86")) {
+                        String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
+                        messages.get(i).setSenderMobile(newSenderMobile);
+                    }
+                }
+                if (messages.get(i).getReceiverMobile() != null) {
+                    if (messages.get(i).getReceiverMobile().startsWith("+86")) {
+                        String newReceiveMobile = messages.get(i).getReceiverMobile().substring(3, messages.get(i).getReceiverMobile().length());
+                        messages.get(i).setReceiverMobile(newReceiveMobile);
+                    }
+                }
+            }
             lowCallDate = messages.get(messages.size() - 1).getOccurTime();
             HighCallDate = messages.get(0).getOccurTime();
         }else{
-            throw  new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
+            throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
         }
-        for(int i=0;i<messages.size();i++){
-            if(StringUtils.isEmpty(messages.get(i).getSenderMobile())){
-                messages.remove(messages.get(i));
-                continue;
-            }
-            if(messages.get(i).getSenderMobile()!=null){
-                if(messages.get(i).getSenderMobile().startsWith("+86")){
-                    String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
-                    messages.get(i).setSenderMobile(newSenderMobile);
-                }
-            }
-            if(messages.get(i).getReceiverMobile()!=null){
-                if(messages.get(i).getReceiverMobile().startsWith("+86")){
-                    String newReceiveMobile = messages.get(i).getReceiverMobile().substring(3, messages.get(i).getReceiverMobile().length());
-                    messages.get(i).setReceiverMobile(newReceiveMobile);
-                }
-            }
-        }
-        logger.info("短信同步最大的时间数据是： "+HighCallDate);
-        logger.info("短信同步最小的时间数据是： "+lowCallDate);
+        logger.info("短信同步最大的时间数据是： "+HighCallDate+" 毫秒数目："+HighCallDate.getTime());
+        logger.info("短信同步最小的时间数据是： "+lowCallDate+" 毫秒数目："+lowCallDate.getTime());
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
         for (SmsMessage message : messages) {
@@ -137,7 +137,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             logger.info("开始调用*********将客户回复的短信增加到销售系统");
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        HighCallDate.setTime(HighCallDate.getTime()+1000);
+//        HighCallDate.setTime(HighCallDate.getTime()+1000);
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
         logger.info("短信  同步返回的时间数据是： "+HighCallDate);
         return HighCallDate;

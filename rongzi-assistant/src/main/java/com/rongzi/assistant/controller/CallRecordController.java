@@ -4,6 +4,8 @@ import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.service.CallRecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RequestMapping("api/call/")
 public class CallRecordController {
 
+    private Logger logger= LoggerFactory.getLogger(CallRecordController.class);
 
     @Autowired
     CallRecordService callRecordService;
@@ -39,7 +42,8 @@ public class CallRecordController {
             assistantTip =ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             Date lastCallRecordSyncTime = callRecordService.syncCallRecordsFromMobileToSystem(callRecord);
-            assistantTip = AssistantTip.ok(lastCallRecordSyncTime);
+            logger.info("返回的毫秒数目是： "+lastCallRecordSyncTime.getTime()+"");
+            assistantTip = AssistantTip.ok(lastCallRecordSyncTime.getTime());
         }
         return assistantTip;
     }

@@ -11,7 +11,6 @@ import com.rongzi.assistant.service.WechatService;
 import com.rongzi.core.page.PageInfoBT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,49 +37,33 @@ public class CustomerController {
      * @return
      */
     @PostMapping("/list")
-    public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam, BindingResult bindingResult) {
+    public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam) {
 
-        AssistantTip assistantTip = new AssistantTip();
-        Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
         List<Integer> status = Arrays.asList(customerExeStatus);
         boolean exeStatusFlag = status.contains(customerListParam.getCustomerExeStatus());
-        if (bindingResult.hasErrors() || (!exeStatusFlag)) {
-            if (!exeStatusFlag) {
-                bindingResultMap.put("customerExeStatus", "客户进程编号异常");
-            }
-            if (bindingResult.hasErrors()) {
-                List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-                for (FieldError fieldError : fieldErrors) {
-                    String field = fieldError.getField();
-                    String defaultMessage = fieldError.getDefaultMessage();
-                    bindingResultMap.put(field, defaultMessage);
-                }
-            }
-            assistantTip = AssistantTip.error(-1, JSON.toJSONString(bindingResultMap));
-        } else {
-            Page page = null;
-            if (customerListParam.getRefreshWX() == 1) {
-                /**
-                 * 调用奥创微信更新
-                 */
-                // TODO 接口现在没有开发。
-                page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
-                List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
-                Collections.sort(customers);
-                page.setRecords(customers);
-            } else {
-                page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
-                List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
-                Collections.sort(customers);
-                page.setRecords(customers);
-            }
-            PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
-            assistantTip = AssistantTip.ok(JSON.toJSON(pageinfo));
+        if (!exeStatusFlag) {
+            return AssistantTip.error(500, "客户进程编号无效");
         }
-        return assistantTip;
 
-
+        Page page = null;
+        if (customerListParam.getRefreshWX() == 1) {
+            /**
+             * 调用奥创微信更新
+             */
+            // TODO 接口现在没有开发。
+            page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+            Collections.sort(customers);
+            page.setRecords(customers);
+        } else {
+            page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
+            Collections.sort(customers);
+            page.setRecords(customers);
+        }
+        PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
+        return AssistantTip.ok(JSON.toJSON(pageinfo));
     }
 
 
@@ -95,7 +78,7 @@ public class CustomerController {
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
-            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip,bindingResultMap);
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
             assistantTip = AssistantTip.ok();

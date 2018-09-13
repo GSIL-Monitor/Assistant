@@ -26,13 +26,13 @@
         insert INTO CustomerMsg
         (
         CltCode,LnkMobile,MsgContent,SendEmpCode,SendEmpName,Signature,SendStatus
-        ,SendTime,CreateTime,ReportResult
+        ,SendTime,CreateTime
         )
         VALUES
         <foreach collection="list" index="index" item="sms" separator=",">
             (
             #{sms.receiver},#{sms.receiverMobile},#{sms.content},#{sms.sender},#{sms.senderName},
-            #{sms.signature},#{sms.sendStatus},#{sms.occurTime},getdate(),'mobile'
+            #{sms.signature},#{sms.sendStatus},#{sms.occurTime},getdate()
             )
         </foreach>
 
