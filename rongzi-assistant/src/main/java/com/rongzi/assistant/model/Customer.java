@@ -64,7 +64,7 @@ public class Customer implements Serializable,Comparable<Customer> {
      * 用款时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
-//    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+//    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date paymentDate;
 
     /**

@@ -75,7 +75,8 @@ public class SmsMessageController {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
             Date lastSmsSyncTime= smsMessageService.addMsgsToSaleSystem(msgs);
-            assistantTip = AssistantTip.ok(lastSmsSyncTime);
+            logger.info("返回的毫秒数目是： "+lastSmsSyncTime.getTime()+"");
+            assistantTip = AssistantTip.ok(lastSmsSyncTime.getTime());
         }
         return assistantTip;
     }
