@@ -68,7 +68,7 @@ public class SmsMessageController {
         }
         logger.info("接受完毕的数据是：------------------");
 
-        logger.info("*********************开始同步短信，时间是："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        logger.info("*********************开始同步短信，时间是："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
