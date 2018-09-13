@@ -1,11 +1,13 @@
 package com.rongzi.assistant.service.impl;
 
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.MobileDataSnycInfoService;
+import com.rongzi.core.exception.GunsException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,8 @@ public class CallRecordServiceImpl implements CallRecordService {
             empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
             lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
             HighCallDate= callRecords.get(0).getCallDate();
+        }else {
+           throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
         logger.info("通话记录最大的时间数据是："+HighCallDate);
         logger.info("通话记录最小的时间数据是："+lowCallDate);

@@ -62,6 +62,12 @@ public class SmsMessageController {
     @PostMapping("/addMessages")
     public AssistantTip addMsgsToSaleSystem(@RequestBody @Valid List<SmsMessage> msgs, BindingResult bindingResult) {
 
+        logger.info("开始接受的数据是：------------------");
+        for(int i=0;i<msgs.size();i++){
+            logger.info(msgs.get(i).toString());
+        }
+        logger.info("接受完毕的数据是：------------------");
+
         logger.info("*********************开始同步短信，时间是："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();

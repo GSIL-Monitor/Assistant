@@ -21,6 +21,7 @@ public enum AssistantExceptionEnum implements ServiceExceptionEnum {
      */
 
     DATA_NULL(500,"数据库该字段没有对应值"),
+    REQUESTDATA_NULL(500,"请求数据不能为空"),
 
     /**
      * 错误的请求

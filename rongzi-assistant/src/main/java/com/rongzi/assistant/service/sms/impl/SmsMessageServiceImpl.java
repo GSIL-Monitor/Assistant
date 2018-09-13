@@ -1,11 +1,13 @@
 package com.rongzi.assistant.service.sms.impl;
 
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.MobileDataSnycInfoService;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
+import com.rongzi.core.exception.GunsException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,13 +76,14 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      */
     @Override
     public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
-
         Date HighCallDate = null;
         Date lowCallDate = null;
         String empCode = null;
         if (messages.size() >= 1) {
             lowCallDate = messages.get(messages.size() - 1).getOccurTime();
             HighCallDate = messages.get(0).getOccurTime();
+        }else{
+            throw  new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
         for(int i=0;i<messages.size();i++){
             if(StringUtils.isEmpty(messages.get(i).getSenderMobile())){

@@ -2,7 +2,10 @@ package com.rongzi.assistant.model;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -41,7 +44,9 @@ public class SmsMessage implements Serializable {
     /**
      * 发送时间
      */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date occurTime;
 
     /**
@@ -79,23 +84,6 @@ public class SmsMessage implements Serializable {
     private int isRead;
 
 
-    @Override
-    public String toString() {
-        return "SmsMessage{" +
-                "sender='" + sender + '\'' +
-                ", receiver='" + receiver + '\'' +
-                ", senderMobile='" + senderMobile + '\'' +
-                ", receiverMobile='" + receiverMobile + '\'' +
-                ", senderRole=" + senderRole +
-                ", occurTime=" + occurTime +
-                ", content='" + content + '\'' +
-                ", signature='" + signature + '\'' +
-                ", senderName='" + senderName + '\'' +
-                ", receiverName='" + receiverName + '\'' +
-                ", sendStatus=" + sendStatus +
-                ", isRead=" + isRead +
-                '}';
-    }
 
     public String getSenderName() {
         return senderName;
@@ -196,6 +184,21 @@ public class SmsMessage implements Serializable {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "SmsMessage{" +
+                "sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", senderMobile='" + senderMobile + '\'' +
+                ", receiverMobile='" + receiverMobile + '\'' +
+                ", senderRole=" + senderRole +
+                ", occurTime=" + occurTime +
+                ", content='" + content + '\'' +
+                ", signature='" + signature + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", sendStatus=" + sendStatus +
+                ", isRead=" + isRead +
+                '}';
+    }
 }
