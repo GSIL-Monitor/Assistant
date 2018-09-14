@@ -56,7 +56,7 @@ public class CatPageURIRewriteAspect implements InitializingBean {
     private volatile boolean requestMappingInfosInit = false;
 
 
-    @Pointcut("execution(* com.rongzi.demo.*..controller.*.*(..))")
+    @Pointcut("execution(* com.rongzi.monitor.*..controller.*.*(..))")
     public void pointCut(){
 
     }
