@@ -56,7 +56,7 @@ public class DruidConfig {
     @Bean
     public JdkRegexpMethodPointcut druidStatPointcut() {
         JdkRegexpMethodPointcut druidStatPointcut = new JdkRegexpMethodPointcut();
-        String patterns = "com.rongzi.demo.modules.*.service.*";
+        String patterns = "com.rongzi.monitor.modules.*.service.*";
         //可以set多个
         druidStatPointcut.setPatterns(patterns);
         return druidStatPointcut;
