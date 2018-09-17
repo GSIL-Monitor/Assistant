@@ -23,7 +23,6 @@
         D.HasPolicy AS hasPolicy,
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
-        '' AS customerWechatId,
         B.ContactStatus AS contactStatus,
         B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE A (NOLOCK)
@@ -45,8 +44,6 @@
                 AND CLT_EXE_STATUS !=0 AND CLT_EXE_STATUS !=10
             </otherwise>
         </choose>
-
-
     </select>
 
 

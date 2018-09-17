@@ -46,6 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setWorkPlace(cityMap.get(Integer.parseInt(customer.getWorkPlace())));
             } else {
                 customer.setWorkPlace(currentUser.getCityName());
+
             }
             resultList.add(customer);
         }
