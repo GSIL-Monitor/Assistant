@@ -10,7 +10,8 @@ public class WebConfig {
 
     @Bean
     public FilterRegistrationBean authFilter() {
-        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         AuthFilter filter = new AuthFilter();
         registrationBean.setFilter(filter);
         return registrationBean;
