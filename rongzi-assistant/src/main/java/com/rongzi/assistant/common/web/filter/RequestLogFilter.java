@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -28,8 +30,18 @@ public class RequestLogFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(RequestLogFilter.class);
 
+    private String[] excludesPattern = new String[]{
+            "/druid/**",
+            "/favicon.ico",
+            "/swagger*",
+    };
+
+    protected PathMatcher pathMatcher = new AntPathMatcher();
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+
+
 
 
     }
@@ -37,6 +49,10 @@ public class RequestLogFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
+        if (isExclusion(((HttpServletRequest)servletRequest).getRequestURI())) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         RequestLogData requestLogData=new RequestLogData();
         HttpServletRequest httpServletRequest=(HttpServletRequest)servletRequest;
 
@@ -84,5 +100,19 @@ public class RequestLogFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean isExclusion(String requestURI) {
+        if (excludesPattern == null || requestURI == null) {
+            return false;
+        }
+
+        for (String pattern : excludesPattern) {
+            if (pathMatcher.match(pattern, requestURI)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
