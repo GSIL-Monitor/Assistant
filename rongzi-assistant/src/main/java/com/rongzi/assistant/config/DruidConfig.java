@@ -1,4 +1,4 @@
-package com.rongzi.assistant.common.web;
+package com.rongzi.assistant.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -47,7 +47,7 @@ public class DruidConfig {
         return filterRegistrationBean;
     }
 
-   /**
+    /**
      * druid数据库连接池监控
      */
     @Bean
@@ -61,7 +61,7 @@ public class DruidConfig {
         String patterns = "com.rongzi.assistant.service.*";
         String patterns2 = "com.rongzi.assistant.dao.*";
         //可以set多个
-        druidStatPointcut.setPatterns(patterns,patterns2);
+        druidStatPointcut.setPatterns(patterns, patterns2);
         return druidStatPointcut;
     }
 
