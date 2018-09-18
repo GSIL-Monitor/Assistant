@@ -61,19 +61,11 @@ public class MybatisPlusConfig {
                 DataSourceModel dataSourceModel = entry.getValue();
 
                 DruidDataSource druidDataSource = new DruidDataSource();
-//                druidProperties.config(mngDataSource);
+                druidProperties.config(druidDataSource);
                 druidDataSource.setDriverClassName(dataSourceModel.getDriverClassName());
                 druidDataSource.setUrl(dataSourceModel.getUrl());
                 druidDataSource.setUsername(dataSourceModel.getUsername());
                 druidDataSource.setPassword(dataSourceModel.getPassword());
-
-                try {
-                    druidDataSource.setFilters("stat");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-
                 druidDataSource.init();
 
                 logger.info("【" + dataSourceName + "】 数据源正在初始化中");
