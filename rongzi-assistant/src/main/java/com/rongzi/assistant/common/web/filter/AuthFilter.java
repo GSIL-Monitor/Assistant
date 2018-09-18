@@ -2,9 +2,11 @@ package com.rongzi.assistant.common.web.filter;
 
 import com.rongzi.assistant.common.constant.Constants;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
+import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.core.exception.GunsException;
+import com.rongzi.core.util.RenderUtil;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -47,7 +49,9 @@ public class AuthFilter extends OncePerRequestFilter {
 
             // Check the authorization, check if the token is started by "Bearer "
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                throw new ServletException("Missing or invalid Authorization header");
+                AssistantTip errorTip = AssistantTip.error(AssistantExceptionEnum.INVALID_TOKEN.getCode(), AssistantExceptionEnum.INVALID_TOKEN.getMessage());
+                RenderUtil.renderJson(response, errorTip);
+                return;
             }
 
             try {
@@ -55,7 +59,9 @@ public class AuthFilter extends OncePerRequestFilter {
                 // Add the userInfo to request header
                 request.setAttribute(Constants.CURRENT_USER_INFO_KEY, userInfo);
             } catch (Exception e) {
-                throw new GunsException(AssistantExceptionEnum.INVALID_TOKEN);
+                AssistantTip errorTip = AssistantTip.error(AssistantExceptionEnum.INVALID_TOKEN.getCode(), AssistantExceptionEnum.INVALID_TOKEN.getMessage());
+                RenderUtil.renderJson(response, errorTip);
+                return;
             }
 
             filterChain.doFilter(request, response);
