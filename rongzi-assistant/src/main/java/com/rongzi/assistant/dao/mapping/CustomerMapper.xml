@@ -25,12 +25,12 @@
         A.CLT_EXE_STATUS AS exeStatus,
         B.ContactStatus AS contactStatus,
         B.wechatFriendStatus AS wechatFriendStatus
-        FROM dbo.SAL_CLT_BASE A (NOLOCK)
-        LEFT JOIN dbo.SAL_CLT_LNKMAN B (NOLOCK) ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
-        LEFT JOIN dbo.SAL_CLT_REQUIRE C (NOLOCK) ON A.RQR_ID=C.RQR_ID
-        LEFT JOIN dbo.FinancingBooksInfo D (NOLOCK) ON A.CLT_CODE=D.CLT_CODE
-        LEFT JOIN dbo.CustomerExtentInfo E (NOLOCK) ON A.CLT_CODE=E.CLT_CODE
-        LEFT JOIN dbo.SYS_SELECT_LIST F (NOLOCK) ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
+        FROM dbo.SAL_CLT_BASE(NOLOCK) A
+        LEFT JOIN dbo.SAL_CLT_LNKMAN(NOLOCK) B ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
+        LEFT JOIN dbo.SAL_CLT_REQUIRE(NOLOCK) C ON A.RQR_ID=C.RQR_ID
+        LEFT JOIN dbo.FinancingBooksInfo(NOLOCK) D ON A.CLT_CODE=D.CLT_CODE
+        LEFT JOIN dbo.CustomerExtentInfo(NOLOCK) E ON A.CLT_CODE=E.CLT_CODE
+        LEFT JOIN dbo.SYS_SELECT_LIST(NOLOCK) F ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
         WHERE
         A.CLT_STATUS='1' AND clt_owner=#{empCode}
         <choose>
