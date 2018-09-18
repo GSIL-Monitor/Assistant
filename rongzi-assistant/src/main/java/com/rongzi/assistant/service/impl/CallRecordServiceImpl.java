@@ -50,9 +50,13 @@ public class CallRecordServiceImpl implements CallRecordService {
                     continue;
                 }
             }
-            empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
-            lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
-            HighCallDate= callRecords.get(0).getCallDate();
+            if(callRecords.size() >= 1){
+                empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
+                lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
+                HighCallDate= callRecords.get(0).getCallDate();
+            }else{
+                throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
+            }
         }else {
            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }

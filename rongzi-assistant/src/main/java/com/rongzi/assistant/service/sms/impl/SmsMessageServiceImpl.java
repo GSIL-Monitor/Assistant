@@ -85,6 +85,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                     messages.remove(messages.get(i));
                     continue;
                 }
+
                 if (messages.get(i).getSenderMobile() != null) {
                     if (messages.get(i).getSenderMobile().startsWith("+86")) {
                         String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
@@ -98,8 +99,12 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                     }
                 }
             }
-            lowCallDate = messages.get(messages.size() - 1).getOccurTime();
-            HighCallDate = messages.get(0).getOccurTime();
+            if(messages.size()>=1){
+                lowCallDate = messages.get(messages.size() - 1).getOccurTime();
+                HighCallDate = messages.get(0).getOccurTime();
+            }else {
+                throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
+            }
         }else{
             throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
         }
