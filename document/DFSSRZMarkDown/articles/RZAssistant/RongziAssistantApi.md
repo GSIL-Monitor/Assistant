@@ -1,0 +1,306 @@
+# 融助手接口文档（Rongzi Assistant Api）
+
+
+## 0. 环境说明
+* 测试环境地址:http://10.40.3.230:8077
+* 开发环境地址:http://10.40.3.110:8077
+
+
+## 1. 统一请求、响应参数、格式
+
+### 请求（request）
+* querystring参数使用kv键值对格式。
+* 请求体参数统一使用json格式，即content-type:application/json  
+
+### 响应（response）
+* 响应体统一使用json格式。 
+
+#### 响应参数
+|Key|Value|类型|说明|
+|---|---|---|---|
+|code|返回代码|int|0:成功 其他:异常| 
+|msg |提示信息|String|调用成功或失败的描述| 
+|data|业务数据|Object|返回数据| 
+
+
+## 2. token 说明
+
+### 从用户登录获取到用户及token信息  
+示例如下:  
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": {
+        "userInfo": {
+            "accountName": "liuchao",
+            "cityCode": "SUZHOU",
+            "cityName": "",
+            "dprCode": "",
+            "dprName": "",
+            "empCode": "AA1611",
+            "empName": "刘超[AA1611]",
+            "roleCode": "",
+            "roleName": ""
+        },
+        "token":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBQTE2MTEiLCJkYXRhIjp7ImFjY291bnROYW1lIjoibGl1Y2hhbyIsImVtcENvZGUiOiJBQTE2MTEiLCJlbXBOYW1lIjoi5YiY6LaFW0FBMTYxMV0iLCJjaXR5Q29kZSI6IlNVWkhPVSIsImNpdHlOYW1lIjpudWxsLCJkcHJDb2RlIjpudWxsLCJkcHJOYW1lIjpudWxsLCJyb2xlQ29kZSI6bnVsbCwicm9sZU5hbWUiOm51bGx9LCJleHAiOjE1MzYxMTMwOTksImlhdCI6MTUzNTUwODI5OX0.OoLpECeSs8oAnWiZ9xc7E81UP_hTSGm7Wy1J_yjM43lXbu8dvT7MyhaW-1_FH50oX1kIM-7SPvmsF0hXzvy2gw"
+    }
+}
+```
+
+### 请求需将token带入请求头 
+示例如下:  
+```
+GET /resource HTTP/1.1
+Host: server.example.com
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBQTE2MTEiLCJkYXRhIjp7ImFjY291bnROYW1lIjoibGl1Y2hhbyIsImVtcENvZGUiOiJBQTE2MTEiLCJlbXBOYW1lIjoi5YiY6LaFW0FBMTYxMV0iLCJjaXR5Q29kZSI6IlNVWkhPVSIsImNpdHlOYW1lIjpudWxsLCJkcHJDb2RlIjpudWxsLCJkcHJOYW1lIjpudWxsLCJyb2xlQ29kZSI6bnVsbCwicm9sZU5hbWUiOm51bGx9LCJleHAiOjE1MzYxMTMwOTksImlhdCI6MTUzNTUwODI5OX0.OoLpECeSs8oAnWiZ9xc7E81UP_hTSGm7Wy1J_yjM43lXbu8dvT7MyhaW-1_FH50oX1kIM-7SPvmsF0hXzvy2gw
+```
+
+PS:  
+这里我们采用比较通用的Http Authorization + Bearer Token的形式。  
+
+Bearer Token 的格式:
+> Bearer XXXXXXXX  
+
+可以参考这篇文章:[OAuth 2.0: Bearer Token Usage](https://www.cnblogs.com/XiongMaoMengNan/p/6785155.html) 
+
+### token校验
+当token校验失败，会收到如下响应内容:
+
+    {
+        code:500,
+        msg:"不合法的token"
+    }
+
+
+## 3. 用户登录
+
+> POST /api/account/login   
+
+### 参数
+
+入参说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|username|销售工号|String|暂定为4位工号| 
+|password|密码|String|与融管系统通用| 
+
+入参示例  
+
+    {
+        "username":"1611",
+        "password":"e10adc3949ba59abbe56e057f20f883e"
+    }
+
+
+### 响应
+
+响应说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|accountName|销售工号|String|---|
+|accountName|账号名称|String|---|
+|empCode|用户编号|String|---|
+|empName|用户姓名|String|---|
+|cityCode|城市编号|String|---|
+|cityName|城市名称|String|---|
+|dprCode|部门编号|String|---|	
+|dprName|部门名称|String|---|
+|roleCode|职位编号|String|---|			
+|roleName|职位名称|String|---|
+|empWorkMobile|销售手机|String|---|
+|empWechatId|销售微信ID|String|---|
+
+响应示例
+
+登录成功示例:
+
+    {
+        "code": 0,
+        "data": {
+            "userInfo": {
+                "accountName": "liuchao",
+                "cityCode": "SUZHOU",
+                "cityName": "苏州市",
+                "dprCode": "",
+                "dprName": "",
+                "empCode": "AA1611",
+                "empName": "刘超[AA1611]",
+                "empWechatId": "wxid_slhv0lqkbac222",
+                "empWorkMobile": "18516431436",
+                "roleCode": "",
+                "roleName": ""
+            },
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBQTE2MTEiLCJkYXRhIjp7ImFjY291bnROYW1lIjoibGl1Y2hhbyIsImVtcENvZGUiOiJBQTE2MTEiLCJlbXBOYW1lIjoi5YiY6LaFW0FBMTYxMV0iLCJjaXR5Q29kZSI6IlNVWkhPVSIsImNpdHlOYW1lIjoi6IuP5bee5biCIiwiZHByQ29kZSI6bnVsbCwiZHByTmFtZSI6bnVsbCwicm9sZUNvZGUiOm51bGwsInJvbGVOYW1lIjpudWxsLCJlbXBXb3JrTW9iaWxlIjoiMTg1MTY0MzE0MzYiLCJlbXBXZWNoYXRJZCI6Ind4aWRfc2xodjBscWtiYWMyMjIifSwiZXhwIjoxNTY4ODAyNTIzLCJpYXQiOjE1MzcyNjY1MjN9.1FugIsS1rgqEhCbw60gzxy_nzwPTkeQLOZ9kKjkfg_eYrocpJv5ul0zRLEPQWwnbRd6izL3PSQ8I-vycdyJD-Q"
+        },
+        "msg": "操作成功"
+    }                                                            
+
+登录失败示例:
+
+    {
+        code:1，
+        msg:"用户名或密码错误"
+    }
+
+
+## 4. 查询客户列表
+
+> POST /api/customer/list  
+
+### 参数
+
+入参说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|customerExeStatus|客户进程|int|-1:全部 1:有需求 2:有意向 3:已来访 4:已签约 5:已成交（包含外包和会员）|
+|empCode|销售工号|String|---|
+|pageSize|每页记录行数|String|---|
+|pageIndex|第几页|String|从1开始|
+|refreshWX|是否更新微信好友|String|1:更新 0:不更新（已弃用）|
+
+注意:  
+1. customerExeStatus 为 -1，代表查询全部进程的客户；    
+   customerExeStatus 为 5，代表查询全部已成交的客户，包括了外包和会员两种成交客户。      
+   PS:数据表存储 5:外包 6:会员
+2. 目前更新微信好友功能取消，refreshWX参数忽略，传递0和传递1是一样的效果。  
+
+入参示例:
+
+    {
+        "customerExeStatus": 1,
+        "pageSize": 10,
+        "pageIndex": 1,
+        "empCode": "AA1611"
+    }
+
+### 响应
+
+响应说明    
+
+返回Customer列表
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|name       |客户姓名|String|   |
+|hasCars    |是否有车产|int|1:有 2:无|
+|hasPolicy  |是否有担保|int|1:有 2:无|
+|salary     |月打卡工资|Double| |
+|hasHouse   |是否有房产|int|1:有 2:无|
+|IsSecuityOrFund|是否社保公积金|int|1:无社保无公积金<br/>2:有社保有公积金<br/>4:有社保无公积金<br/>8:无社保有公积金|
+|job        |工作身份|String|   |
+|rqrDuration|借款期限|int|  |
+|rqrAmount  |借款额度|int|  |
+|paymentDate|用款时间|Date| |
+|workPlace  |工作城市|String|   |
+|comment    |备注|String|   |
+|exeStatus  |客户进程|int|1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
+|customerCode|客户编号|String|  |
+|mobile     |客户手机号码|String|   |
+|contactStatus|拨打状态|int|0:未拨打<br/>1:已接通<br/>2:未接通|
+|wechatFriendStatus|微信好友关系状态|int|1:非微信好友<br/>2:微信号不存在(暂不用)<br/>3:微信好友申请中(暂不用)<br/>4:微信好友申请已过期(暂不用)<br/>5:拒绝添加好友(暂不用)<br/>6:已经是微信好友|
+
+响应示例:
+
+    {
+        "code": 0,
+        "data": {
+            "total": "72",
+            "rows": [
+                {
+                    "wechatFriendStatus": 3,
+                    "customerWechatId": "",
+                    "mobile": "13472764344",
+                    "rqrAmount": 2500,
+                    "customerCode": "AAC13031400024",
+                    "salary": 5000,
+                    "exeStatus": 1,
+                    "hasPolicy": 1,
+                    "contactStatus": 2,
+                    "hasHouse": 2,
+                    "name": "AAC13031400024",
+                    "comment": "",
+                    "hasCars": 1,
+                    "job": "企业主",
+                    "paymentDate": "2018-08-28 14:49:20",
+                    "rqrDuration": 12,
+                    "isSecuityOrFund": 1,
+                    "workPlace": "苏州市"
+                },
+                {
+                    "wechatFriendStatus": 3,
+                    "customerWechatId": "",
+                    "mobile": "15051711562",
+                    "rqrAmount": 2,
+                    "customerCode": "AAC13040300071",
+                    "salary": 0,
+                    "exeStatus": 1,
+                    "hasPolicy": 0,
+                    "contactStatus": 2,
+                    "hasHouse": 2,
+                    "name": "AAC13040300071",
+                    "comment": "下周一联系212344561234",
+                    "hasCars": 2,
+                    "job": "企业主",
+                    "paymentDate": "2018-03-08 00:00:00",
+                    "rqrDuration": 0,
+                    "isSecuityOrFund": 0,
+                    "workPlace": "苏州市"
+                },
+                {
+                    "wechatFriendStatus": 1,
+                    "customerWechatId": "",
+                    "mobile": "13771986452",
+                    "rqrAmount": 50,
+                    "customerCode": "AAC13070404916",
+                    "salary": "",
+                    "exeStatus": 1,
+                    "hasPolicy": 2,
+                    "contactStatus": 2,
+                    "hasHouse": 1,
+                    "name": "AAC13070404916",
+                    "comment": "需要",
+                    "hasCars": 1,
+                    "job": "企业主",
+                    "paymentDate": "2016-08-10 00:00:00",
+                    "rqrDuration": 12,
+                    "isSecuityOrFund": 0,
+                    "workPlace": "苏州市"
+                }
+            ]
+        },
+        "msg": "操作成功"
+    }
+
+
+## 5. 编辑客户备注
+
+> POST /api/customer/editComment  
+
+### 参数
+
+入参说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|empCode|销售工号|String|---|
+
+入参示例:
+
+
+    
+### 响应
+
+响应说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|name       |客户姓名|String|   |
+
+
+响应示例:
+
+   
