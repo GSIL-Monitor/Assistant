@@ -291,6 +291,10 @@ Bearer Token 的格式:
 入参示例:
 
 
+    {
+      "customerCode": "AFC14101000001",
+      "comment":"你好",
+    }
     
 ### 响应
 
@@ -302,5 +306,189 @@ Bearer Token 的格式:
 
 
 响应示例:
+    
+    {
+    	msg:"编辑备注成功"
+    	code：0
+        data：null
+    }
 
-   
+## 6. 获取短信模板
+
+> GET /api/sms/templates  
+
+### 参数
+
+入参说明: 无参数
+
+### 响应
+
+响应说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|id       |模板id|String|   | 
+|title    |模板标题|String|   |   
+|content  |模板内容|String|   |   
+
+响应示例:
+
+返回列表
+
+    {
+    	msg:"操作成功"
+    	code：0
+    	data：
+    			 [
+    				{
+	    				" id ": “0”,
+	    				" title ": "回访模板"
+	    				" content ": "恭喜你成功放款一个亿"
+    				},
+    				{
+	    			    " id ": “1”,
+	    				" title ": "回访模板1"
+	    				" content ": "恭喜你成功放款三个亿"
+    				}
+    
+    			]
+    
+    }
+    
+## 7. 同步手机短信到销售系统
+
+> POST /api/sms/addMessages
+
+### 参数
+
+入参说明: 
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|sender       |发送者编号|String|---| 
+|receiver     |接收方编号|String|---|
+|senderRole   |谁发送|int|1:销售 2:客户|
+|occurTime    |发送时间|Date|---|
+|content      |发送内容|String|---|
+|senderMobile      |发送者号码|String|---|
+|receiverMobile      |接受者号码|String|---|
+|senderName      |发送者名字|String|---|
+|receiverName    |接受者名字|String|---|
+|signature       |签名|String|默认是【东方融资网】|
+|sendStatus   |发送状态|int|1:成功 0:失败|
+|isRead   |读取状态|int|默认是1|
+
+入参示例:
+
+    
+      [
+	    {
+		    "sender": "AFC14101000001",
+			"receiver": "AA0396",
+			"senderRole": 2,
+			"occurTime": "2018-09-07 07:53:41.300",
+			"content": "1111客户给销售发短信测试",
+			"senderMobile": "13906509892",
+			"receiverMobile": "",
+			"senderName": "AFC14101000001",
+			"receiverName": "赵静[AA0396]",
+			"signature": "【东方融资网】",
+			"sendStatus": 1,
+			"isRead": 1
+	    },
+	    {
+		    "sender": "AA0396",
+			"receiver": "AFC14101000001",
+			"senderRole": 1,
+			"occurTime": "2018-09-07 06:53:41.300",
+			"content": "22222销售给客户发短信测试",
+			"senderMobile": "",
+			"receiverMobile": "13906509892",
+			"senderName": "赵静[AA0396]",
+			"receiverName": "AFC14101000001",
+			"signature": "【东方融资网】",
+			"sendStatus": 1,
+			"isRead": 1
+	    }
+      ]
+    
+
+### 响应
+响应示例:
+    
+    
+    {
+    	msg:"编辑备注成功"
+    	code：0
+        data：最后一次同步时间毫秒数
+    }
+    
+## 8. 同步系统短信到手机
+
+> POST api/sms/getMessages
+
+### 参数
+
+入参说明
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|empCode|销售工号|String|---|
+|customerCode|客户工号|String|---|
+|empName  |销售姓名|String|---|
+|customerMobile|客户手机号码|String|---|
+|pageSize|每页记录行数|int|从1开始|
+|pageIndex|初始化加载第几页|int|从1开始|
+
+入参示例:
+    
+    {
+      "empCode": "AA0396",
+      "customerCode": "AFC14101000001",
+      "customerMobile":"13906509892",
+       "empName":"AFC14101000001",
+      "pageSize": 10,
+      "pageIndex": 1
+    }
+
+### 响应
+响应示例:
+
+    {
+	    msg:"操作成功"
+	    code：0
+	    data：
+		    {
+	    	  total: 2
+	    	  rows:[
+						 {
+							"sender": "",
+							"receiver": "xxxxxxxx",
+							"senderRole": 2,
+							"occurTime": "2018-08-29 06:53:41.30",
+							"content": "xxxxxxxxx",
+							"senderMobile": "xxxxxxxxx",
+							"receiverMobile": "",
+							"senderName": "",
+							"receiverName": "xxxxxxx",
+							"signature": "【东方融资网】",
+							"sendStatus": 1,
+							"isRead": 1
+						},
+						{
+							"sender": "xxxxxxxxx",
+							"receiver": "",
+							"senderRole": 1,
+							"occurTime": "2018-08-29 06:53:41.30",
+							"content": "xxxxxxxxx",
+							"senderMobile": "",
+							"receiverMobile": "xxxxxxxxx",
+							"senderName": "xxxxxxxxxxxx",
+							"receiverName": "",
+							"signature": "【东方融资网】",
+							"sendStatus": 1,
+							"isRead": 1
+						}
+	    			]
+		    	}
+    }
