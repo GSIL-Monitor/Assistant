@@ -32,11 +32,7 @@ public class UserServiceImpl implements UserService {
         userInfo.setEmpWechatId(account.getEmpWechatId());
         userInfo.setEmpWorkMobile(account.getEmpWorkMobile());
 
-// TODO
-//        userInfo.setDprCode("dev");
-//        userInfo.setDprName("dev");
-//        userInfo.setRoleCode("dev");
-//        userInfo.setRoleName("dev");
+
 
         return userInfo;
     }

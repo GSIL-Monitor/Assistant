@@ -1,11 +1,11 @@
 package com.rongzi.assistant.common.web.filter;
 
 import com.rongzi.assistant.common.constant.Constants;
+import com.rongzi.assistant.common.constant.FilterConstants;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.UserInfo;
-import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.util.RenderUtil;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthFilter extends OncePerRequestFilter {
+
 
     protected PathMatcher pathMatcher = new AntPathMatcher();
 
@@ -40,7 +41,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         // If the Http request is OPTIONS then just return the status code 200
         // which is HttpServletResponse.SC_OK in this code
-        if ("OPTIONS".equals(request.getMethod())) {
+        if (FilterConstants.REQUEST_METHOD_OPTIONS.equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
             filterChain.doFilter(request, response);
         }
@@ -48,7 +49,7 @@ public class AuthFilter extends OncePerRequestFilter {
         else {
 
             // Check the authorization, check if the token is started by "Bearer "
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            if (authHeader == null || !authHeader.startsWith(FilterConstants.AUTHHEADER)) {
                 AssistantTip errorTip = AssistantTip.error(AssistantExceptionEnum.INVALID_TOKEN.getCode(), AssistantExceptionEnum.INVALID_TOKEN.getMessage());
                 RenderUtil.renderJson(response, errorTip);
                 return;

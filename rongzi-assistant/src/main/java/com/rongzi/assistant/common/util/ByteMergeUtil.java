@@ -3,18 +3,18 @@ package com.rongzi.assistant.common.util;
 public class ByteMergeUtil {
 
     public static byte[] byteMergerAll(byte[]... values) {
-        int length_byte = 0;
+        int lengthByte = 0;
         for (int i = 0; i < values.length; i++) {
-            length_byte += values[i].length;
+            lengthByte += values[i].length;
         }
-        byte[] all_byte = new byte[length_byte];
+        byte[] allByte = new byte[lengthByte];
         int countLength = 0;
         for (int i = 0; i < values.length; i++) {
             byte[] b = values[i];
-            System.arraycopy(b, 0, all_byte, countLength, b.length);
+            System.arraycopy(b, 0, allByte, countLength, b.length);
             countLength += b.length;
         }
-        return all_byte;
+        return allByte;
     }
 
 }

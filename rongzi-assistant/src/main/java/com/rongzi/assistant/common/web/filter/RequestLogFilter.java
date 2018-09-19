@@ -1,7 +1,8 @@
 package com.rongzi.assistant.common.web.filter;
 
 
-import com.rongzi.assistant.common.util.IPutil;
+import com.rongzi.assistant.common.constant.FilterConstants;
+import com.rongzi.assistant.common.util.IPUtil;
 import com.rongzi.assistant.common.util.MyRequestUtil;
 import com.rongzi.assistant.common.web.RequestLogData;
 import com.rongzi.assistant.common.web.wrapper.MyRequestWrapper;
@@ -63,22 +64,22 @@ public class RequestLogFilter implements Filter {
         String userAgent = httpServletRequest.getHeader("User-Agent");
         requestLogData.setUserAgent(userAgent);
         requestLogData.setUri(requestURI);
-        requestLogData.setClientIp(IPutil.getIpAddr(httpServletRequest));
+        requestLogData.setClientIp(IPUtil.getIpAddr(httpServletRequest));
         requestLogData.setAuthorization(authorization);
         requestLogData.setHttpMethod(method);
         requestLogData.setContentType(contentType);
 
         ServletRequest requestWrapper =null;
-        if("POST".equals(method)){
+        if(FilterConstants.REQUEST_METHOD_POST.equals(method)){
           requestWrapper = new MyRequestWrapper(httpServletRequest);
-            if(contentType.equals("application/x-www-form-urlencoded")){
+            if(FilterConstants.CONTENTTYPE_FORM.equals(contentType)){
                 Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
                 for(Map.Entry<String, String[]> entry: parameterMap.entrySet()){
                     params+=entry.getKey()+"="+entry.getValue()[0]+"&&";
                 }
                 String finalParams = params.substring(0, params.length() - 2);
                 body= finalParams;
-            }else if(contentType.equals("multipart/form-data")){
+            }else if(FilterConstants.CONTENTTYPE_UPLOAD.equals(contentType)){
                 body=null;
             }else{
                 body= MyRequestUtil.getBody(requestWrapper);

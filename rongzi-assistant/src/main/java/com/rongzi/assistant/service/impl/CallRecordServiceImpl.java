@@ -42,7 +42,7 @@ public class CallRecordServiceImpl implements CallRecordService {
 
         String empCode = null;
         Date lowCallDate = null;
-        Date HighCallDate = null;
+        Date highCallDate = null;
         if (callRecords.size() >= 1) {
             for(int i=0;i<callRecords.size();i++){
                 if(StringUtils.isEmpty(callRecords.get(i).getMobile())){
@@ -53,14 +53,14 @@ public class CallRecordServiceImpl implements CallRecordService {
             if(callRecords.size() >= 1){
                 empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
                 lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
-                HighCallDate= callRecords.get(0).getCallDate();
+                highCallDate= callRecords.get(0).getCallDate();
             }else{
                 throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
             }
         }else {
            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
-        logger.info("通话记录最大的时间数据是："+HighCallDate);
+        logger.info("通话记录最大的时间数据是："+highCallDate);
         logger.info("通话记录最小的时间数据是："+lowCallDate);
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
@@ -94,10 +94,9 @@ public class CallRecordServiceImpl implements CallRecordService {
         }
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
 
-//        HighCallDate.setTime(HighCallDate.getTime()+1000);
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, HighCallDate, new Date()));
-        logger.info("通话  记录返回的时间数据是： "+HighCallDate);
-        return HighCallDate;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, highCallDate, new Date()));
+        logger.info("通话  记录返回的时间数据是： "+highCallDate);
+        return highCallDate;
     }
 
 }

@@ -76,7 +76,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      */
     @Override
     public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
-        Date HighCallDate = null;
+        Date highcalldate = null;
         Date lowCallDate = null;
         String empCode = null;
         if(messages.size() >= 1){
@@ -101,14 +101,14 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             }
             if(messages.size()>=1){
                 lowCallDate = messages.get(messages.size() - 1).getOccurTime();
-                HighCallDate = messages.get(0).getOccurTime();
+                highcalldate = messages.get(0).getOccurTime();
             }else {
                 throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
             }
         }else{
             throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
         }
-        logger.info("短信同步最大的时间数据是： "+HighCallDate+" 毫秒数目："+HighCallDate.getTime());
+        logger.info("短信同步最大的时间数据是： "+highcalldate+" 毫秒数目："+highcalldate.getTime());
         logger.info("短信同步最小的时间数据是： "+lowCallDate+" 毫秒数目："+lowCallDate.getTime());
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
@@ -142,9 +142,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             logger.info("开始调用*********将客户回复的短信增加到销售系统");
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-//        HighCallDate.setTime(HighCallDate.getTime()+1000);
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, HighCallDate, null, new Date()));
-        logger.info("短信  同步返回的时间数据是： "+HighCallDate);
-        return HighCallDate;
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, highcalldate, null, new Date()));
+        logger.info("短信  同步返回的时间数据是： "+highcalldate);
+        return highcalldate;
     }
 }

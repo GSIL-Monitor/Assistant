@@ -23,7 +23,7 @@ public class WechatController {
 
 
     @Value("${wechat.AccountSecret}")
-    private String AccountSecret;
+    private String accountsecret;
 
 
     @Value("${wechat.constantStr}")
@@ -42,7 +42,7 @@ public class WechatController {
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
-            wechatParam.setAccountSecret(AccountSecret);
+            wechatParam.setAccountSecret(accountsecret);
             wechatParam.setWeChatConstantStr(weChatConstantStr);
             int weChatCode = wechatService.addFriend(wechatParam);
             assistantTip = AssistantTip.ok(weChatCode);
