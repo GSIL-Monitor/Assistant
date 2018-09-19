@@ -409,15 +409,24 @@ Bearer Token 的格式:
 
 ### 响应
 
+响应说明：
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|msg       |操作信息|String|---| 
+|code      |响应编码|int|---|   
+|data      |最后一次操作的毫秒数|String|---|  
+
 响应示例:
   
     {
     	msg:"编辑备注成功"
     	code:0
-        data:最后一次同步时间毫秒数
+        data:"1537348268039" 
     }
 
- 
+
+
 ## 8. 获取短信列表
 
 > POST /api/sms/getMessages
@@ -447,6 +456,29 @@ Bearer Token 的格式:
     }
 
 ### 响应
+
+响应说明：
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|sender       |发送者编号|String|---| 
+|receiver     |接收方编号|String|---|
+|senderRole   |谁发送|int|1:销售 2:客户|
+|occurTime    |发送时间|Date|---|
+|content      |发送内容|String|---|
+|senderMobile |发送者号码|String|---|
+|receiverMobile  |接受者号码|String|---|
+|senderName      |发送者名字|String|---|
+|receiverName    |接受者名字|String|---|
+|signature       |签名|String|默认是【东方融资网】|
+|sendStatus   |发送状态|int|1:成功 0:失败|
+|isRead   |读取状态|int|默认是1|
+|msg       |操作信息|String|---| 
+|code      |响应编码|int|---|   
+|data      |响应数据集合|String|---|  
+|total     |响应数据总条数|int|---|  
+|rows      |响应数据集|List|---|  
+
 
 响应示例:
 
