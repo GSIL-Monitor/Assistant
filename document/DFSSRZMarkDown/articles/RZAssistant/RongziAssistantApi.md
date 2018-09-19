@@ -6,7 +6,7 @@
 * 开发环境地址:http://10.40.3.110:8077
 
 
-## 1. 统一请求、响应参数、格式
+## 1. 统一请求、响应的参数和格式
 
 ### 请求（request）
 * querystring参数使用kv键值对格式。
@@ -79,7 +79,7 @@ Bearer Token 的格式:
 
 ### 参数
 
-入参说明
+入参说明：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
@@ -96,7 +96,7 @@ Bearer Token 的格式:
 
 ### 响应
 
-响应说明
+响应说明：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
@@ -152,7 +152,7 @@ Bearer Token 的格式:
 
 ### 参数
 
-入参说明
+入参说明：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
@@ -162,10 +162,11 @@ Bearer Token 的格式:
 |pageIndex|第几页|String|从1开始|
 |refreshWX|是否更新微信好友|String|1:更新 0:不更新（已弃用）|
 
-注意:  
-1. customerExeStatus 为 -1，代表查询全部进程的客户；    
-   customerExeStatus 为 5，代表查询全部已成交的客户，包括了外包和会员两种成交客户。      
-   PS:数据表存储 5:外包 6:会员
+注意:   
+
+1. customerExeStatus 为 -1，代表查询全部进程的客户；<br>
+   customerExeStatus 为 5，代表查询全部已成交的客户，包括了外包和会员两种成交客户。<br>
+   PS:数据表中存储的字典 5:外包 6:会员        
 2. 目前更新微信好友功能取消，refreshWX参数忽略，传递0和传递1是一样的效果。  
 
 入参示例:
@@ -179,7 +180,7 @@ Bearer Token 的格式:
 
 ### 响应
 
-响应说明    
+响应说明：    
 
 返回Customer列表
 
@@ -282,36 +283,30 @@ Bearer Token 的格式:
 
 ### 参数
 
-入参说明
+入参说明：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
-|empCode|销售工号|String|---|
+|customerCode|客户编号|String|---|
+|comment|备注内容|String|不大于500字|
 
 入参示例:
-
 
     {
       "customerCode": "AFC14101000001",
       "comment":"你好",
     }
-    
+  
 ### 响应
-
-响应说明
-
-|Key|Value|类型|说明|
-|---|---|---|---|
-|name       |客户姓名|String|   |
-
 
 响应示例:
     
     {
-    	msg:"编辑备注成功"
-    	code：0
-        data：null
+    	msg:"编辑备注成功",
+    	code:0,
+        data:null
     }
+
 
 ## 6. 获取短信模板
 
@@ -319,49 +314,49 @@ Bearer Token 的格式:
 
 ### 参数
 
-入参说明: 无参数
+入参说明： 无参数
 
 ### 响应
 
-响应说明
+响应说明：
+
+返回短信模板列表    
 
 |Key|Value|类型|说明|
 |---|---|---|---|
-|id       |模板id|String|   | 
-|title    |模板标题|String|   |   
-|content  |模板内容|String|   |   
+|id       |模板id|String|---| 
+|title    |模板标题|String|---|   
+|content  |模板内容|String|---|   
 
 响应示例:
 
-返回列表
-
     {
     	msg:"操作成功"
-    	code：0
-    	data：
+    	code:0
+    	data:
     			 [
     				{
 	    				" id ": “0”,
-	    				" title ": "回访模板"
+	    				" title ": "回访模板",
 	    				" content ": "恭喜你成功放款一个亿"
     				},
     				{
 	    			    " id ": “1”,
-	    				" title ": "回访模板1"
+	    				" title ": "回访模板1",
 	    				" content ": "恭喜你成功放款三个亿"
     				}
-    
     			]
     
     }
-    
-## 7. 同步手机短信到销售系统
+
+
+## 7. 同步手机短信
 
 > POST /api/sms/addMessages
 
 ### 参数
 
-入参说明: 
+入参说明： 
 
 |Key|Value|类型|说明|
 |---|---|---|---|
@@ -370,8 +365,8 @@ Bearer Token 的格式:
 |senderRole   |谁发送|int|1:销售 2:客户|
 |occurTime    |发送时间|Date|---|
 |content      |发送内容|String|---|
-|senderMobile      |发送者号码|String|---|
-|receiverMobile      |接受者号码|String|---|
+|senderMobile |发送者号码|String|---|
+|receiverMobile  |接受者号码|String|---|
 |senderName      |发送者名字|String|---|
 |receiverName    |接受者名字|String|---|
 |signature       |签名|String|默认是【东方融资网】|
@@ -380,7 +375,6 @@ Bearer Token 的格式:
 
 入参示例:
 
-    
       [
 	    {
 		    "sender": "AFC14101000001",
@@ -414,22 +408,23 @@ Bearer Token 的格式:
     
 
 ### 响应
+
 响应示例:
-    
-    
+  
     {
     	msg:"编辑备注成功"
-    	code：0
-        data：最后一次同步时间毫秒数
+    	code:0
+        data:最后一次同步时间毫秒数
     }
-    
-## 8. 同步系统短信到手机
 
-> POST api/sms/getMessages
+ 
+## 8. 获取短信列表
+
+> POST /api/sms/getMessages
 
 ### 参数
 
-入参说明
+入参说明：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
@@ -452,12 +447,13 @@ Bearer Token 的格式:
     }
 
 ### 响应
+
 响应示例:
 
     {
 	    msg:"操作成功"
-	    code：0
-	    data：
+	    code:0
+	    data:
 		    {
 	    	  total: 2
 	    	  rows:[
@@ -492,3 +488,136 @@ Bearer Token 的格式:
 	    			]
 		    	}
     }
+
+
+## 9. 同步手机通话记录
+
+> POST /api/call/syncRecords
+
+### 参数
+
+入参说明：
+
+入参为通话记录列表，列表按照时间(callDate)倒叙排列的，即第一条是最后的时间。
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|mobile|客户手机号码|String|---|
+|billSec|通话时长(秒)|int|---|
+|callDate|拨打时间|Date|---|
+|empWorkMobile|销售手机号码|String|---|
+|empCode|销售编号|String|---|
+|callStatus|通话类型|int|0：销售未拨打客户<br/>1：销售拨打客户，客户接通 <br/> 2：销售拨打了客户，但是客户未接通<br/> 3：客户拨打销售，销售未接<br/> 4：客户拨打销售，销售接通|
+
+PS: 根据通话类型，可以确认：    
+
+1. 拨打者是什么角色: 销售/客户   
+2. 电话拨打状态：接听/呼叫/呼叫未接听
+
+入参示例:
+    
+    [
+        {
+            "mobile":"xxxxxxxx",
+            "billSec":40,
+            "callDate":"2018-08-30 18:30:55",
+            "empWorkMobile":"",
+            "empCode":"XXXX",
+            "callStatus":1
+        }
+    ]
+
+### 响应
+
+响应说明：  
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|data|最后一次通话记录同步时间|timestramp|精确到毫秒|
+
+响应示例:
+
+    {
+        msg:"操作成功"
+        code:0
+        data:1537345115000
+    }
+
+### 备注
+
+在涉及到短信和电话的时候，发送/接收都是销售的时候，那么发送编号就是工号，发送号码就是空字符串； 发送/接收都是客户的时候，就一个是客户编号，一个是客户手机号码，后续存在工号和手机号码对应数据后能处理。
+
+## 10. 发送添加微信好友请求（已弃用）
+
+> POST /api/wechat/addFriend
+
+### 参数
+
+入参说明：
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|customerMobile|客户手机号码|String|---|
+|customerWechatId|客户微信ID|String|---|
+|customerName|客户姓名|String|用于微信备注客户|
+|empWorkMobile|销售手机号码|String|---|
+|empWechatId|销售微信ID|String|---|
+|empName|销售姓名|String|用于微信提示客户备注销售|
+
+入参示例:
+
+    {
+        "customerMobile": "18522222222",
+        "customerWechatId": "",
+        "customerName": "普陀",
+        "empWorkMobile": "18511111111",
+        "empWechatId": "wxid_xbeakwi8vj9q22",
+        "empName": "黄埔"
+    }
+
+### 响应
+
+响应说明：  
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|friendStatus|微信好友关系状态|int|3：微信好友申请中|
+
+响应示例:
+
+    {
+        msg:"操作成功",
+        code:0,
+        data:3
+    }
+
+## 11. 更新微信好友状态
+
+> POST /api/wechat/updateFriendStatus
+
+### 参数
+
+入参说明：
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|customerMobile|客户手机号码|String|---|
+|friendStatus|微信好友关系状态|String|1:非微信好友<br>6:已经是微信好友|
+
+入参示例:
+
+    {
+        "customerMobile": "18722222222",
+        "friendStatus": 1
+    }
+
+### 响应
+
+响应示例:
+
+    {
+        msg:"操作成功",
+        code:0,
+        data:null
+    }
+
