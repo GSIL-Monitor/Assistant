@@ -68,8 +68,8 @@ Bearer Token 的格式:
 当token校验失败，会收到如下响应内容:
 
     {
-        code:500,
-        msg:"不合法的token"
+        "code":500,
+        "msg":"不合法的token"
     }
 
 
@@ -141,8 +141,8 @@ Bearer Token 的格式:
 登录失败示例:
 
     {
-        code:1，
-        msg:"用户名或密码错误"
+        "code":1，
+        "msg":"用户名或密码错误"
     }
 
 
@@ -302,9 +302,9 @@ Bearer Token 的格式:
 响应示例:
     
     {
-    	msg:"编辑备注成功",
-    	code:0,
-        data:null
+    	"msg":"编辑备注成功",
+    	"code":0,
+        "data":null
     }
 
 
@@ -331,9 +331,9 @@ Bearer Token 的格式:
 响应示例:
 
     {
-    	msg:"操作成功"
-    	code:0
-    	data:
+    	"msg":"操作成功"
+    	"code":0
+    	"data":
     			 [
     				{
 	    				" id ": “0”,
@@ -415,16 +415,15 @@ Bearer Token 的格式:
 |---|---|---|---|
 |msg       |操作信息|String|---| 
 |code      |响应编码|int|---|   
-|data      |最后一次操作的毫秒数|String|---|  
+|data      |最后一次操作的毫秒数|String|timestramp，精确到毫秒|  
 
 响应示例:
   
     {
-    	msg:"编辑备注成功"
-    	code:0
-        data:"1537348268039" 
+    	"msg":"操作成功",
+    	"code":0,
+        "data":"1537348268039" 
     }
-
 
 
 ## 8. 获取短信列表
@@ -483,9 +482,9 @@ Bearer Token 的格式:
 响应示例:
 
     {
-	    msg:"操作成功"
-	    code:0
-	    data:
+	    "msg":"操作成功"
+	    "code":0
+	    "data":
 		    {
 	    	  total: 2
 	    	  rows:[
@@ -565,14 +564,14 @@ PS: 根据通话类型，可以确认：
 
 |Key|Value|类型|说明|
 |---|---|---|---|
-|data|最后一次通话记录同步时间|timestramp|精确到毫秒|
+|data|最后一次通话记录同步时间|String|timestramp，精确到毫秒|
 
 响应示例:
 
     {
-        msg:"操作成功"
-        code:0
-        data:1537345115000
+        "msg":"操作成功",
+        "code":0,
+        "data":"1537345115000"
     }
 
 ### 备注
@@ -618,9 +617,9 @@ PS: 根据通话类型，可以确认：
 响应示例:
 
     {
-        msg:"操作成功",
-        code:0,
-        data:3
+        "msg":"操作成功",
+        "code":0,
+        "data":3
     }
 
 ## 11. 更新微信好友状态
@@ -648,8 +647,8 @@ PS: 根据通话类型，可以确认：
 响应示例:
 
     {
-        msg:"操作成功",
-        code:0,
-        data:null
+        "msg":"操作成功",
+        "code":0,
+        "data":null
     }
 
