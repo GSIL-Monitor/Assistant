@@ -50,6 +50,8 @@ public class ExceptionLogServiceImpl extends ServiceImpl<ExceptionLogMapper, Exc
 
         List<Map<String, Object>> data=exceptionLogMapper.findExceptionLogsAll(beginTime, endTime, systemCode, isReadonly, page, Owner, Status,orderByField,asc);
 
+        DataSourceContextHolder.clearDataSourceType();
+
         return data;
     }
 
