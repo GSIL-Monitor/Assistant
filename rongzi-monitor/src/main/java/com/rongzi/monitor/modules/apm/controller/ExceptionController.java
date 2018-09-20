@@ -1,7 +1,5 @@
 package com.rongzi.monitor.modules.apm.controller;
 
-import com.rongzi.core.exception.GunsException;
-import com.rongzi.core.exception.GunsExceptionEnum;
 import com.rongzi.monitor.core.common.constant.factory.PageFactory;
 import com.rongzi.monitor.modules.apm.service.ExceptionLogService;
 import com.alibaba.fastjson.JSONObject;
@@ -11,6 +9,8 @@ import com.rongzi.core.base.tips.Tip;
 import com.rongzi.core.util.FileUtil;
 import com.rongzi.monitor.modules.apm.model.ExceptionLog;
 import com.rongzi.monitor.modules.apm.wrapper.ExceptionLogWarpper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
 @RequestMapping("/exception")
 public class ExceptionController extends BaseController {
+
+
+    private Logger logger= LoggerFactory.getLogger(ExceptionController.class);
 
     private static String PREFIX = "/apm/exception/";
 
@@ -50,10 +52,13 @@ public class ExceptionController extends BaseController {
                        @RequestParam(required = true) String Owner,
                        @RequestParam(required = true) Integer Status) {
 
+        logger.info("开始查询异常日志时间为： "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
+        long startTime=System.currentTimeMillis();
         String flag = "";
         String today="";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         today = simpleDateFormat.format(new Date());
+
         if (today.equals(beginTime) && today.equals(endTime)) {
             //查询新的数据库
             flag = "dataSourceBiz";
@@ -63,8 +68,9 @@ public class ExceptionController extends BaseController {
         Page<ExceptionLog> page = new PageFactory<ExceptionLog>().defaultPage();
         List<Map<String, Object>> resultdata = exceptionLogService.getExceptionLogsAllByDatabase(beginTime, endTime, systemCode,
                 isReadonly, page, Owner, Status, page.getOrderByField(), page.isAsc(), flag);
-
+        logger.info("sql执行调用结束消耗毫秒数为："+(System.currentTimeMillis()-startTime)+" 毫秒");
         page.setRecords((List<ExceptionLog>) new ExceptionLogWarpper(resultdata).warp());
+        logger.info("通过包装类调用结束消耗毫秒数为："+(System.currentTimeMillis()-startTime)+" 毫秒");
         return super.packForBT(page);
     }
 
