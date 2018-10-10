@@ -22,7 +22,7 @@ public class ExceptionLogWarpper extends BaseControllerWarpper {
         Short status = (Short) map.get("Status");
         if (status != null) {
             int statusCode = (Short) status;
-            map.put("Status", ExceptionLogStatusEnum.getStatusMessageByCode(statusCode));
+            map.put("Status", ExceptionLogStatusEnum.getMessageByCode(statusCode));
         }
     }
 
