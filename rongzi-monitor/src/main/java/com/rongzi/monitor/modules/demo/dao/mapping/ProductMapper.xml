@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.rongzi.monitor.modules.apm.dao.ProductMapper">
+<mapper namespace="com.rongzi.monitor.modules.demo.dao.ProductMapper">
 
 
 
@@ -9,7 +9,7 @@
         Id AS id, Name AS name, Count as count, Description AS description, ProductionDate as productionDate, ExpireDate AS expireDate
     </sql>
 
-    <insert id="addProduct" parameterType="com.rongzi.monitor.modules.apm.model.Product">
+    <insert id="addProduct" parameterType="com.rongzi.monitor.modules.demo.model.Product">
 
         INSERT INTO  [DFSS_LOG].[dbo].[Product]
         (
@@ -22,7 +22,7 @@
     </insert>
 
 
-    <select id="findProductById" resultType="com.rongzi.monitor.modules.apm.model.Product">
+    <select id="findProductById" resultType="com.rongzi.monitor.modules.demo.model.Product">
         SELECT
         <include refid="Base_Column_List"/>
         FROM [DFSS_LOG].[dbo].[Product]

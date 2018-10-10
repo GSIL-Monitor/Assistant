@@ -1,7 +1,7 @@
-package com.rongzi.monitor.modules.apm.service;
+package com.rongzi.monitor.modules.demo.service;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.rongzi.monitor.modules.apm.model.Product;
+import com.rongzi.monitor.modules.demo.model.Product;
 
 import java.util.List;
 import java.util.Map;

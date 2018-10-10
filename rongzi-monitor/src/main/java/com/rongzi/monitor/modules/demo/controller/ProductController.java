@@ -1,4 +1,4 @@
-package com.rongzi.monitor.modules.apm.controller;
+package com.rongzi.monitor.modules.demo.controller;
 
 
 import cn.afterturn.easypoi.excel.entity.ImportParams;
@@ -8,8 +8,8 @@ import com.rongzi.monitor.core.common.annotion.Permission;
 import com.rongzi.core.common.exception.BizExceptionEnum;
 import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.util.FileUtil;
-import com.rongzi.monitor.modules.apm.model.Product;
-import com.rongzi.monitor.modules.apm.service.ProductService;
+import com.rongzi.monitor.modules.demo.model.Product;
+import com.rongzi.monitor.modules.demo.service.ProductService;
 import com.rongzi.monitor.modules.apm.wrapper.ProductWarpper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ import java.util.*;
 public class ProductController extends BaseController {
 
 
-    private static String PREFIX = "/apm/product/";
+    private static String PREFIX = "/demo/product/";
 
 
     @Autowired

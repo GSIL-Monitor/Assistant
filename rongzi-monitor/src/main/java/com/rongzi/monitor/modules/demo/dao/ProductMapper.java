@@ -1,6 +1,6 @@
-package com.rongzi.monitor.modules.apm.dao;
+package com.rongzi.monitor.modules.demo.dao;
 
-import com.rongzi.monitor.modules.apm.model.Product;
+import com.rongzi.monitor.modules.demo.model.Product;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
