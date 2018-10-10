@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.common.datasource.DataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
+import com.rongzi.assistant.controller.SmsMessageController;
 import com.rongzi.assistant.dao.CustomerMapper;
-import com.rongzi.assistant.model.CallRecord;
-import com.rongzi.assistant.model.City;
-import com.rongzi.assistant.model.Customer;
-import com.rongzi.assistant.model.UserInfo;
+import com.rongzi.assistant.model.*;
 import com.rongzi.assistant.service.RegionService;
 import com.rongzi.assistant.service.CustomerInternalService;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.core.mutidatasource.DataSourceContextHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
+    private Logger logger= LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @Autowired
     RegionService regionService;
@@ -75,6 +77,14 @@ public class CustomerServiceImpl implements CustomerService {
                 continue;
             }
         }
+
+
+        logger.info("****************通话记录如下：*********************************");
+        for (CallRecord callRecord : callRecords) {
+            logger.info(callRecord.toString());
+        }
+        logger.info("*******************通话记录如下：**********************************");
+
 
         if (callRecords.size() <= 0) {
             return true;
