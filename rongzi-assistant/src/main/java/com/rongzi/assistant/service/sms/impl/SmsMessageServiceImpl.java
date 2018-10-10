@@ -81,7 +81,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         String empCode = null;
         if(messages.size() >= 1){
             for (int i = 0; i < messages.size(); i++) {
-                if (StringUtils.isEmpty(messages.get(i).getSenderMobile())) {
+                if (StringUtils.isEmpty(messages.get(i).getSenderMobile()) || (messages.get(i).getSenderMobile().equals("null"))) {
                     messages.remove(messages.get(i));
                     continue;
                 }

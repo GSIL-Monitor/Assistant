@@ -45,7 +45,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         Date highCallDate = null;
         if (callRecords.size() >= 1) {
             for(int i=0;i<callRecords.size();i++){
-                if(StringUtils.isEmpty(callRecords.get(i).getMobile())){
+                if(StringUtils.isEmpty(callRecords.get(i).getMobile()) || (callRecords.get(i).getMobile() .equals("null"))){
                     callRecords.remove(callRecords.get(i));
                     continue;
                 }

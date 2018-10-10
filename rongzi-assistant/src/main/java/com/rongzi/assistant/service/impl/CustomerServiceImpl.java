@@ -78,14 +78,6 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
 
-
-        logger.info("****************通话记录如下：*********************************");
-        for (CallRecord callRecord : callRecords) {
-            logger.info(callRecord.toString());
-        }
-        logger.info("*******************通话记录如下：**********************************");
-
-
         if (callRecords.size() <= 0) {
             return true;
 //            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
