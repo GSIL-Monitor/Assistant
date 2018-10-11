@@ -38,22 +38,24 @@ public class MultiDataSourceAop implements Ordered {
         Method currentMethod = target.getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
         AssistantDataSource assistantDataSource = currentMethod.getAnnotation(AssistantDataSource.class);
         String name = assistantDataSource.name();
+
         if (name != null) {
             if (name.equals(AssistantDatasourceEnum.DATA_SOURCE_PRODUCT)) {
                 // 产品数据库
                 DataSourceContextHolder.setDataSourceType(AssistantDatasourceEnum.DATA_SOURCE_PRODUCT);
                 logger.debug("系统当前所在数据源为：" + AssistantDatasourceEnum.DATA_SOURCE_PRODUCT);
             } else if (name.equals(AssistantDatasourceEnum.DATA_SOURCE_MNG)) {
-                //默认数据源
+                // MNG数据库
                 DataSourceContextHolder.setDataSourceType(AssistantDatasourceEnum.DATA_SOURCE_MNG);
                 logger.debug("系统当前所在数据源为：" + AssistantDatasourceEnum.DATA_SOURCE_MNG);
             } else {
-                // 分公司城市库
+                // 分公司城市数据库
                 UserInfo currentUserInfo = UserContextHolder.getCurrentUserInfo();
                 DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());
                 logger.debug("设置当前城市数据源为：" + currentUserInfo.getCityCode());
             }
         }
+
         try {
             return proceedingJoinPoint.proceed();
         } finally {
