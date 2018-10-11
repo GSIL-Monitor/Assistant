@@ -2,7 +2,7 @@ package com.rongzi.assistant.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.AssistantDataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.util.ByteMergeUtil;
@@ -38,7 +38,7 @@ public class WechatServiceImpl implements WechatService {
     CustomerMapper customerMapper;
 
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public int addFriend(WechatParam wechatParam) {
         OpenApiSendAddFriendRequestForm addFriendData = new OpenApiSendAddFriendRequestForm();
         addFriendData.setWechatId(wechatParam.getEmpWechatId());
@@ -100,7 +100,7 @@ public class WechatServiceImpl implements WechatService {
     }
 
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public void updateFriendStatus(WechatParam wechatParam) {
         customerMapper.updateCustomerWechatStatus(wechatParam.getFriendStatus(), new Date(), wechatParam.getCustomerMobile());
     }

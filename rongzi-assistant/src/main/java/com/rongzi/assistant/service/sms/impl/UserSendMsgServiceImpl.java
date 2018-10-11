@@ -1,6 +1,6 @@
 package com.rongzi.assistant.service.sms.impl;
 
-import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.AssistantDataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.UserSendMsgMapper;
@@ -40,7 +40,7 @@ public class UserSendMsgServiceImpl implements UserSendMsgService {
      * @return
      */
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public List<SmsMessage> findMsgsFromSaleSystemByUserAndCustomer(String empCode, String customerMobile, String customerCode) {
         List<SmsMessage> sendMsgs = userSendMsgMapper.findAllMsgsByUserAndCustomer(empCode, customerCode);
 

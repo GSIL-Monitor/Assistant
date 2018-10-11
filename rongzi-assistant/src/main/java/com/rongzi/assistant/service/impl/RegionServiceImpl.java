@@ -2,7 +2,7 @@ package com.rongzi.assistant.service.impl;
 
 import com.rongzi.assistant.common.constant.cache.Cache;
 import com.rongzi.assistant.common.constant.cache.CacheKey;
-import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.AssistantDataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.dao.CityMapper;
 import com.rongzi.assistant.model.City;
@@ -26,7 +26,7 @@ public class RegionServiceImpl implements RegionService {
      */
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.CITY_NAME + "'")
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_PRODUCT)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_PRODUCT)
     public List<City> findAllCities() {
         List<City> cities = cityDao.queryAllCitys();
         return cities;

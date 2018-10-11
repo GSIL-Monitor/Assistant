@@ -1,6 +1,6 @@
 package com.rongzi.assistant.service.impl;
 
-import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.AssistantDataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.dao.MobileDataSyncMapper;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
@@ -15,7 +15,7 @@ public class MobileDataSyncInfoServiceImpl implements MobileDataSnycInfoService 
     MobileDataSyncMapper mobileDataSyncMapper;
 
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
     public void syncSmsMessageAndCallRecordInfo(MobileDataSyncInfo mobileDataSyncInfo) {
 
         int count= mobileDataSyncMapper.updateSyncInfo(mobileDataSyncInfo);
@@ -25,7 +25,7 @@ public class MobileDataSyncInfoServiceImpl implements MobileDataSnycInfoService 
     }
 
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
     public MobileDataSyncInfo findLastTime(String empCode) {
 
 

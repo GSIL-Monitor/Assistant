@@ -22,7 +22,7 @@ public class MultiDataSourceAop implements Ordered {
 
     private Logger logger = LoggerFactory.getLogger(MultiDataSourceAop.class);
 
-    @Pointcut(value = "@annotation(com.rongzi.assistant.common.datasource.DataSource)")
+    @Pointcut(value = "@annotation(com.rongzi.assistant.common.datasource.AssistantDataSource)")
     public void cut() {
     }
 
@@ -36,8 +36,8 @@ public class MultiDataSourceAop implements Ordered {
         MethodSignature methodSignature = (MethodSignature) signature;
         Object target = proceedingJoinPoint.getTarget();
         Method currentMethod = target.getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
-        DataSource dataSource = currentMethod.getAnnotation(DataSource.class);
-        String name = dataSource.name();
+        AssistantDataSource assistantDataSource = currentMethod.getAnnotation(AssistantDataSource.class);
+        String name = assistantDataSource.name();
         if (name != null) {
             if (name.equals(DatasourceEnum.DATA_SOURCE_PRODUCT)) {
                 // 产品数据库

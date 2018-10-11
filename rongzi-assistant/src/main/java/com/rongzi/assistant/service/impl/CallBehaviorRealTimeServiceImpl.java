@@ -1,6 +1,6 @@
 package com.rongzi.assistant.service.impl;
 
-import com.rongzi.assistant.common.datasource.DataSource;
+import com.rongzi.assistant.common.datasource.AssistantDataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.dao.CallBehaviorMapper;
 import com.rongzi.assistant.model.CallRecord;
@@ -24,7 +24,7 @@ public class CallBehaviorRealTimeServiceImpl implements CallBehaviorRealTimeServ
      * @return
      */
     @Override
-    @DataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
     public boolean addCallBehaviorFromMobileToSystme(List<CallRecord> callRecords) {
         int batchCount = 50;
         List<CallRecord> temp = new ArrayList<CallRecord>();
