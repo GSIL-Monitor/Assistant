@@ -3,7 +3,7 @@ package com.rongzi.assistant.config.datasource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.common.datasource.AssistantDatasourceEnum;
 import com.rongzi.assistant.config.datasource.properties.DataSourceModel;
 import com.rongzi.assistant.config.datasource.properties.MultiDataSourceProperties;
 import com.rongzi.core.datasource.DruidProperties;
@@ -53,7 +53,7 @@ public class MybatisPlusConfig {
 
         try {
             mngDataSource.init();
-            dataSourceMap.put(DatasourceEnum.DATA_SOURCE_MNG, mngDataSource);
+            dataSourceMap.put(AssistantDatasourceEnum.DATA_SOURCE_MNG, mngDataSource);
 
             Map<String, DataSourceModel> dataSources = multiDataSourceProperties.getDatasources();
             for (Map.Entry<String, DataSourceModel> entry : dataSources.entrySet()) {

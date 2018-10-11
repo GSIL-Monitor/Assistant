@@ -1,7 +1,7 @@
 package com.rongzi.assistant.service.sms.impl;
 
 import com.rongzi.assistant.common.datasource.AssistantDataSource;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.common.datasource.AssistantDatasourceEnum;
 import com.rongzi.assistant.dao.CustomerReplyMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
@@ -31,7 +31,7 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      * @return
      */
     @Override
-    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
+    @AssistantDataSource(name = AssistantDatasourceEnum.DATA_SOURCE_MNG)
     public List<SmsMessage> findReplyMsgsByCustomerMobile(String customerMobile, String customerCode, String empCode) {
         List<SmsMessage> replyMsgs = customerReplyMsgMapper.queryCustomerReplyMsgs(customerMobile);
         List<SmsMessage> resultList = new ArrayList<SmsMessage>();
@@ -53,7 +53,7 @@ public class CustomerReplyMsgServiceImpl implements CustomerReplyMsgService {
      * @return
      */
     @Override
-    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_MNG)
+    @AssistantDataSource(name = AssistantDatasourceEnum.DATA_SOURCE_MNG)
     public boolean addMsgsToSaleSystem(List<SmsMessage> replyList) {
         logger.info("****************客户回复的短信*********************************");
         for (SmsMessage smsMessage : replyList) {

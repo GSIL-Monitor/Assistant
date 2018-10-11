@@ -6,7 +6,7 @@ package com.rongzi.assistant.common.datasource;
  * @author fengshuonan
  * @date 2017年3月5日 上午10:15:02
  */
-public interface DatasourceEnum {
+public interface AssistantDatasourceEnum {
 
     /**
      * 默认的MNG库

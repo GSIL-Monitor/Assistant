@@ -2,7 +2,7 @@ package com.rongzi.assistant.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.common.datasource.AssistantDataSource;
-import com.rongzi.assistant.common.datasource.DatasourceEnum;
+import com.rongzi.assistant.common.datasource.AssistantDatasourceEnum;
 import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.dao.CustomerMapper;
 import com.rongzi.assistant.model.*;
@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @AssistantDataSource(name = DatasourceEnum.DATA_SOURCE_CITY)
+    @AssistantDataSource(name = AssistantDatasourceEnum.DATA_SOURCE_CITY)
     public void editCommentByCode(String customerCode, String comment) {
         customerMapper.editCommentByCodeAndComment(customerCode, comment);
     }
