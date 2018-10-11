@@ -1,10 +1,10 @@
 package com.rongzi.assistant.service.sms.impl;
 
+import com.rongzi.assistant.common.datasource.DataSource;
 import com.rongzi.assistant.common.datasource.DatasourceEnum;
 import com.rongzi.assistant.dao.CustomerReplyMsgMapper;
 import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
-import com.rongzi.core.mutidatasource.annotion.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.Highlighter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
 @Service
 public class CallRecordServiceImpl implements CallRecordService {
 
-    private Logger logger= LoggerFactory.getLogger(CallRecordServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(CallRecordServiceImpl.class);
 
     @Autowired
     CallRecordService callRecordService;
@@ -44,32 +43,32 @@ public class CallRecordServiceImpl implements CallRecordService {
         Date lowCallDate = null;
         Date highCallDate = null;
         if (callRecords.size() >= 1) {
-            for(int i=0;i<callRecords.size();i++){
-                if(StringUtils.isEmpty(callRecords.get(i).getMobile()) || (callRecords.get(i).getMobile() .equals("null"))){
+            for (int i = 0; i < callRecords.size(); i++) {
+                if (StringUtils.isEmpty(callRecords.get(i).getMobile()) || (callRecords.get(i).getMobile().equals("null"))) {
                     callRecords.remove(callRecords.get(i));
                     continue;
                 }
             }
-            if(callRecords.size() >= 1){
+            if (callRecords.size() >= 1) {
                 empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
-                lowCallDate  = callRecords.get(callRecords.size() - 1).getCallDate();
-                highCallDate= callRecords.get(0).getCallDate();
-            }else{
+                lowCallDate = callRecords.get(callRecords.size() - 1).getCallDate();
+                highCallDate = callRecords.get(0).getCallDate();
+            } else {
                 throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
             }
-        }else {
-           throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
+        } else {
+            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
-        logger.info("通话记录最大的时间数据是："+highCallDate);
-        logger.info("通话记录最小的时间数据是："+lowCallDate);
+        logger.info("通话记录最大的时间数据是：" + highCallDate);
+        logger.info("通话记录最小的时间数据是：" + lowCallDate);
 
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
-            if(dataSyncInfo.getLastCallRecordSyncTime()!=null){
-                logger.info("通话  数据库里面保存的时间是："+dataSyncInfo.getLastCallRecordSyncTime()+"毫秒数目是："+dataSyncInfo.getLastCallRecordSyncTime().getTime());
-                logger.info("通话  传入过来的通话时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
-                if (dataSyncInfo.getLastCallRecordSyncTime().getTime()>=(lowCallDate.getTime())) {
-                    logger.info("通话  数据库时间大于等于最小时间,所以返回： "+dataSyncInfo.getLastCallRecordSyncTime());
+            if (dataSyncInfo.getLastCallRecordSyncTime() != null) {
+                logger.info("通话  数据库里面保存的时间是：" + dataSyncInfo.getLastCallRecordSyncTime() + "毫秒数目是：" + dataSyncInfo.getLastCallRecordSyncTime().getTime());
+                logger.info("通话  传入过来的通话时间是：" + lowCallDate + " 毫秒数目是：" + lowCallDate.getTime());
+                if (dataSyncInfo.getLastCallRecordSyncTime().getTime() >= (lowCallDate.getTime())) {
+                    logger.info("通话  数据库时间大于等于最小时间,所以返回： " + dataSyncInfo.getLastCallRecordSyncTime());
                     Date lastCallRecordSyncTime = dataSyncInfo.getLastCallRecordSyncTime();
                     return lastCallRecordSyncTime;
                 }
@@ -96,7 +95,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         callBehaviorRealTimeService.addCallBehaviorFromMobileToSystme(callBehaviorData);
 
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, null, highCallDate, new Date()));
-        logger.info("通话  记录返回的时间数据是： "+highCallDate);
+        logger.info("通话  记录返回的时间数据是： " + highCallDate);
         return highCallDate;
     }
 
