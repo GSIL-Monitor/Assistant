@@ -1,8 +1,12 @@
-package com.rongzi.hr.core.aop;
+package com.rongzi.monitor.core.cat;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,11 +24,9 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 重写cat对springmvc的统计uri.
@@ -54,8 +56,8 @@ public class CatPageURIRewriteAspect implements InitializingBean {
     private volatile boolean requestMappingInfosInit = false;
 
 
-    @Pointcut("execution(* com.rongzi.hr.*..controller.*.*(..))")
-    public void pointCut() {
+    @Pointcut("execution(* com.rongzi.monitor.*..controller.*.*(..))")
+    public void pointCut(){
 
     }
 
@@ -78,7 +80,8 @@ public class CatPageURIRewriteAspect implements InitializingBean {
             if (uri != null) {
                 request.setAttribute("cat-page-uri", uri);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.warn("修改cat统计uri失败[{}]", e.getMessage(), e);
         }
         return pjp.proceed();

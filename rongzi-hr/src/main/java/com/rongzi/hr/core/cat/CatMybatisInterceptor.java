@@ -1,11 +1,11 @@
-package com.rongzi.monitor.core.interceptor;
+package com.rongzi.hr.core.cat;
 
-import com.rongzi.monitor.core.mq.send.DataSend;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSON;
 import com.dianping.cat.Cat;
 import com.dianping.cat.message.Message;
 import com.dianping.cat.message.Transaction;
+import com.rongzi.hr.core.mq.send.DataSend;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -43,19 +43,14 @@ import java.util.regex.Matcher;
 public class CatMybatisInterceptor implements Interceptor {
 
 
-    @Value("${sqlTime}")
-    public Long sqlTime;
-
-    @Autowired
-    DataSend dataSend;
-
-    private static Logger logger = LoggerFactory.getLogger(CatMybatisInterceptor.class);
-
     //缓存，提高性能
     private static final Map<String, String> sqlURLCache = new ConcurrentHashMap<String, String>(256);
-
     private static final String EMPTY_CONNECTION = "jdbc:mysql://unknown:3306/%s?useUnicode=true";
-
+    private static Logger logger = LoggerFactory.getLogger(CatMybatisInterceptor.class);
+    @Value("${sqlTime}")
+    public Long sqlTime;
+    @Autowired
+    DataSend dataSend;
     private Executor target;
 
     public Object intercept(Invocation invocation) throws Throwable {
@@ -86,21 +81,21 @@ public class CatMybatisInterceptor implements Interceptor {
 
         Object returnObj = null;
         try {
-            long start=System.currentTimeMillis();
+            long start = System.currentTimeMillis();
 
             returnObj = invocation.proceed();
-            long time=System.currentTimeMillis()-start;
+            long time = System.currentTimeMillis() - start;
 
 
-            if(time>sqlTime){
-                Map mqMap=new HashMap();
-                mqMap.put("methodname",methodName);
-                mqMap.put("sqlData",sql);
-                mqMap.put("costtime",time);
-                mqMap.put("url","");
-                mqMap.put("occurtime",new Date());
+            if (time > sqlTime) {
+                Map mqMap = new HashMap();
+                mqMap.put("methodname", methodName);
+                mqMap.put("sqlData", sql);
+                mqMap.put("costtime", time);
+                mqMap.put("url", "");
+                mqMap.put("occurtime", new Date());
                 String mqMsg = JSON.toJSONString(mqMap);
-                dataSend.sendData("sqlExchange","sql.data",mqMsg);
+                dataSend.sendData("sqlExchange", "sql.data", mqMsg);
             }
 
             t.setStatus(Transaction.SUCCESS);

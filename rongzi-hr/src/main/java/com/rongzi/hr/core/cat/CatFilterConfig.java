@@ -1,4 +1,4 @@
-package com.rongzi.monitor.config.cat;
+package com.rongzi.hr.core.cat;
 
 import com.dianping.cat.servlet.CatFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
