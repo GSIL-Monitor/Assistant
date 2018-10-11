@@ -43,13 +43,11 @@ public class MultiDataSourceAop implements Ordered {
                 // 产品数据库
                 DataSourceContextHolder.setDataSourceType(AssistantDatasourceEnum.DATA_SOURCE_PRODUCT);
                 logger.debug("系统当前所在数据源为：" + AssistantDatasourceEnum.DATA_SOURCE_PRODUCT);
-
-            }else if(name.equals(AssistantDatasourceEnum.DATA_SOURCE_MNG)){
+            } else if (name.equals(AssistantDatasourceEnum.DATA_SOURCE_MNG)) {
                 //默认数据源
                 DataSourceContextHolder.setDataSourceType(AssistantDatasourceEnum.DATA_SOURCE_MNG);
                 logger.debug("系统当前所在数据源为：" + AssistantDatasourceEnum.DATA_SOURCE_MNG);
-            }
-            else {
+            } else {
                 // 分公司城市库
                 UserInfo currentUserInfo = UserContextHolder.getCurrentUserInfo();
                 DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());

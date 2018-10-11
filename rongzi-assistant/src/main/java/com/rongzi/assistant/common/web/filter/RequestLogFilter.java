@@ -38,12 +38,10 @@ public class RequestLogFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
-
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
 
         if (isExclusion(((HttpServletRequest) servletRequest).getRequestURI())) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -63,7 +61,6 @@ public class RequestLogFilter implements Filter {
         requestLogData.setAuthorization(authorization);
         requestLogData.setHttpMethod(method);
         requestLogData.setContentType(contentType);
-
 
         String body = null;
         String params = "";
@@ -86,7 +83,6 @@ public class RequestLogFilter implements Filter {
         } else {
             requestWrapper = servletRequest;
         }
-
         Long  startTime = System.currentTimeMillis();
         filterChain.doFilter(requestWrapper, servletResponse);
         requestLogData.setHttpBody(body);

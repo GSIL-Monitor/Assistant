@@ -15,7 +15,6 @@ public enum AssistantExceptionEnum implements ServiceExceptionEnum {
     INVALID_TOKEN(500, "不合法的Token。"),
     WRONG_USERNAME_PASSWORD(1, "用户名或密码错误。"),
 
-
     /**
      * 数据异常
      */
