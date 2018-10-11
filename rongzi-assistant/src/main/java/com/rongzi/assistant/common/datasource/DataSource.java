@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface DataSource {
 
-    String name() default "";
+    String name();
 
 }

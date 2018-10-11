@@ -62,6 +62,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         }
         logger.info("通话记录最大的时间数据是："+highCallDate);
         logger.info("通话记录最小的时间数据是："+lowCallDate);
+
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {
             if(dataSyncInfo.getLastCallRecordSyncTime()!=null){

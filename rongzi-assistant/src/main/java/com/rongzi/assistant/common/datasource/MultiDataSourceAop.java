@@ -37,25 +37,25 @@ public class MultiDataSourceAop implements Ordered {
         Object target = proceedingJoinPoint.getTarget();
         Method currentMethod = target.getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
         DataSource dataSource = currentMethod.getAnnotation(DataSource.class);
-
-        if (dataSource != null) {
-            String name = dataSource.name();
+        String name = dataSource.name();
+        if (name != null) {
             if (name.equals(DatasourceEnum.DATA_SOURCE_PRODUCT)) {
                 // 产品数据库
                 DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_PRODUCT);
                 logger.debug("系统当前所在数据源为：" + DatasourceEnum.DATA_SOURCE_PRODUCT);
-            } else {
+
+            }else if(name.equals(DatasourceEnum.DATA_SOURCE_MNG)){
+                //默认数据源
+                DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_MNG);
+                logger.debug("系统当前所在数据源为：" + DatasourceEnum.DATA_SOURCE_MNG);
+            }
+            else {
                 // 分公司城市库
                 UserInfo currentUserInfo = UserContextHolder.getCurrentUserInfo();
                 DataSourceContextHolder.setDataSourceType(currentUserInfo.getCityCode());
                 logger.debug("设置当前城市数据源为：" + currentUserInfo.getCityCode());
             }
-        } else {
-            // 未加注解默认访问DFSSMNG数据库
-            DataSourceContextHolder.setDataSourceType(DatasourceEnum.DATA_SOURCE_MNG);
-            logger.debug("系统当前所在数据源为：" + DatasourceEnum.DATA_SOURCE_MNG);
         }
-
         try {
             return proceedingJoinPoint.proceed();
         } finally {
