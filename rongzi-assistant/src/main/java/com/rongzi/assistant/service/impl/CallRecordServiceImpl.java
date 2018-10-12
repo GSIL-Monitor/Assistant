@@ -3,7 +3,6 @@ package com.rongzi.assistant.service.impl;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
-import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
