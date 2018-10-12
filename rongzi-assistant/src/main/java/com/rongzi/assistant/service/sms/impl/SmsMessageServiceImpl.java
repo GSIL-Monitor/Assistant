@@ -20,8 +20,7 @@ import java.util.*;
 public class SmsMessageServiceImpl implements SmsMessageService {
 
 
-
-    private Logger logger= LoggerFactory.getLogger(SmsMessageServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(SmsMessageServiceImpl.class);
     @Autowired
     UserSendMsgService userSendMsgService;
 
@@ -79,40 +78,43 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         Date highcalldate = null;
         Date lowCallDate = null;
         String empCode = null;
-        if(messages.size() >= 1){
+        List<SmsMessage> correctMsg = new ArrayList<>();
+        if (messages.size() >= 1) {
             for (int i = 0; i < messages.size(); i++) {
-                if (StringUtils.isEmpty(messages.get(i).getSenderMobile()) || (messages.get(i).getSenderMobile().equals("null"))) {
-                    messages.remove(messages.get(i));
-                    continue;
+                if (!(StringUtils.isEmpty(messages.get(i).getSenderMobile()) || (messages.get(i).getSenderMobile().equals("null")))) {
+                    correctMsg.add(messages.get(i));
+                }
+            }
+        } else {
+            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
+        }
+        if (correctMsg.size() >= 1) {
+            for (int i = 0; i < correctMsg.size(); i++) {
+                if (correctMsg.get(i).getSenderMobile() != null) {
+                    if (correctMsg.get(i).getSenderMobile().startsWith("+86")) {
+                        String newSenderMobile = correctMsg.get(i).getSenderMobile().substring(3, correctMsg.get(i).getSenderMobile().length());
+                        correctMsg.get(i).setSenderMobile(newSenderMobile);
+                    }
+                }
+                if (correctMsg.get(i).getReceiverMobile() != null) {
+                    if (correctMsg.get(i).getReceiverMobile().startsWith("+86")) {
+                        String newReceiveMobile = correctMsg.get(i).getReceiverMobile().substring(3, correctMsg.get(i).getReceiverMobile().length());
+                        correctMsg.get(i).setReceiverMobile(newReceiveMobile);
+                    }
                 }
 
-                if (messages.get(i).getSenderMobile() != null) {
-                    if (messages.get(i).getSenderMobile().startsWith("+86")) {
-                        String newSenderMobile = messages.get(i).getSenderMobile().substring(3, messages.get(i).getSenderMobile().length());
-                        messages.get(i).setSenderMobile(newSenderMobile);
-                    }
-                }
-                if (messages.get(i).getReceiverMobile() != null) {
-                    if (messages.get(i).getReceiverMobile().startsWith("+86")) {
-                        String newReceiveMobile = messages.get(i).getReceiverMobile().substring(3, messages.get(i).getReceiverMobile().length());
-                        messages.get(i).setReceiverMobile(newReceiveMobile);
-                    }
-                }
             }
-            if(messages.size()>=1){
-                lowCallDate = messages.get(messages.size() - 1).getOccurTime();
-                highcalldate = messages.get(0).getOccurTime();
-            }else {
-                throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
-            }
-        }else{
-            throw  new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
+            lowCallDate = correctMsg.get(correctMsg.size() - 1).getOccurTime();
+            highcalldate = correctMsg.get(0).getOccurTime();
+        } else {
+            throw new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
         }
-        logger.info("短信同步最大的时间数据是： "+highcalldate+" 毫秒数目："+highcalldate.getTime());
-        logger.info("短信同步最小的时间数据是： "+lowCallDate+" 毫秒数目："+lowCallDate.getTime());
+
+        logger.info("短信同步最大的时间数据是： " + highcalldate + " 毫秒数目：" + highcalldate.getTime());
+        logger.info("短信同步最小的时间数据是： " + lowCallDate + " 毫秒数目：" + lowCallDate.getTime());
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
-        for (SmsMessage message : messages) {
+        for (SmsMessage message : correctMsg) {
             int senderRole = message.getSenderRole();
             if (senderRole == 1) {
                 empCode = message.getSender();
@@ -124,11 +126,11 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         }
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
-            if(mobileDataSyncInfo.getLastSmsSyncTime()!=null){
-                logger.info("短信  数据库里面保存的时间是："+mobileDataSyncInfo.getLastSmsSyncTime()+"毫秒数目是："+mobileDataSyncInfo.getLastSmsSyncTime().getTime());
-                logger.info("短信  传入过来的时间是："+lowCallDate+" 毫秒数目是："+lowCallDate.getTime());
+            if (mobileDataSyncInfo.getLastSmsSyncTime() != null) {
+                logger.info("短信  数据库里面保存的时间是：" + mobileDataSyncInfo.getLastSmsSyncTime() + "毫秒数目是：" + mobileDataSyncInfo.getLastSmsSyncTime().getTime());
+                logger.info("短信  传入过来的时间是：" + lowCallDate + " 毫秒数目是：" + lowCallDate.getTime());
                 if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("短信  数据库时间大于等于最小时间,所以返回： "+mobileDataSyncInfo.getLastSmsSyncTime());
+                    logger.info("短信  数据库时间大于等于最小时间,所以返回： " + mobileDataSyncInfo.getLastSmsSyncTime());
                     Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
                     return lastSmsSyncTime;
                 }
@@ -143,7 +145,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
         mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, highcalldate, null, new Date()));
-        logger.info("短信  同步返回的时间数据是： "+highcalldate);
+        logger.info("短信  同步返回的时间数据是： " + highcalldate);
         return highcalldate;
     }
 }

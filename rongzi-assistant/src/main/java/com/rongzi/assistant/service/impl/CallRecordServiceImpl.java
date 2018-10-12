@@ -3,6 +3,7 @@ package com.rongzi.assistant.service.impl;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.MobileDataSyncInfo;
+import com.rongzi.assistant.model.SmsMessage;
 import com.rongzi.assistant.service.CallBehaviorRealTimeService;
 import com.rongzi.assistant.service.CallRecordService;
 import com.rongzi.assistant.service.CustomerService;
@@ -42,20 +43,20 @@ public class CallRecordServiceImpl implements CallRecordService {
         String empCode = null;
         Date lowCallDate = null;
         Date highCallDate = null;
+        List<CallRecord> currectRecord = new ArrayList<>();
         if (callRecords.size() >= 1) {
             for (int i = 0; i < callRecords.size(); i++) {
-                if (StringUtils.isEmpty(callRecords.get(i).getMobile()) || (callRecords.get(i).getMobile().equals("null"))) {
-                    callRecords.remove(callRecords.get(i));
-                    continue;
+                if (!(StringUtils.isEmpty(callRecords.get(i).getMobile()) || (callRecords.get(i).getMobile().equals("null")))) {
+                    currectRecord.add(callRecords.get(i));
                 }
             }
-            if (callRecords.size() >= 1) {
-                empCode = callRecords.get(callRecords.size() - 1).getEmpCode();
-                lowCallDate = callRecords.get(callRecords.size() - 1).getCallDate();
-                highCallDate = callRecords.get(0).getCallDate();
-            } else {
-                throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
-            }
+        } else {
+            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
+        }
+        if (currectRecord.size() >= 1) {
+            empCode = currectRecord.get(currectRecord.size() - 1).getEmpCode();
+            lowCallDate = currectRecord.get(currectRecord.size() - 1).getCallDate();
+            highCallDate = currectRecord.get(0).getCallDate();
         } else {
             throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
@@ -76,7 +77,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         }
         List<CallRecord> customerData = new ArrayList<CallRecord>();
         List<CallRecord> callBehaviorData = new ArrayList<CallRecord>();
-        for (CallRecord callRecord : callRecords) {
+        for (CallRecord callRecord : currectRecord) {
             int callStatus = callRecord.getCallStatus();
             if (callStatus == 1 || callStatus == 2) {
                 customerData.add(callRecord);
