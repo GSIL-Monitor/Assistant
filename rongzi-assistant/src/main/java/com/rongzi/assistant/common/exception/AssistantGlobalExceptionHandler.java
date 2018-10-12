@@ -1,5 +1,6 @@
 package com.rongzi.assistant.common.exception;
 
+import com.dianping.cat.Cat;
 import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.core.exception.GunsException;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class AssistantGlobalExceptionHandler {
     @ResponseBody
     public AssistantTip notFount(GunsException e) {
         log.error("业务异常:", e);
+        Cat.logError(e);
         return AssistantTip.error(e.getCode(), e.getMessage());
     }
 
@@ -39,6 +41,7 @@ public class AssistantGlobalExceptionHandler {
     @ResponseBody
     public AssistantTip notFount(RuntimeException e) {
         log.error("运行时异常:", e);
+        Cat.logError(e);
         return AssistantTip.error(AssistantExceptionEnum.SERVER_ERROR.getCode(), AssistantExceptionEnum.SERVER_ERROR.getMessage());
     }
 
