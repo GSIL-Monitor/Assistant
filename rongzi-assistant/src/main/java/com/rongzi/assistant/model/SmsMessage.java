@@ -44,9 +44,8 @@ public class SmsMessage implements Serializable {
     /**
      * 发送时间
      */
-
 //   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS",timezone="GMT+8")
     private Date occurTime;
 
     /**
