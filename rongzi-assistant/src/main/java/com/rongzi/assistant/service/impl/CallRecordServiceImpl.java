@@ -36,6 +36,14 @@ public class CallRecordServiceImpl implements CallRecordService {
     @Autowired
     MobileDataSnycInfoService mobileDataSnycInfoService;
 
+    /**
+     * 从手机获取通话记录同步到系统
+     *
+     * @Author xulei
+     * @Date 18:31 2018/10/12
+     * @Param [callRecords]
+     * @return java.util.Date
+     **/
     @Override
     public Date syncCallRecordsFromMobileToSystem(List<CallRecord> callRecords) {
 

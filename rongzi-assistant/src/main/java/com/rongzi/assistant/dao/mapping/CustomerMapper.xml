@@ -24,17 +24,19 @@
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
         B.ContactStatus AS contactStatus,
-        B.wechatFriendStatus AS wechatFriendStatus
+        B.wechatFriendStatus AS wechatFriendStatus,
+        M.contractType AS contractType
         FROM dbo.SAL_CLT_BASE(NOLOCK) A
         LEFT JOIN dbo.SAL_CLT_LNKMAN(NOLOCK) B ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
         LEFT JOIN dbo.SAL_CLT_REQUIRE(NOLOCK) C ON A.RQR_ID=C.RQR_ID
         LEFT JOIN dbo.FinancingBooksInfo(NOLOCK) D ON A.CLT_CODE=D.CLT_CODE
         LEFT JOIN dbo.CustomerExtentInfo(NOLOCK) E ON A.CLT_CODE=E.CLT_CODE
         LEFT JOIN dbo.SYS_SELECT_LIST(NOLOCK) F ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
+        LEFT JOIN dbo.Contract (NOLOCK) M ON A.CLT_CODE = M.CLTCODE
         WHERE
-        A.CLT_STATUS='1' AND clt_owner=#{empCode}
+        A.CLT_STATUS='1' AND A.clt_owner=#{empCode}
         <choose>
-            <when test="customerExeStatus!=null and customerExeStatus!=-1  and customerExeStatus !=0 and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
+            <when test="customerExeStatus!=null and customerExeStatus!=-1  and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
                 AND CLT_EXE_STATUS=#{customerExeStatus}
             </when>
             <when test="customerExeStatus!=null and customerExeStatus==5">
@@ -69,10 +71,9 @@
     </update>
 
 
-
     <select id="queryCustomerNameAndCustomerCode" resultType="com.rongzi.assistant.model.Customer">
 
-        SELECT  CLT_CODE AS customerCode,LNK_NAME AS  name FROM  SAL_CLT_LNKMAN WHERE LNK_MOBILE=#{mobile}
+        SELECT CLT_CODE AS customerCode,LNK_NAME AS name FROM SAL_CLT_LNKMAN WHERE LNK_MOBILE=#{mobile}
 
     </select>
 
@@ -82,5 +83,77 @@
 
         WHERE LNK_MOBILE=#{customerMobile}
     </update>
+
+
+    <select id="searchCustomersByCondition" resultType="com.rongzi.assistant.model.Customer">
+
+        SELECT
+        A.CLT_MEMO AS comment,
+        B.LNK_NAME AS name,
+        B.LNK_MOBILE AS mobile,
+        B.CLT_CODE AS customerCode,
+        C.PAYMENT_DATE AS paymentDate,
+        C.RQR_AMOUNT AS rqrAmount,
+        C.RQR_DURATION AS rqrDuration,
+        F.SEL_TXT AS job,
+        D.IsSecuityOrFund AS IsSecuityOrFund,
+        C.LoanCity AS workPlace,
+        D.HasHouse AS hasHouse ,
+        D.HasCar AS hasCars ,
+        D.HasPolicy AS hasPolicy,
+        E.Salary AS salary,
+        A.CLT_EXE_STATUS AS exeStatus,
+        B.ContactStatus AS contactStatus,
+        B.wechatFriendStatus AS wechatFriendStatus,
+        M.contractType AS contractType
+        FROM dbo.SAL_CLT_BASE(NOLOCK) A
+        LEFT JOIN dbo.SAL_CLT_LNKMAN(NOLOCK) B ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
+        LEFT JOIN dbo.SAL_CLT_REQUIRE(NOLOCK) C ON A.RQR_ID=C.RQR_ID
+        LEFT JOIN dbo.FinancingBooksInfo(NOLOCK) D ON A.CLT_CODE=D.CLT_CODE
+        LEFT JOIN dbo.CustomerExtentInfo(NOLOCK) E ON A.CLT_CODE=E.CLT_CODE
+        LEFT JOIN dbo.SYS_SELECT_LIST(NOLOCK) F ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
+        LEFT JOIN dbo.Contract (NOLOCK) M ON A.CLT_CODE = M.CLTCODE
+        WHERE
+        A.CLT_STATUS='1' AND A.clt_owner=#{empCode}
+        <if test="customerExeStatus !=null ">
+            <choose>
+                <when test="customerExeStatus!=null and customerExeStatus!=-1  and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
+                    AND CLT_EXE_STATUS=#{customerExeStatus}
+                </when>
+                <when test="customerExeStatus!=null and customerExeStatus==5">
+                    AND CLT_EXE_STATUS IN (5,6)
+                </when>
+                <otherwise>
+                    AND CLT_EXE_STATUS !=0 AND CLT_EXE_STATUS !=10
+                </otherwise>
+            </choose>
+        </if>
+        <if test="searchName !=null and searchName !=''">
+            AND B.LNK_NAME LIKE CONCAT('%',#{searchName},'%')
+        </if>
+        <if test="contactStatus!=null">
+            AND B.ContactStatus IN
+            <foreach collection="contactStatus" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        <if test="payStartTime!=null ">
+            AND
+            C.PAYMENT_DATE >= #{payStartTime}
+        </if>
+        <if test="payEndTime!=null ">
+            AND
+            #{payEndTime} >= C.PAYMENT_DATE
+        </if>
+        <if test="contractType ==1">
+            AND (M.contractType =#{contractType} OR M.IsContainMember=1)
+        </if>
+        <if test="contractType ==2">
+            AND (M.contractType =2 OR M.contractType =3 OR M.IsContainOutSourcing=1)
+        </if>
+        <if test="contractType ==3">
+            AND M.contractType > 4
+        </if>
+    </select>
 
 </mapper>

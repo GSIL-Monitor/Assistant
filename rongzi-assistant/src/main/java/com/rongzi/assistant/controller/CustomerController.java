@@ -2,13 +2,19 @@ package com.rongzi.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.CustomerListParam;
+import com.rongzi.assistant.model.SearchParam;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.WechatService;
+import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.page.PageInfoBT;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +31,8 @@ import java.util.*;
 public class CustomerController {
 
 
+    private Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     @Autowired
     CustomerService customerService;
 
@@ -39,9 +47,7 @@ public class CustomerController {
     @PostMapping("/list")
     public AssistantTip findCustomerList(@RequestBody @Valid CustomerListParam customerListParam) {
 
-        Integer[] customerExeStatus = {1, 2, 3, 4, 5, -1};
-        List<Integer> status = Arrays.asList(customerExeStatus);
-        boolean exeStatusFlag = status.contains(customerListParam.getCustomerExeStatus());
+        boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(customerListParam.getCustomerExeStatus());
         if (!exeStatusFlag) {
             return AssistantTip.error(500, "客户进程编号无效");
         }
@@ -82,6 +88,55 @@ public class CustomerController {
         } else {
             customerService.editCommentByCode(customer.getCustomerCode(), customer.getComment());
             assistantTip = AssistantTip.ok();
+        }
+        return assistantTip;
+    }
+
+    /**
+     * 查询满足搜索条件的数据
+     *
+     * @return com.rongzi.assistant.common.tips.AssistantTip
+     * @Author xulei
+     * @Date 15:17 2018/10/12
+     * @Param []
+     **/
+    @PostMapping("/search")
+    public AssistantTip searchCustomerList(@RequestBody SearchParam searchParam, BindingResult bindingResult) {
+
+        logger.info("前端传递过来的搜索参数为：" + searchParam.toString());
+
+        AssistantTip assistantTip = new AssistantTip();
+        Map<String, Object> bindingResultMap = new HashMap<String, Object>();
+        if (bindingResult.hasErrors()) {
+            assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
+        } else {
+            List<Integer> contactStatus = searchParam.getContactStatus();
+            Integer contractType = searchParam.getContractType();
+            Integer customerExeStatus = searchParam.getCustomerExeStatus();
+            String searchName = searchParam.getSearchName();
+            Date payStartTime = searchParam.getPayStartTime();
+            Date payEndTime = searchParam.getPayEndTime();
+            String empCode = searchParam.getEmpCode();
+
+            if (contactStatus.size() == 0 && contractType == null
+                    && customerExeStatus == null
+                    && StringUtils.isEmpty(searchName)
+                    && payStartTime == null && payEndTime == null) {
+                throw new GunsException(AssistantExceptionEnum.SEARCH_DATA_NULL);
+
+            }
+
+            boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(searchParam.getCustomerExeStatus());
+            if (!exeStatusFlag) {
+                return AssistantTip.error(500, "客户进程编号无效");
+            }
+
+            Page page = new Page(searchParam.getPageIndex(), searchParam.getPageSize());
+            List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime);
+            Collections.sort(customers);
+            page.setRecords(customers);
+            PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
+            assistantTip = AssistantTip.ok(JSON.toJSON(pageinfo));
         }
         return assistantTip;
     }

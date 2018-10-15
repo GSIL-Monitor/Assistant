@@ -22,6 +22,7 @@ public enum AssistantExceptionEnum implements ServiceExceptionEnum {
     DATA_NULL(500,"数据库该字段没有对应值"),
     EMPCODE_NULL(500,"去掉发送者手机号码为空的状态后，数据仍然为空.此时不会同步数据"),
     REQUESTDATA_NULL(500,"请求数据不能为空"),
+    SEARCH_DATA_NULL(500,"请至少选择一项条件来进行搜索"),
 
     /**
      * 错误的请求

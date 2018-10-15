@@ -63,7 +63,6 @@ public class Customer implements Serializable,Comparable<Customer> {
      * 用款时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS",timezone="GMT+8")
-//    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date paymentDate;
 
     /**
@@ -82,7 +81,7 @@ public class Customer implements Serializable,Comparable<Customer> {
     /**
      * 客户意向进程
      */
-    private int exeStatus;
+    private Integer exeStatus;
 
     /**
      * 客户编号
@@ -98,7 +97,7 @@ public class Customer implements Serializable,Comparable<Customer> {
     /**
      * 拨打状态
      */
-    private int contactStatus;
+    private Integer contactStatus;
 
     /**
      * 微信好友状态
@@ -116,6 +115,23 @@ public class Customer implements Serializable,Comparable<Customer> {
      */
     private String customerWechatId;
 
+
+    /**
+     * 合同类型
+     * 1：会员客户 对应数据库的 1
+     * 2：外包客户 对应数据库的 2 3
+     * 3：协议客户 对应数据库的 4 5 6 7 8
+     */
+    private Integer contractType;
+
+
+    public Integer getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(Integer contractType) {
+        this.contractType = contractType;
+    }
 
     public String getCustomerWechatId() {
         return customerWechatId;
@@ -229,11 +245,11 @@ public class Customer implements Serializable,Comparable<Customer> {
         this.comment = comment;
     }
 
-    public int getExeStatus() {
+    public Integer getExeStatus() {
         return exeStatus;
     }
 
-    public void setExeStatus(int exeStatus) {
+    public void setExeStatus(Integer exeStatus) {
         this.exeStatus = exeStatus;
     }
 
@@ -246,11 +262,11 @@ public class Customer implements Serializable,Comparable<Customer> {
         this.mobile = mobile;
     }
 
-    public int getContactStatus() {
+    public Integer getContactStatus() {
         return contactStatus;
     }
 
-    public void setContactStatus(int contactStatus) {
+    public void setContactStatus(Integer contactStatus) {
         this.contactStatus = contactStatus;
     }
 
@@ -283,6 +299,7 @@ public class Customer implements Serializable,Comparable<Customer> {
                 ", contactStatus=" + contactStatus +
                 ", wechatFriendStatus=" + wechatFriendStatus +
                 ", customerWechatId='" + customerWechatId + '\'' +
+                ", contractType=" + contractType +
                 '}';
     }
 
