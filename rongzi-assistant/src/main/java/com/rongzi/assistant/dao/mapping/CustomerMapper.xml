@@ -36,7 +36,7 @@
         WHERE
         A.CLT_STATUS='1' AND A.clt_owner=#{empCode}
         <choose>
-            <when test="customerExeStatus!=null and customerExeStatus!=-1  and  customerExeStatus !=10 and customerExeStatus!=5 and customerExeStatus!=6">
+            <when test="customerExeStatus!=null and customerExeStatus!=-1  and customerExeStatus!=5 and customerExeStatus!=6">
                 AND CLT_EXE_STATUS=#{customerExeStatus}
             </when>
             <when test="customerExeStatus!=null and customerExeStatus==5">
