@@ -24,9 +24,10 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private String[] excludesPattern = new String[]{
             "/api/account/login",
-            "/druid/**",
             "/favicon.ico",
+            "/druid/**",
             "/swagger*",
+            "/actuator/**",
     };
 
     @Override

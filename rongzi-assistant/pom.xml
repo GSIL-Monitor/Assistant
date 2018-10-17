@@ -11,7 +11,6 @@
 
     <artifactId>rongzi-assistant</artifactId>
 
-
     <dependencies>
         <!-- demo 基础模块 -->
         <dependency>
@@ -40,8 +39,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
-        <!-- spring boot 基础组件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
@@ -51,30 +48,13 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.9</version>
-        </dependency>
+        <!--shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
@@ -100,6 +80,28 @@
             </exclusions>
         </dependency>
 
+        <!-- 数据访问 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
+        <!--cache-->
+        <!--   redis相关  -->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
@@ -108,9 +110,15 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -152,28 +160,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--   redis相关  -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <!--  注解版EasyPoi   -->
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-base</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-web</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
-            <version>3.1.0</version>
-        </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -183,6 +169,13 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
+        </dependency>
+
+        <!--Admin监控-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>1.5.7</version>
         </dependency>
     </dependencies>
 
