@@ -42,8 +42,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- spring boot 基础组件 -->
-       <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
@@ -60,6 +59,13 @@
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl</artifactId>
+        </dependency>
+
+        <!--Admin监控-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>1.5.7</version>
         </dependency>
 
         <!-- 数据访问 -->
