@@ -39,6 +39,6 @@ public interface CustomerInternalService {
      * @Param [page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime]
      * @return java.util.List<com.rongzi.assistant.model.Customer>
      **/
-    List<Customer> searchCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer contractType, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime);
+    List<Customer> searchCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime);
 
 }

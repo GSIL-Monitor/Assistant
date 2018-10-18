@@ -1,8 +1,6 @@
 package com.rongzi.assistant.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,24 +8,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SearchParam implements Serializable{
+public class CustomerSearchParam implements Serializable {
 
     private static final long serialVersionUID = 4558372390347679593L;
 
     /**
      * 用款开始时间
      */
-    private Date  payStartTime;
+    private Date payStartTime;
 
     /**
      * 用款结束时间
      */
-    private Date  payEndTime;
-
-    /**
-     * 合同类型
-     */
-    private Integer contractType;
+    private Date payEndTime;
 
     /**
      * 客户进程id
@@ -44,10 +37,10 @@ public class SearchParam implements Serializable{
      */
     @Min(value = 1)
     @NotNull
-    private  int  pageSize;
+    private int pageSize;
 
     /**
-     *  初始化加载第几页
+     * 初始化加载第几页
      */
     @Min(value = 1)
     @NotNull
@@ -56,7 +49,7 @@ public class SearchParam implements Serializable{
     /**
      * 搜索参数
      */
-    private  String searchName;
+    private String searchName;
 
     @NotEmpty
     private String empCode;
@@ -75,14 +68,6 @@ public class SearchParam implements Serializable{
 
     public void setPayEndTime(Date payEndTime) {
         this.payEndTime = payEndTime;
-    }
-
-    public Integer getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(Integer contractType) {
-        this.contractType = contractType;
     }
 
     public Integer getCustomerExeStatus() {
@@ -135,10 +120,9 @@ public class SearchParam implements Serializable{
 
     @Override
     public String toString() {
-        return "SearchParam{" +
+        return "CustomerSearchParam{" +
                 "payStartTime=" + payStartTime +
                 ", payEndTime=" + payEndTime +
-                ", contractType=" + contractType +
                 ", customerExeStatus=" + customerExeStatus +
                 ", contactStatus=" + contactStatus +
                 ", pageSize=" + pageSize +

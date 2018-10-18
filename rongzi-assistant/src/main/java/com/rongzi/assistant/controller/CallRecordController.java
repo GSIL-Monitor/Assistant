@@ -36,6 +36,7 @@ public class CallRecordController {
      */
     @PostMapping("/syncRecords")
     public AssistantTip syncRecords(@RequestBody @Valid  List<CallRecord> callRecord, BindingResult bindingResult) {
+
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {

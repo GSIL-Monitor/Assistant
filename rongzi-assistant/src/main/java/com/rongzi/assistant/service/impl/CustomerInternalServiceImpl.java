@@ -32,11 +32,10 @@ public class CustomerInternalServiceImpl implements CustomerInternalService {
 
     @Override
     @AssistantDataSource(name = AssistantDatasourceEnum.DATA_SOURCE_CITY)
-    public List<Customer> searchCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer contractType, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
+    public List<Customer> searchCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
 
-        return customerMapper.searchCustomersByCondition(page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime);
+        return customerMapper.searchCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
     }
-
 
 
 }

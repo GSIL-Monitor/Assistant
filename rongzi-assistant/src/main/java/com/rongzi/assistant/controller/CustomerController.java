@@ -7,7 +7,7 @@ import com.rongzi.assistant.common.tips.AssistantTip;
 import com.rongzi.assistant.common.util.ValidatorParamUtil;
 import com.rongzi.assistant.model.Customer;
 import com.rongzi.assistant.model.CustomerListParam;
-import com.rongzi.assistant.model.SearchParam;
+import com.rongzi.assistant.model.CustomerSearchParam;
 import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.WechatService;
 import com.rongzi.core.exception.GunsException;
@@ -101,24 +101,23 @@ public class CustomerController {
      * @Param []
      **/
     @PostMapping("/search")
-    public AssistantTip searchCustomerList(@RequestBody SearchParam searchParam, BindingResult bindingResult) {
+    public AssistantTip searchCustomerList(@RequestBody CustomerSearchParam customerSearchParam, BindingResult bindingResult) {
 
-        logger.info("前端传递过来的搜索参数为：" + searchParam.toString());
+        logger.info("前端传递过来的搜索参数为：" + customerSearchParam.toString());
 
         AssistantTip assistantTip = new AssistantTip();
         Map<String, Object> bindingResultMap = new HashMap<String, Object>();
         if (bindingResult.hasErrors()) {
             assistantTip = ValidatorParamUtil.getAssistantTip(bindingResult, assistantTip, bindingResultMap);
         } else {
-            List<Integer> contactStatus = searchParam.getContactStatus();
-            Integer contractType = searchParam.getContractType();
-            Integer customerExeStatus = searchParam.getCustomerExeStatus();
-            String searchName = searchParam.getSearchName();
-            Date payStartTime = searchParam.getPayStartTime();
-            Date payEndTime = searchParam.getPayEndTime();
-            String empCode = searchParam.getEmpCode();
+            List<Integer> contactStatus = customerSearchParam.getContactStatus();
+            Integer customerExeStatus = customerSearchParam.getCustomerExeStatus();
+            String searchName = customerSearchParam.getSearchName();
+            Date payStartTime = customerSearchParam.getPayStartTime();
+            Date payEndTime = customerSearchParam.getPayEndTime();
+            String empCode = customerSearchParam.getEmpCode();
 
-            if (contactStatus.size() == 0 && contractType == null
+            if (contactStatus.size() == 0
                     && customerExeStatus == null
                     && StringUtils.isEmpty(searchName)
                     && payStartTime == null && payEndTime == null) {
@@ -126,13 +125,13 @@ public class CustomerController {
 
             }
 
-            boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(searchParam.getCustomerExeStatus());
+            boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(customerSearchParam.getCustomerExeStatus());
             if (!exeStatusFlag) {
                 return AssistantTip.error(500, "客户进程编号无效");
             }
 
-            Page page = new Page(searchParam.getPageIndex(), searchParam.getPageSize());
-            List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime);
+            Page page = new Page(customerSearchParam.getPageIndex(), customerSearchParam.getPageSize());
+            List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
             Collections.sort(customers);
             page.setRecords(customers);
             PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);

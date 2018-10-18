@@ -103,9 +103,9 @@ public class CustomerServiceImpl implements CustomerService {
      * @Param [page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime]
      **/
     @Override
-    public List<Customer> searchAllCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer contractType, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
+    public List<Customer> searchAllCustomersByCondition(Page page, String empCode, List<Integer> contactStatus,Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
 
-        List<Customer> customers = customerInternalService.searchCustomersByCondition(page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime);
+        List<Customer> customers = customerInternalService.searchCustomersByCondition(page, empCode, contactStatus,customerExeStatus, searchName, payStartTime, payEndTime);
         List<Customer> resultList = new ArrayList<Customer>();
         findRequiredCustomers(customers, resultList);
         return resultList;
@@ -129,16 +129,6 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setWorkPlace(cityMap.get(Integer.parseInt(customer.getWorkPlace())));
             } else {
                 customer.setWorkPlace(currentUser.getCityName());
-            }
-            Integer customerContractType = customer.getContractType();
-            if (customerContractType!=null) {
-                if (customerContractType == 1) {
-                    customer.setContractType(1);
-                } else if (customerContractType >= 2 || customerContractType <= 3) {
-                    customer.setContractType(2);
-                } else {
-                    customer.setContractType(3);
-                }
             }
             resultList.add(customer);
         }

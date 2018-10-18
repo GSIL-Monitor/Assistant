@@ -3,7 +3,6 @@ package com.rongzi.assistant.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.Customer;
-import com.rongzi.assistant.model.SearchParam;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,7 @@ public interface CustomerService {
      * @Param [page, searchParam]
      * @return java.util.List<com.rongzi.assistant.model.Customer>
      **/
-    List<Customer> searchAllCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer contractType, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime);
+    List<Customer> searchAllCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime);
 
 
 }

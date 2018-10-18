@@ -116,38 +116,15 @@ public class Customer implements Serializable,Comparable<Customer> {
     private String customerWechatId;
 
 
-    /**
-     * 合同类型
-     * 1：会员客户 对应数据库的 1
-     * 2：外包客户 对应数据库的 2 3
-     * 3：协议客户 对应数据库的 4 5 6 7 8
-     */
-    private Integer contractType;
-
-
-    public Integer getContractType() {
-        return contractType;
+    @Override
+    public int compareTo(Customer o) {
+        if((!StringUtils.isEmpty(o.name)) && (!StringUtils.isEmpty(this.name))){
+            return Collator.getInstance(Locale.CHINA).compare(this.name, o.name);
+        }else{
+            return this.mobile.compareTo(o.mobile);
+        }
     }
 
-    public void setContractType(Integer contractType) {
-        this.contractType = contractType;
-    }
-
-    public String getCustomerWechatId() {
-        return customerWechatId;
-    }
-
-    public void setCustomerWechatId(String customerWechatId) {
-        this.customerWechatId = customerWechatId;
-    }
-
-    public int getWechatFriendStatus() {
-        return wechatFriendStatus;
-    }
-
-    public void setWechatFriendStatus(int wechatFriendStatus) {
-        this.wechatFriendStatus = wechatFriendStatus;
-    }
 
     public String getName() {
         return name;
@@ -253,6 +230,13 @@ public class Customer implements Serializable,Comparable<Customer> {
         this.exeStatus = exeStatus;
     }
 
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 
     public String getMobile() {
         return mobile;
@@ -270,13 +254,30 @@ public class Customer implements Serializable,Comparable<Customer> {
         this.contactStatus = contactStatus;
     }
 
-    public String getCustomerCode() {
-        return customerCode;
+    public int getWechatFriendStatus() {
+        return wechatFriendStatus;
     }
 
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode;
+    public void setWechatFriendStatus(int wechatFriendStatus) {
+        this.wechatFriendStatus = wechatFriendStatus;
     }
+
+    public Date getAddFriendTime() {
+        return addFriendTime;
+    }
+
+    public void setAddFriendTime(Date addFriendTime) {
+        this.addFriendTime = addFriendTime;
+    }
+
+    public String getCustomerWechatId() {
+        return customerWechatId;
+    }
+
+    public void setCustomerWechatId(String customerWechatId) {
+        this.customerWechatId = customerWechatId;
+    }
+
 
     @Override
     public String toString() {
@@ -298,17 +299,8 @@ public class Customer implements Serializable,Comparable<Customer> {
                 ", mobile='" + mobile + '\'' +
                 ", contactStatus=" + contactStatus +
                 ", wechatFriendStatus=" + wechatFriendStatus +
+                ", addFriendTime=" + addFriendTime +
                 ", customerWechatId='" + customerWechatId + '\'' +
-                ", contractType=" + contractType +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Customer o) {
-        if((!StringUtils.isEmpty(o.name)) && (!StringUtils.isEmpty(this.name))){
-            return Collator.getInstance(Locale.CHINA).compare(this.name, o.name);
-        }else{
-            return this.mobile.compareTo(o.mobile);
-        }
     }
 }

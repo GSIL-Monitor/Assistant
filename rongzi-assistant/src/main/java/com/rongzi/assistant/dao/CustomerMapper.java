@@ -4,7 +4,6 @@ package com.rongzi.assistant.dao;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.rongzi.assistant.model.CallRecord;
 import com.rongzi.assistant.model.Customer;
-import com.rongzi.assistant.model.SearchParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -77,5 +76,5 @@ public interface CustomerMapper {
      * @Param [page, empCode, contactStatus, contractType, customerExeStatus, searchName, payStartTime, payEndTime]
      * @return java.util.List<com.rongzi.assistant.model.Customer>
      **/
-    List<Customer> searchCustomersByCondition(@Param("page") Page page, @Param("empCode") String empCode, @Param("contactStatus") List<Integer> contactStatus, @Param("contractType") Integer contractType,@Param("customerExeStatus")  Integer customerExeStatus,@Param("searchName") String searchName,@Param("payStartTime") Date payStartTime,@Param("payEndTime") Date payEndTime);
+    List<Customer> searchCustomersByCondition(@Param("page") Page page, @Param("empCode") String empCode, @Param("contactStatus") List<Integer> contactStatus,@Param("customerExeStatus")  Integer customerExeStatus,@Param("searchName") String searchName,@Param("payStartTime") Date payStartTime,@Param("payEndTime") Date payEndTime);
 }
