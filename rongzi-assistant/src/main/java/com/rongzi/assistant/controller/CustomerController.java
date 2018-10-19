@@ -117,10 +117,13 @@ public class CustomerController {
             Date payEndTime = customerSearchParam.getPayEndTime();
             String empCode = customerSearchParam.getEmpCode();
 
-            if (contactStatus.size() == 0
-                    && customerExeStatus == null
+            Boolean flag= contactStatus == null || contactStatus.size() == 0 ;
+
+            if (flag && customerExeStatus == null
                     && StringUtils.isEmpty(searchName)
-                    && payStartTime == null && payEndTime == null) {
+                    && payStartTime == null
+                    && payEndTime == null
+                    && StringUtils.isEmpty(empCode)) {
                 throw new GunsException(AssistantExceptionEnum.SEARCH_DATA_NULL);
 
             }
@@ -131,6 +134,13 @@ public class CustomerController {
             }
 
             Page page = new Page(customerSearchParam.getPageIndex(), customerSearchParam.getPageSize());
+
+            Calendar   calendar = new GregorianCalendar();
+            calendar.setTime(payEndTime);
+            calendar.add(Calendar.DATE,1);
+            payEndTime=calendar.getTime();
+
+
             List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
             Collections.sort(customers);
             page.setRecords(customers);

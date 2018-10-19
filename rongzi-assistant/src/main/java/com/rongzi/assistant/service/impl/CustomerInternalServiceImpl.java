@@ -34,6 +34,10 @@ public class CustomerInternalServiceImpl implements CustomerInternalService {
     @AssistantDataSource(name = AssistantDatasourceEnum.DATA_SOURCE_CITY)
     public List<Customer> searchCustomersByCondition(Page page, String empCode, List<Integer> contactStatus, Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
 
+        if(contactStatus!=null && contactStatus.size()==0){
+                contactStatus=null;
+        }
+
         return customerMapper.searchCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
     }
 

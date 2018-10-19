@@ -139,7 +139,7 @@
         </if>
         <if test="payEndTime!=null ">
             AND
-            #{payEndTime} >= C.PAYMENT_DATE
+            #{payEndTime} > C.PAYMENT_DATE
         </if>
 
 
