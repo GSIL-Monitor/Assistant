@@ -12,6 +12,7 @@ import com.rongzi.assistant.service.CustomerService;
 import com.rongzi.assistant.service.WechatService;
 import com.rongzi.core.exception.GunsException;
 import com.rongzi.core.page.PageInfoBT;
+import com.rongzi.core.support.DateTimeKit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,12 +135,7 @@ public class CustomerController {
             }
 
             Page page = new Page(customerSearchParam.getPageIndex(), customerSearchParam.getPageSize());
-
-            Calendar   calendar = new GregorianCalendar();
-            calendar.setTime(payEndTime);
-            calendar.add(Calendar.DATE,1);
-            payEndTime=calendar.getTime();
-
+            payEndTime= DateTimeKit.offsiteDate(payEndTime,Calendar.DATE,1);
 
             List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
             Collections.sort(customers);
