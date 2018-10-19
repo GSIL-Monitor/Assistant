@@ -1,5 +1,10 @@
 # 融助手接口文档（Rongzi Assistant Api）
 
+## 修改记录
+|日期|作者|说明|
+|---|---|---|---|
+|2018.09.19|徐磊|融助手一期相关接口| 
+|2018.10.19|徐磊|融助手二期相关接口<br>修订接口4. 查询客户列表：添加已联系客户进程。<br>添加接口12. 按条件搜索客户。|
 
 ## 0. 环境说明
 * 测试环境地址:http://10.40.3.230:8077
@@ -145,7 +150,6 @@ Bearer Token 的格式:
         "msg":"用户名或密码错误"
     }
 
-
 ## 4. 查询客户列表
 
 > POST /api/customer/list  
@@ -156,7 +160,7 @@ Bearer Token 的格式:
 
 |Key|Value|类型|说明|
 |---|---|---|---|
-|customerExeStatus|客户进程|int|-1:全部 1:有需求 2:有意向 3:已来访 4:已签约 5:已成交（包含外包和会员）|
+|customerExeStatus|客户进程|int|-1:全部 0:已联系 1:有需求 2:有意向 3:已来访 4:已签约 5:已成交（包含外包和会员）|
 |empCode|销售工号|String|---|
 |pageSize|每页记录行数|String|---|
 |pageIndex|第几页|String|从1开始|
@@ -198,7 +202,7 @@ Bearer Token 的格式:
 |paymentDate|用款时间|Date| |
 |workPlace  |工作城市|String|   |
 |comment    |备注|String|   |
-|exeStatus  |客户进程|int|1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
+|exeStatus  |客户进程|int|0：已联系<br/> 1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
 |customerCode|客户编号|String|  |
 |mobile     |客户手机号码|String|   |
 |contactStatus|拨打状态|int|0:未拨打<br/>1:已接通<br/>2:未接通|
@@ -275,7 +279,6 @@ Bearer Token 的格式:
         },
         "msg": "操作成功"
     }
-
 
 ## 5. 编辑客户备注
 
@@ -652,3 +655,137 @@ PS: 根据通话类型，可以确认：
         "data":null
     }
 
+## 12. 按条件搜索客户（二期）
+
+> POST /api/customer/search
+
+### 参数
+
+入参说明： 
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|searchName       |搜索参数|String|---| 
+|empCode     |销售编号|String|---|
+|payStartTime   |贷款开始时间|Date|格式：yyyy-MM-dd|
+|payEndTime    |贷款结束时间|Date|格式：yyyy-MM-dd|
+|customerExeStatus      |客户进程编号|int||0：已联系<br/> 1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
+|contactStatus |电话拨打状态|int|0:未拨打<br/>1:已接通<br/>2:未接通|
+|pageSize|每页记录行数|String|---|
+|pageIndex|第几页|String|从1开始|
+
+备注：
+
+日期/合同类型/客户意向/拨打状态 必须选择一个来传值
+电话拨打状态可以支持多选.
+
+入参示例:
+    
+	   {
+		   "empCode": "AA1611",
+		   "searchName": "",
+		   "payStartTime": "2015-04-29",
+		   "payEndTime": "2015-09-29",
+		   "pageSize": 10,
+		   "pageIndex": 1,
+		   "customerExeStatus":5,
+		   "contactStatus":[1,2]
+	  }
+
+### 响应
+
+响应说明：    
+
+返回Customer列表
+
+|Key|Value|类型|说明|
+|---|---|---|---|
+|name       |客户姓名|String|   |
+|hasCars    |是否有车产|int|1:有 2:无|
+|hasPolicy  |是否有担保|int|1:有 2:无|
+|salary     |月打卡工资|Double| |
+|hasHouse   |是否有房产|int|1:有 2:无|
+|IsSecuityOrFund|是否社保公积金|int|1:无社保无公积金<br/>2:有社保有公积金<br/>4:有社保无公积金<br/>8:无社保有公积金|
+|job        |工作身份|String|   |
+|rqrDuration|借款期限|int|  |
+|rqrAmount  |借款额度|int|  |
+|paymentDate|用款时间|Date| |
+|workPlace  |工作城市|String|   |
+|comment    |备注|String|   |
+|exeStatus  |客户进程|int|0：已联系<br/> 1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
+|customerCode|客户编号|String|  |
+|mobile     |客户手机号码|String|   |
+|contactStatus|拨打状态|int|0:未拨打<br/>1:已接通<br/>2:未接通|
+|wechatFriendStatus|微信好友关系状态|int|1:非微信好友<br/>2:微信号不存在(暂不用)<br/>3:微信好友申请中(暂不用)<br/>4:微信好友申请已过期(暂不用)<br/>5:拒绝添加好友(暂不用)<br/>6:已经是微信好友|
+
+响应示例:
+
+    {
+        "code": 0,
+        "data": {
+            "total": "72",
+            "rows": [
+                {
+                    "wechatFriendStatus": 3,
+                    "customerWechatId": "",
+                    "mobile": "13472764344",
+                    "rqrAmount": 2500,
+                    "customerCode": "AAC13031400024",
+                    "salary": 5000,
+                    "exeStatus": 1,
+                    "hasPolicy": 1,
+                    "contactStatus": 2,
+                    "hasHouse": 2,
+                    "name": "AAC13031400024",
+                    "comment": "",
+                    "hasCars": 1,
+                    "job": "企业主",
+                    "paymentDate": "2018-08-28 14:49:20",
+                    "rqrDuration": 12,
+                    "isSecuityOrFund": 1,
+                    "workPlace": "苏州市"
+                },
+                {
+                    "wechatFriendStatus": 3,
+                    "customerWechatId": "",
+                    "mobile": "15051711562",
+                    "rqrAmount": 2,
+                    "customerCode": "AAC13040300071",
+                    "salary": 0,
+                    "exeStatus": 1,
+                    "hasPolicy": 0,
+                    "contactStatus": 2,
+                    "hasHouse": 2,
+                    "name": "AAC13040300071",
+                    "comment": "下周一联系212344561234",
+                    "hasCars": 2,
+                    "job": "企业主",
+                    "paymentDate": "2018-03-08 00:00:00",
+                    "rqrDuration": 0,
+                    "isSecuityOrFund": 0,
+                    "workPlace": "苏州市"
+                },
+                {
+                    "wechatFriendStatus": 1,
+                    "customerWechatId": "",
+                    "mobile": "13771986452",
+                    "rqrAmount": 50,
+                    "customerCode": "AAC13070404916",
+                    "salary": "",
+                    "exeStatus": 1,
+                    "hasPolicy": 2,
+                    "contactStatus": 2,
+                    "hasHouse": 1,
+                    "name": "AAC13070404916",
+                    "comment": "需要",
+                    "hasCars": 1,
+                    "job": "企业主",
+                    "paymentDate": "2016-08-10 00:00:00",
+                    "rqrDuration": 12,
+                    "isSecuityOrFund": 0,
+                    "workPlace": "苏州市"
+                }
+            ]
+        },
+        "msg": "操作成功"
+    }
