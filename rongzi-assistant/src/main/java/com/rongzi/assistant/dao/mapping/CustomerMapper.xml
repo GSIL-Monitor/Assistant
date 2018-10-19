@@ -24,7 +24,7 @@
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
         B.ContactStatus AS contactStatus,
-        B.wechatFriendStatus AS wechatFriendStatus,
+        B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE(NOLOCK) A
         LEFT JOIN dbo.SAL_CLT_LNKMAN(NOLOCK) B ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
         LEFT JOIN dbo.SAL_CLT_REQUIRE(NOLOCK) C ON A.RQR_ID=C.RQR_ID
@@ -102,7 +102,7 @@
         E.Salary AS salary,
         A.CLT_EXE_STATUS AS exeStatus,
         B.ContactStatus AS contactStatus,
-        B.wechatFriendStatus AS wechatFriendStatus,
+        B.wechatFriendStatus AS wechatFriendStatus
         FROM dbo.SAL_CLT_BASE(NOLOCK) A
         LEFT JOIN dbo.SAL_CLT_LNKMAN(NOLOCK) B ON A.CLT_CODE=B.CLT_CODE AND LNK_DEFAULT=1
         LEFT JOIN dbo.SAL_CLT_REQUIRE(NOLOCK) C ON A.RQR_ID=C.RQR_ID
