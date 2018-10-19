@@ -24,7 +24,6 @@ import java.util.Map;
 @WebFilter(filterName = "RequestLogFilter", urlPatterns = "/*")
 public class RequestLogFilter implements Filter {
 
-
     private Logger logger = LoggerFactory.getLogger(RequestLogFilter.class);
 
     private String[] excludesPattern = new String[]{
@@ -47,6 +46,7 @@ public class RequestLogFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+
         RequestLogData requestLogData = new RequestLogData();
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
@@ -63,29 +63,27 @@ public class RequestLogFilter implements Filter {
         requestLogData.setContentType(contentType);
 
         String body = null;
-        String params = "";
-
-        ServletRequest requestWrapper = null;
         if (FilterConstants.REQUEST_METHOD_POST.equals(method)) {
-            requestWrapper = new MyRequestWrapper(httpServletRequest);
             if (FilterConstants.CONTENTTYPE_FORM.equals(contentType)) {
                 Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
-                for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-                    params += entry.getKey() + "=" + entry.getValue()[0] + "&&";
+                if (parameterMap != null & parameterMap.size() > 0) {
+                    String params = "";
+                    for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+                        params += entry.getKey() + "=" + entry.getValue()[0] + "&";
+                    }
+                    body = params.substring(0, params.length() - 1);
                 }
-                String finalParams = params.substring(0, params.length() - 2);
-                body = finalParams;
             } else if (FilterConstants.CONTENTTYPE_UPLOAD.equals(contentType)) {
                 body = null;
             } else {
-                body = MyRequestUtil.getBody(requestWrapper);
+                servletRequest = new MyRequestWrapper(httpServletRequest);
+                body = MyRequestUtil.getBody(servletRequest);
             }
-        } else {
-            requestWrapper = servletRequest;
         }
-        Long  startTime = System.currentTimeMillis();
-        filterChain.doFilter(requestWrapper, servletResponse);
         requestLogData.setHttpBody(body);
+
+        Long startTime = System.currentTimeMillis();
+        filterChain.doFilter(servletRequest, servletResponse);
         requestLogData.setCostTime(System.currentTimeMillis() - startTime);
         logger.info(requestLogData.toString());
     }
