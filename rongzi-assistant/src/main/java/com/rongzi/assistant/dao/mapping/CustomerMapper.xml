@@ -6,7 +6,6 @@
 
     <select id="queryAllCutomers" resultType="com.rongzi.assistant.model.Customer">
 
-
         SELECT
         A.CLT_MEMO AS comment,
         B.LNK_NAME AS name,
@@ -141,7 +140,6 @@
             AND
             #{payEndTime} > C.PAYMENT_DATE
         </if>
-
 
     </select>
 
