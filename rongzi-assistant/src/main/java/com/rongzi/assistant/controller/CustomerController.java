@@ -135,7 +135,10 @@ public class CustomerController {
             }
 
             Page page = new Page(customerSearchParam.getPageIndex(), customerSearchParam.getPageSize());
-            payEndTime= DateTimeKit.offsiteDate(payEndTime,Calendar.DATE,1);
+            if(payEndTime!=null){
+                payEndTime= DateTimeKit.offsiteDate(payEndTime,Calendar.DATE,1);
+            }
+
 
             List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
             Collections.sort(customers);
