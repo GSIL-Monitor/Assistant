@@ -53,23 +53,20 @@ public class CustomerController {
             return AssistantTip.error(500, "客户进程编号无效");
         }
 
-        Page page = null;
+        List<Customer> customers =null;
+        Page page =new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
         if (customerListParam.getRefreshWX() == 1) {
             /**
              * 调用奥创微信更新
              */
             // TODO 接口现在没有开发。
-            page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
-            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
-            Collections.sort(customers);
-            page.setRecords(customers);
+            customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
         } else {
-            page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
-            List<Customer> customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
-            Collections.sort(customers);
-            page.setRecords(customers);
+            customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
         }
         PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
+        Collections.sort(customers);
+        page.setRecords(customers);
         return AssistantTip.ok(JSON.toJSON(pageinfo));
     }
 
