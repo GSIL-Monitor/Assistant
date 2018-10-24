@@ -53,8 +53,8 @@ public class CustomerController {
             return AssistantTip.error(500, "客户进程编号无效");
         }
 
-        List<Customer> customers =null;
-        Page page =new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
+        List<Customer> customers = null;
+        Page page = new Page(customerListParam.getPageIndex(), customerListParam.getPageSize());
         if (customerListParam.getRefreshWX() == 1) {
             /**
              * 调用奥创微信更新
@@ -115,7 +115,7 @@ public class CustomerController {
             Date payEndTime = customerSearchParam.getPayEndTime();
             String empCode = customerSearchParam.getEmpCode();
 
-            Boolean flag= contactStatus == null || contactStatus.size() == 0 ;
+            Boolean flag = contactStatus == null || contactStatus.size() == 0;
 
             if (flag && customerExeStatus == null
                     && StringUtils.isEmpty(searchName)
@@ -125,15 +125,16 @@ public class CustomerController {
                 throw new GunsException(AssistantExceptionEnum.SEARCH_DATA_NULL);
 
             }
-
-            boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(customerSearchParam.getCustomerExeStatus());
-            if (!exeStatusFlag) {
-                return AssistantTip.error(500, "客户进程编号无效");
+            if (customerSearchParam.getCustomerExeStatus() != null) {
+                boolean exeStatusFlag = ValidatorParamUtil.checkCustomerExeStatus(customerSearchParam.getCustomerExeStatus());
+                if (!exeStatusFlag) {
+                    return AssistantTip.error(500, "客户进程编号无效");
+                }
             }
 
             Page page = new Page(customerSearchParam.getPageIndex(), customerSearchParam.getPageSize());
-            if(payEndTime!=null){
-                payEndTime= DateTimeKit.offsiteDate(payEndTime,Calendar.DATE,1);
+            if (payEndTime != null) {
+                payEndTime = DateTimeKit.offsiteDate(payEndTime, Calendar.DATE, 1);
             }
 
 
