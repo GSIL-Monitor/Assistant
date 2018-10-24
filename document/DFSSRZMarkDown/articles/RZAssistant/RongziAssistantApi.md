@@ -162,8 +162,8 @@ Bearer Token 的格式:
 |---|---|---|---|
 |customerExeStatus|客户进程|int|-1:全部 0:已联系 1:有需求 2:有意向 3:已来访 4:已签约 5:已成交（包含外包和会员）|
 |empCode|销售工号|String|---|
-|pageSize|每页记录行数|String|---|
-|pageIndex|第几页|String|从1开始|
+|pageSize|每页记录行数|int|---|
+|pageIndex|第几页|int|从1开始|
 |refreshWX|是否更新微信好友|String|1:更新 0:不更新（已弃用）|
 
 注意:   
@@ -670,9 +670,9 @@ PS: 根据通话类型，可以确认：
 |payStartTime   |贷款开始时间|Date|格式：yyyy-MM-dd|
 |payEndTime    |贷款结束时间|Date|格式：yyyy-MM-dd|
 |customerExeStatus      |客户进程编号|int||0：已联系<br/> 1:有需求<br/>2:有意向<br/>3:已来访<br/>4:已签约<br/>5:外包成交<br/>6:会员成交<br/>(5和6都是已成交）|
-|contactStatus |电话拨打状态|int|0:未拨打<br/>1:已接通<br/>2:未接通|
-|pageSize|每页记录行数|String|---|
-|pageIndex|第几页|String|从1开始|
+|contactStatus |电话拨打状态|int   组成的List数组|0:未拨打<br/>1:已接通<br/>2:未接通|
+|pageSize|每页记录行数|int|---|
+|pageIndex|第几页|int|从1开始|
 
 备注：
 
