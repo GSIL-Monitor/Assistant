@@ -110,19 +110,20 @@
         LEFT JOIN dbo.SYS_SELECT_LIST(NOLOCK) F ON A.CLT_TYPE=F.SEL_KEY and F.SEL_TYPE='OccupationalIdentity'
         WHERE
         A.CLT_STATUS='1' AND A.clt_owner=#{empCode}
-        <if test="customerExeStatus !=null ">
-            <choose>
-                <when test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus!=5 and customerExeStatus!=6">
-                    AND CLT_EXE_STATUS=#{customerExeStatus}
-                </when>
-                <when test="customerExeStatus!=null and customerExeStatus==5">
-                    AND CLT_EXE_STATUS IN (5,6)
-                </when>
-                <otherwise>
-                   AND CLT_EXE_STATUS !=10
-                </otherwise>
-            </choose>
-        </if>
+        <choose>
+            <when test="customerExeStatus!=null and customerExeStatus!=-1 and customerExeStatus!=5 and customerExeStatus!=6">
+                AND CLT_EXE_STATUS=#{customerExeStatus}
+            </when>
+            <when test="customerExeStatus==5">
+                AND CLT_EXE_STATUS IN (5,6)
+            </when>
+            <when test="customerExeStatus==null">
+                AND CLT_EXE_STATUS !=10
+            </when>
+            <otherwise>
+               AND CLT_EXE_STATUS !=10
+            </otherwise>
+        </choose>
         <if test="searchName !=null and searchName !=''">
             AND B.LNK_NAME LIKE CONCAT('%',#{searchName},'%')
         </if>

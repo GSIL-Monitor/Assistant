@@ -1,6 +1,6 @@
 package com.rongzi.assistant.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -51,8 +51,11 @@ public class CustomerSearchParam implements Serializable {
      */
     private String searchName;
 
-    @NotEmpty
+    @NotBlank
     private String empCode;
+
+
+
 
     public Date getPayStartTime() {
         return payStartTime;

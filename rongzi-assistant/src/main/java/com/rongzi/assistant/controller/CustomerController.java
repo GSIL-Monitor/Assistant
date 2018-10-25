@@ -99,7 +99,7 @@ public class CustomerController {
      * @Param []
      **/
     @PostMapping("/search")
-    public AssistantTip searchCustomerList(@RequestBody CustomerSearchParam customerSearchParam, BindingResult bindingResult) {
+    public AssistantTip searchCustomerList(@RequestBody @Valid CustomerSearchParam customerSearchParam, BindingResult bindingResult) {
 
         logger.info("前端传递过来的搜索参数为：" + customerSearchParam.toString());
 
@@ -136,7 +136,6 @@ public class CustomerController {
             if (payEndTime != null) {
                 payEndTime = DateTimeKit.offsiteDate(payEndTime, Calendar.DATE, 1);
             }
-
 
             List<Customer> customers = customerService.searchAllCustomersByCondition(page, empCode, contactStatus, customerExeStatus, searchName, payStartTime, payEndTime);
             Collections.sort(customers);
