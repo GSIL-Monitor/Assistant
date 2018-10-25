@@ -8,6 +8,7 @@ import com.rongzi.assistant.service.sms.CustomerReplyMsgService;
 import com.rongzi.assistant.service.sms.SmsMessageService;
 import com.rongzi.assistant.service.sms.UserSendMsgService;
 import com.rongzi.core.exception.GunsException;
+import com.rongzi.core.support.DateTimeKit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class SmsMessageServiceImpl implements SmsMessageService {
@@ -29,6 +31,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
     @Autowired
     MobileDataSnycInfoService mobileDataSnycInfoService;
+
+    AtomicInteger msgCount=new AtomicInteger();
 
     /**
      * 从销售系统导入短信到手机
@@ -75,7 +79,7 @@ public class SmsMessageServiceImpl implements SmsMessageService {
      */
     @Override
     public Date addMsgsToSaleSystem(List<SmsMessage> messages) {
-        Date highcalldate = null;
+        Date highCallDate = null;
         Date lowCallDate = null;
         String empCode = null;
         List<SmsMessage> correctMsg = new ArrayList<>();
@@ -85,9 +89,8 @@ public class SmsMessageServiceImpl implements SmsMessageService {
                     correctMsg.add(messages.get(i));
                 }
             }
-        } else {
-            throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
+
         if (correctMsg.size() >= 1) {
             for (int i = 0; i < correctMsg.size(); i++) {
                 if (correctMsg.get(i).getSenderMobile() != null) {
@@ -105,12 +108,12 @@ public class SmsMessageServiceImpl implements SmsMessageService {
 
             }
             lowCallDate = correctMsg.get(correctMsg.size() - 1).getOccurTime();
-            highcalldate = correctMsg.get(0).getOccurTime();
+            highCallDate = correctMsg.get(0).getOccurTime();
         } else {
             throw new GunsException(AssistantExceptionEnum.EMPCODE_NULL);
         }
 
-        logger.info("短信同步最大的时间数据是： " + highcalldate + " 毫秒数目：" + highcalldate.getTime());
+        logger.info("短信同步最大的时间数据是： " + highCallDate + " 毫秒数目：" + highCallDate.getTime());
         logger.info("短信同步最小的时间数据是： " + lowCallDate + " 毫秒数目：" + lowCallDate.getTime());
         List<SmsMessage> empSendMsgs = new ArrayList<SmsMessage>();
         List<SmsMessage> customerSendMsgs = new ArrayList<SmsMessage>();
@@ -126,12 +129,14 @@ public class SmsMessageServiceImpl implements SmsMessageService {
         }
         MobileDataSyncInfo mobileDataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (mobileDataSyncInfo != null) {
+
+            Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
+
             if (mobileDataSyncInfo.getLastSmsSyncTime() != null) {
-                logger.info("短信  数据库里面保存的时间是：" + mobileDataSyncInfo.getLastSmsSyncTime() + "毫秒数目是：" + mobileDataSyncInfo.getLastSmsSyncTime().getTime());
-                logger.info("短信  传入过来的时间是：" + lowCallDate + " 毫秒数目是：" + lowCallDate.getTime());
-                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() >= lowCallDate.getTime()) {
-                    logger.info("短信  数据库时间大于等于最小时间,所以返回： " + mobileDataSyncInfo.getLastSmsSyncTime());
-                    Date lastSmsSyncTime = mobileDataSyncInfo.getLastSmsSyncTime();
+                logger.info("短信  数据库里面保存的最后时间是：" + lastSmsSyncTime + "毫秒数目是：" + lastSmsSyncTime.getTime());
+                if (mobileDataSyncInfo.getLastSmsSyncTime().getTime() > lowCallDate.getTime()) {
+                    logger.info("短信  数据库最后时间大于传入过来的最小时间,所以返回数据库里时间： " + lastSmsSyncTime);
+                    logger.info("短信  无效的请求次数为： "+msgCount.addAndGet(1));
                     return lastSmsSyncTime;
                 }
             }
@@ -144,8 +149,9 @@ public class SmsMessageServiceImpl implements SmsMessageService {
             logger.info("开始调用*********将客户回复的短信增加到销售系统");
             customerReplyMsgService.addMsgsToSaleSystem(customerSendMsgs);
         }
-        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, highcalldate, null, new Date()));
-        logger.info("短信  同步返回的时间数据是： " + highcalldate);
-        return highcalldate;
+        highCallDate= DateTimeKit.offsiteDate(highCallDate, Calendar.MILLISECOND,3);
+        mobileDataSnycInfoService.syncSmsMessageAndCallRecordInfo(new MobileDataSyncInfo(empCode, highCallDate, null, new Date()));
+        logger.info("短信  同步返回的时间数据是： " + highCallDate);
+        return highCallDate;
     }
 }
