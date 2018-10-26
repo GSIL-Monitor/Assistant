@@ -64,9 +64,9 @@ public class CustomerController {
         } else {
             customers = customerService.findAllCustomers(page, customerListParam.getEmpCode(), customerListParam.getCustomerExeStatus());
         }
-        PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
         Collections.sort(customers);
         page.setRecords(customers);
+        PageInfoBT<Customer> pageinfo = new PageInfoBT<Customer>(page);
         return AssistantTip.ok(JSON.toJSON(pageinfo));
     }
 
