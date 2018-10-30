@@ -136,10 +136,14 @@
         <if test="payStartTime!=null ">
             AND
             C.PAYMENT_DATE >= #{payStartTime}
+            AND
+            C.PAYMENT_DATE is not null
         </if>
         <if test="payEndTime!=null ">
             AND
             #{payEndTime} > C.PAYMENT_DATE
+            AND
+            C.PAYMENT_DATE is not null
         </if>
 
     </select>

@@ -37,9 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerMapper customerMapper;
 
     /**
+     * 查询客户列表
+     *
      * @return java.util.List<com.rongzi.assistant.model.Customer>
      * @Author xulei
-     * @Description 查询客户列表
      * @Date 17:46 2018/10/12
      * @Param [page, empCode, customerExeStatus]
      **/
@@ -52,9 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
+     *  通过客户编号来更改备注信息
+     *
      * @return void
      * @Author xulei
-     * @Description 通过客户编号来更改备注信息
      * @Date 17:46 2018/10/12
      * @Param [customerCode, comment]
      **/
@@ -74,22 +76,22 @@ public class CustomerServiceImpl implements CustomerService {
      **/
     @Override
     public boolean syncContactStatusByCallRecords(List<CallRecord> callRecords) {
+        List<CallRecord> correctRecords=new ArrayList<CallRecord>();
         for (int i = 0; i < callRecords.size(); i++) {
             CallRecord callRecord = callRecords.get(i);
             Customer customer = customerInternalService.findCustomerCodeAndNameByMobile(callRecord.getMobile());
-            if (customer == null) {
-                callRecords.remove(callRecord);
-                continue;
+            if (customer != null) {
+                correctRecords.add(callRecord);
             }
         }
 
-        if (callRecords.size() <= 0) {
+        if (correctRecords.size() <= 0) {
             return true;
 //            throw  new GunsException(AssistantExceptionEnum.CUSTOMER_NOT_FOUNT);
         }
         UserInfo currentUser = UserContextHolder.getCurrentUserInfo();
         DataSourceContextHolder.setDataSourceType(currentUser.getCityCode());
-        boolean flag = customerMapper.syncContactStatusByCallRecords(callRecords);
+        boolean flag = customerMapper.syncContactStatusByCallRecords(correctRecords);
         DataSourceContextHolder.clearDataSourceType();
         return flag;
     }
@@ -104,7 +106,6 @@ public class CustomerServiceImpl implements CustomerService {
      **/
     @Override
     public List<Customer> searchAllCustomersByCondition(Page page, String empCode, List<Integer> contactStatus,Integer customerExeStatus, String searchName, Date payStartTime, Date payEndTime) {
-
         List<Customer> customers = customerInternalService.searchCustomersByCondition(page, empCode, contactStatus,customerExeStatus, searchName, payStartTime, payEndTime);
         List<Customer> resultList = new ArrayList<Customer>();
         findRequiredCustomers(customers, resultList);
