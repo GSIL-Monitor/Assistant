@@ -1,9 +1,9 @@
 package com.rongzi.assistant.common.web.filter;
 
-import com.rongzi.assistant.common.constant.Constants;
 import com.rongzi.assistant.common.constant.FilterConstants;
 import com.rongzi.assistant.common.exception.AssistantExceptionEnum;
 import com.rongzi.assistant.common.tips.AssistantTip;
+import com.rongzi.assistant.common.web.context.UserContextHolder;
 import com.rongzi.assistant.manager.TokenManager;
 import com.rongzi.assistant.model.UserInfo;
 import com.rongzi.core.util.RenderUtil;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthFilter extends OncePerRequestFilter {
-
 
     protected PathMatcher pathMatcher = new AntPathMatcher();
 
@@ -58,8 +57,8 @@ public class AuthFilter extends OncePerRequestFilter {
 
             try {
                 UserInfo userInfo = TokenManager.getUserInfoFromToken(authHeader);
-                // Add the userInfo to request header
-                request.setAttribute(Constants.CURRENT_USER_INFO_KEY, userInfo);
+                // Add the userInfo to request
+                UserContextHolder.setCurrentUserInfo(userInfo);
             } catch (Exception e) {
                 AssistantTip errorTip = AssistantTip.error(AssistantExceptionEnum.INVALID_TOKEN.getCode(), AssistantExceptionEnum.INVALID_TOKEN.getMessage());
                 RenderUtil.renderJson(response, errorTip);

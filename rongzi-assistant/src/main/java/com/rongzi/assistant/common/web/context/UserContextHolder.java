@@ -13,4 +13,9 @@ public class UserContextHolder {
         return (UserInfo) httpRequest.getAttribute(Constants.CURRENT_USER_INFO_KEY);
     }
 
+    public static void setCurrentUserInfo(UserInfo userInfo) {
+        HttpServletRequest httpRequest = HttpKit.getRequest();
+        httpRequest.setAttribute(Constants.CURRENT_USER_INFO_KEY, userInfo);
+    }
+
 }
