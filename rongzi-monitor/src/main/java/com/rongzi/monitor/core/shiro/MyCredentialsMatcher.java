@@ -30,14 +30,9 @@ public class MyCredentialsMatcher extends HashedCredentialsMatcher {
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 
         logger.info("开始进入自定义密码比较器中");
-
         UsernamePasswordToken utoken = (UsernamePasswordToken) token;
         String username = utoken.getUsername();
-        String credentials = (String) info.getCredentials();
-
         UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
-        User user = userMapper.getByAccount(username);
-
         AtomicInteger count = CacheKit.get("CONSTANT", username);
 
         boolean matches = super.doCredentialsMatch(token, info);
@@ -50,6 +45,7 @@ public class MyCredentialsMatcher extends HashedCredentialsMatcher {
             }else{
                 if (count.incrementAndGet()> 3) {
                     logger.info("----------已经超过3次输入错误的密码了,下一次将锁定---------");
+                    User user = userMapper.getByAccount(username);
                     user.setStatus( ManagerStatus.FREEZED.getCode());
                     userMapper.updateById(user);
                     throw new ExcessiveAttemptsException();
