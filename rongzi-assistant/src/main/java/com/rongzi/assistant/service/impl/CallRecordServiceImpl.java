@@ -82,7 +82,7 @@ public class CallRecordServiceImpl implements CallRecordService {
         } else {
             throw new GunsException(AssistantExceptionEnum.REQUESTDATA_NULL);
         }
-        logger.info("通话  记录最大的时间数据是：" + highCallDate+ " 毫秒数目是：" + highCallDate.getTime());
+        logger.info("通话  传入过来的通话记录最大的时间是：" + highCallDate+ " 毫秒数目是：" + highCallDate.getTime());
         logger.info("通话  传入过来的通话记录的最小时间是：" + lowCallDate + " 毫秒数目是：" + lowCallDate.getTime());
         MobileDataSyncInfo dataSyncInfo = mobileDataSnycInfoService.findLastTime(empCode);
         if (dataSyncInfo != null) {

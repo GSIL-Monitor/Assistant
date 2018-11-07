@@ -1,8 +1,10 @@
 package com.rongzi.monitor.config.web;
 
+import com.rongzi.monitor.core.shiro.MyCredentialsMatcher;
 import com.rongzi.monitor.core.shiro.ShiroDbRealm;
 import com.rongzi.monitor.config.properties.GunsProperties;
 import com.rongzi.monitor.core.intercept.GunsUserFilter;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -17,6 +19,7 @@ import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
@@ -43,7 +46,8 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager, SessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(this.shiroDbRealm());
+//        securityManager.setRealm(this.shiroDbRealm());
+        securityManager.setRealm(this.shiroDbRealm(credentialsMatcher()));
         securityManager.setCacheManager(cacheShiroManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
@@ -92,8 +96,19 @@ public class ShiroConfig {
      * 项目自定义的Realm
      */
     @Bean
-    public ShiroDbRealm shiroDbRealm() {
+    public ShiroDbRealm shiroDbRealm(@Qualifier("credentialsMatcher")CredentialsMatcher matcher) {
+
+        ShiroDbRealm shiroDbRealm = new ShiroDbRealm();
+
+        shiroDbRealm.setCredentialsMatcher(matcher);
+
         return new ShiroDbRealm();
+    }
+
+
+    @Bean(name="credentialsMatcher")
+    public CredentialsMatcher credentialsMatcher() {
+        return new MyCredentialsMatcher();
     }
 
     /**

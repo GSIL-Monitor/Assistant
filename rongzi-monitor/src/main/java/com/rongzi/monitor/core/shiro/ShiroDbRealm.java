@@ -68,8 +68,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
      */
     @Override
     public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
-        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
+        HashedCredentialsMatcher md5CredentialsMatcher = new MyCredentialsMatcher();
         md5CredentialsMatcher.setHashAlgorithmName(ShiroKit.hashAlgorithmName);
+        // 循环次数
         md5CredentialsMatcher.setHashIterations(ShiroKit.hashIterations);
         super.setCredentialsMatcher(md5CredentialsMatcher);
     }

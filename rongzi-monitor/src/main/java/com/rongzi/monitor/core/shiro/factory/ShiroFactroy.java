@@ -13,6 +13,8 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ShiroFactroy implements IShiro {
 
+    private Logger logger= LoggerFactory.getLogger(ShiroFactroy.class);
+
     @Autowired
     private UserMapper userMapper;
 
@@ -38,6 +42,8 @@ public class ShiroFactroy implements IShiro {
 
     @Override
     public User user(String account) {
+
+        logger.info("开始进行查询个人账户操作");
 
         User user = userMapper.getByAccount(account);
 
@@ -88,7 +94,6 @@ public class ShiroFactroy implements IShiro {
     @Override
     public SimpleAuthenticationInfo info(ShiroUser shiroUser, User user, String realmName) {
         String credentials = user.getPassword();
-
         // 密码加盐处理
         String source = user.getSalt();
         ByteSource credentialsSalt = new Md5Hash(source);

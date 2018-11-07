@@ -11,6 +11,7 @@ import com.rongzi.monitor.core.log.LogManager;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.CredentialsException;
 import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -79,6 +80,18 @@ public class GlobalExceptionHandler {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         model.addAttribute("tips", "账号密码错误");
+        return "/login.html";
+    }
+
+    /**
+     * 登录失败次数过多
+     */
+    @ExceptionHandler(ExcessiveAttemptsException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String credentials(ExcessiveAttemptsException e, Model model) {
+        String username = HttpKit.getRequest().getParameter("username");
+        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "登录失败次数过多", HttpKit.getIp()));
+        model.addAttribute("tips", "登录失败次数过多");
         return "/login.html";
     }
 
