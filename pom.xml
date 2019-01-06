@@ -201,20 +201,7 @@
 
     <repositories>
 
-        <repository>
-            <id>dfss-repos</id>
-            <name>DFSS Repository</name>
-            <url>http://10.40.3.110:8456/nexus/content/groups/public</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-        <repository>
-            <id>aliyun-repos</id>
-            <name>Aliyun Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
+      
 		
     </repositories>
 

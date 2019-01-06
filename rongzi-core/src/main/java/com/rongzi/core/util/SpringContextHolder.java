@@ -37,7 +37,8 @@ public class SpringContextHolder implements ApplicationContextAware {
         return applicationContext.getBean(requiredType);
     }
 
-    private static void assertApplicationContext() {
+    private static void
+    assertApplicationContext() {
         if (SpringContextHolder.applicationContext == null) {
             throw new RuntimeException("applicaitonContext属性为null,请检查是否注入了SpringContextHolder!");
         }
